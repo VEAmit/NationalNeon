@@ -1,0 +1,722 @@
+﻿<!-- widget grid -->
+<section id="widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+            <button class="btn btn-danger new-jobs" data-toggle="modal" data-target="#myModal">New Task</button>
+            <button class="btn btn-danger new-jobs export-data">Export All Work Orders</button>
+
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header modal-popup-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h1 class="modal-title">New Task</h1>
+                        </div>
+                        <div class="modal-body">
+                            <form class="smart-form">
+                                <section>
+                                    <label class="label">Job</label>
+                                    <label class="select">
+                                        <select>
+                                            <option value="0">Choose name</option>
+                                            <option value="1">Alexandra</option>
+                                            <option value="2">Alice</option>
+                                            <option value="3">Anastasia</option>
+                                            <option value="4">Avelina</option>
+                                        </select> <i></i>
+                                    </label>
+                                </section>
+
+                                <section>
+                                    <label class="label">Department</label>
+                                    <label class="select">
+                                        <select>
+                                            <option value="0">Choose name</option>
+                                            <option value="1">Alexandra</option>
+                                            <option value="2">Alice</option>
+                                            <option value="3">Anastasia</option>
+                                            <option value="4">Avelina</option>
+                                        </select> <i></i>
+                                    </label>
+                                </section>
+
+
+                                <section>
+                                    <label class="label">Task Name</label>
+                                    <label class="input"><input type="text" class="input-sm"></label>
+                                </section>
+
+
+                                <section>
+                                    <label class="label">Budgeted Hours</label>
+                                    <label class="input"><input type="text" class="input-sm"></label>
+                                </section>
+
+
+                                <section>
+                                    <label class="label">Target Completion Date</label>
+                                    <label class="input"><input type="text" class="input-sm"></label>
+                                </section>
+
+
+                                <section>
+                                    <label class="label">Employee</label>
+                                    <label class="input"><input type="text" class="input-sm"></label>
+                                </section>
+
+                                <section>
+                                    <label class="label">Status</label>
+                                    <label class="input"><input type="text" class="input-sm"></label>
+                                </section>
+
+                               
+
+                                <footer class="text-center form-submit"><button type="submit" class="btn btn-danger form-submit-btn">Submit</button></footer>
+                            </form>
+                        </div>
+                        @*<div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>*@
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-deletebutton="false">
+
+                <header><span class="widget-icon"> <i class="fa fa-briefcase"></i> </span><h2>Incomplete Tasks</h2></header>
+
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        <div class="table-responsive">
+                            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Job Number</th>
+                                        <th>Job Name</th>
+                                        <th>Description</th>
+                                        <th>Target Completion Date</th>
+                                        <th>Status</th>
+                                        <th>Revenue</th>
+                                        <th>Scheduled Date</th>
+                                        <th>Sales Person</th>
+                                        <th>Documents</th>
+                                        <th>Actions</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+
+                                        <td>49225</td>
+                                        <td>Enfance</td>
+                                        <td>Supply and install two lexan face replacements with graphics</td>
+                                        <td>Wed Sep 7th, 2016</td>
+                                        <td>Completed - Billed August 16 2016</td>
+                                        <td>$1,990.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4922</td>
+                                        <td>Certus Development - Royal Oak Shopping Centre</td>
+                                        <td>Supply and install two blank panels; one in pylon and one in fascia sign</td>
+                                        <td>Tue Aug 30th, 2016</td>
+                                        <td>Completed - Billed August 16 2016</td>
+                                        <td>$520.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>49227</td>
+                                        <td>Gemini Pump &amp; Compressor Service Ltd.</td>
+                                        <td>Centex Cedarbrae - Supply vinyl for one pump door - Customer to pick up</td>
+                                        <td>Thu Sep 8th, 2016/td>
+                                        <td>Not started</td>
+                                        <td>$150.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>49218</td>
+                                        <td>Frilly Lilly - East Village</td>
+                                        <td>
+                                            S/I one set of illuminated channel letters on rails (1 1/2 aluminum tube rails mill finish)
+                                            S/I two faces for existing blade sign - white translucent lexan with UV painted graphics&nbsp;
+                                        </td>
+                                        <td>Tue Aug 30th, 2016&nbsp;</td>
+                                        <td>Completed - Billed August 24 2016&nbsp;</td>
+                                        <td>$7,235.00&nbsp;</td>
+                                        <td>Date not set&nbsp;</td>
+                                        <td>TS&nbsp;</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+
+                                        <td>49225</td>
+                                        <td>Enfance</td>
+                                        <td>Supply and install two lexan face replacements with graphics</td>
+                                        <td>Wed Sep 7th, 2016</td>
+                                        <td>Completed - Billed August 16 2016</td>
+                                        <td>$1,990.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4922</td>
+                                        <td>Certus Development - Royal Oak Shopping Centre</td>
+                                        <td>Supply and install two blank panels; one in pylon and one in fascia sign</td>
+                                        <td>Tue Aug 30th, 2016</td>
+                                        <td>Completed - Billed August 16 2016</td>
+                                        <td>$520.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>49227</td>
+                                        <td>Gemini Pump &amp; Compressor Service Ltd.</td>
+                                        <td>Centex Cedarbrae - Supply vinyl for one pump door - Customer to pick up</td>
+                                        <td>Thu Sep 8th, 2016/td>
+                                        <td>Not started</td>
+                                        <td>$150.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>49218</td>
+                                        <td>Frilly Lilly - East Village</td>
+                                        <td>
+                                            S/I one set of illuminated channel letters on rails (1 1/2 aluminum tube rails mill finish)
+                                            S/I two faces for existing blade sign - white translucent lexan with UV painted graphics&nbsp;
+                                        </td>
+                                        <td>Tue Aug 30th, 2016&nbsp;</td>
+                                        <td>Completed - Billed August 24 2016&nbsp;</td>
+                                        <td>$7,235.00&nbsp;</td>
+                                        <td>Date not set&nbsp;</td>
+                                        <td>TS&nbsp;</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>49225</td>
+                                        <td>Enfance</td>
+                                        <td>Supply and install two lexan face replacements with graphics</td>
+                                        <td>Wed Sep 7th, 2016</td>
+                                        <td>Completed - Billed August 16 2016</td>
+                                        <td>$1,990.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4922</td>
+                                        <td>Certus Development - Royal Oak Shopping Centre</td>
+                                        <td>Supply and install two blank panels; one in pylon and one in fascia sign</td>
+                                        <td>Tue Aug 30th, 2016</td>
+                                        <td>Completed - Billed August 16 2016</td>
+                                        <td>$520.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>49227</td>
+                                        <td>Gemini Pump &amp; Compressor Service Ltd.</td>
+                                        <td>Centex Cedarbrae - Supply vinyl for one pump door - Customer to pick up</td>
+                                        <td>Thu Sep 8th, 2016/td>
+                                        <td>Not started</td>
+                                        <td>$150.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>49218</td>
+                                        <td>Frilly Lilly - East Village</td>
+                                        <td>
+                                            S/I one set of illuminated channel letters on rails (1 1/2 aluminum tube rails mill finish)
+                                            S/I two faces for existing blade sign - white translucent lexan with UV painted graphics&nbsp;
+                                        </td>
+                                        <td>Tue Aug 30th, 2016&nbsp;</td>
+                                        <td>Completed - Billed August 24 2016&nbsp;</td>
+                                        <td>$7,235.00&nbsp;</td>
+                                        <td>Date not set&nbsp;</td>
+                                        <td>TS&nbsp;</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+
+                                        <td>49225</td>
+                                        <td>Enfance</td>
+                                        <td>Supply and install two lexan face replacements with graphics</td>
+                                        <td>Wed Sep 7th, 2016</td>
+                                        <td>Completed - Billed August 16 2016</td>
+                                        <td>$1,990.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4922</td>
+                                        <td>Certus Development - Royal Oak Shopping Centre</td>
+                                        <td>Supply and install two blank panels; one in pylon and one in fascia sign</td>
+                                        <td>Tue Aug 30th, 2016</td>
+                                        <td>Completed - Billed August 16 2016</td>
+                                        <td>$520.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>49227</td>
+                                        <td>Gemini Pump &amp; Compressor Service Ltd.</td>
+                                        <td>Centex Cedarbrae - Supply vinyl for one pump door - Customer to pick up</td>
+                                        <td>Thu Sep 8th, 2016/td>
+                                        <td>Not started</td>
+                                        <td>$150.00</td>
+                                        <td>Date not set</td>
+                                        <td>NC</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>49218</td>
+                                        <td>Frilly Lilly - East Village</td>
+                                        <td>
+                                            S/I one set of illuminated channel letters on rails (1 1/2 aluminum tube rails mill finish)
+                                            S/I two faces for existing blade sign - white translucent lexan with UV painted graphics&nbsp;
+                                        </td>
+                                        <td>Tue Aug 30th, 2016&nbsp;</td>
+                                        <td>Completed - Billed August 24 2016&nbsp;</td>
+                                        <td>$7,235.00&nbsp;</td>
+                                        <td>Date not set&nbsp;</td>
+                                        <td>TS&nbsp;</td>
+                                        <td></td>
+                                        <td class="job-action">
+                                            <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+
+
+
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                <!-- end widget div -->
+
+            </div>
+            <!-- end widget -->
+        </article>
+        <!-- WIDGET END -->
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-deletebutton="false">
+
+                <header><span class="widget-icon"> <i class="fa fa-briefcase"></i> </span><h2>Complete Tasks</h2></header>
+
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="table-responsive">
+                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Job Number</th>
+                                    <th>Job Name</th>
+                                    <th>Description</th>
+                                    <th>Target Completion Date</th>
+                                    <th>Status</th>
+                                    <th>Revenue</th>
+                                    <th>Scheduled Date</th>
+                                    <th>Sales Person</th>
+                                    <th>Documents</th>
+                                    <th>Actions</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                    <td>49225</td>
+                                    <td>Enfance</td>
+                                    <td>Supply and install two lexan face replacements with graphics</td>
+                                    <td>Wed Sep 7th, 2016</td>
+                                    <td>Completed - Billed August 16 2016</td>
+                                    <td>$1,990.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4922</td>
+                                    <td>Certus Development - Royal Oak Shopping Centre</td>
+                                    <td>Supply and install two blank panels; one in pylon and one in fascia sign</td>
+                                    <td>Tue Aug 30th, 2016</td>
+                                    <td>Completed - Billed August 16 2016</td>
+                                    <td>$520.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>49227</td>
+                                    <td>Gemini Pump &amp; Compressor Service Ltd.</td>
+                                    <td>Centex Cedarbrae - Supply vinyl for one pump door - Customer to pick up</td>
+                                    <td>Thu Sep 8th, 2016/td>
+                                    <td>Not started</td>
+                                    <td>$150.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>49218</td>
+                                    <td>Frilly Lilly - East Village</td>
+                                    <td>
+                                        S/I one set of illuminated channel letters on rails (1 1/2 aluminum tube rails mill finish)
+                                        S/I two faces for existing blade sign - white translucent lexan with UV painted graphics&nbsp;
+                                    </td>
+                                    <td>Tue Aug 30th, 2016&nbsp;</td>
+                                    <td>Completed - Billed August 24 2016&nbsp;</td>
+                                    <td>$7,235.00&nbsp;</td>
+                                    <td>Date not set&nbsp;</td>
+                                    <td>TS&nbsp;</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr>
+
+                                    <td>49225</td>
+                                    <td>Enfance</td>
+                                    <td>Supply and install two lexan face replacements with graphics</td>
+                                    <td>Wed Sep 7th, 2016</td>
+                                    <td>Completed - Billed August 16 2016</td>
+                                    <td>$1,990.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4922</td>
+                                    <td>Certus Development - Royal Oak Shopping Centre</td>
+                                    <td>Supply and install two blank panels; one in pylon and one in fascia sign</td>
+                                    <td>Tue Aug 30th, 2016</td>
+                                    <td>Completed - Billed August 16 2016</td>
+                                    <td>$520.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>49227</td>
+                                    <td>Gemini Pump &amp; Compressor Service Ltd.</td>
+                                    <td>Centex Cedarbrae - Supply vinyl for one pump door - Customer to pick up</td>
+                                    <td>Thu Sep 8th, 2016/td>
+                                    <td>Not started</td>
+                                    <td>$150.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>49218</td>
+                                    <td>Frilly Lilly - East Village</td>
+                                    <td>
+                                        S/I one set of illuminated channel letters on rails (1 1/2 aluminum tube rails mill finish)
+                                        S/I two faces for existing blade sign - white translucent lexan with UV painted graphics&nbsp;
+                                    </td>
+                                    <td>Tue Aug 30th, 2016&nbsp;</td>
+                                    <td>Completed - Billed August 24 2016&nbsp;</td>
+                                    <td>$7,235.00&nbsp;</td>
+                                    <td>Date not set&nbsp;</td>
+                                    <td>TS&nbsp;</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>49225</td>
+                                    <td>Enfance</td>
+                                    <td>Supply and install two lexan face replacements with graphics</td>
+                                    <td>Wed Sep 7th, 2016</td>
+                                    <td>Completed - Billed August 16 2016</td>
+                                    <td>$1,990.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4922</td>
+                                    <td>Certus Development - Royal Oak Shopping Centre</td>
+                                    <td>Supply and install two blank panels; one in pylon and one in fascia sign</td>
+                                    <td>Tue Aug 30th, 2016</td>
+                                    <td>Completed - Billed August 16 2016</td>
+                                    <td>$520.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>49227</td>
+                                    <td>Gemini Pump &amp; Compressor Service Ltd.</td>
+                                    <td>Centex Cedarbrae - Supply vinyl for one pump door - Customer to pick up</td>
+                                    <td>Thu Sep 8th, 2016/td>
+                                    <td>Not started</td>
+                                    <td>$150.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>49218</td>
+                                    <td>Frilly Lilly - East Village</td>
+                                    <td>
+                                        S/I one set of illuminated channel letters on rails (1 1/2 aluminum tube rails mill finish)
+                                        S/I two faces for existing blade sign - white translucent lexan with UV painted graphics&nbsp;
+                                    </td>
+                                    <td>Tue Aug 30th, 2016&nbsp;</td>
+                                    <td>Completed - Billed August 24 2016&nbsp;</td>
+                                    <td>$7,235.00&nbsp;</td>
+                                    <td>Date not set&nbsp;</td>
+                                    <td>TS&nbsp;</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr>
+
+                                    <td>49225</td>
+                                    <td>Enfance</td>
+                                    <td>Supply and install two lexan face replacements with graphics</td>
+                                    <td>Wed Sep 7th, 2016</td>
+                                    <td>Completed - Billed August 16 2016</td>
+                                    <td>$1,990.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4922</td>
+                                    <td>Certus Development - Royal Oak Shopping Centre</td>
+                                    <td>Supply and install two blank panels; one in pylon and one in fascia sign</td>
+                                    <td>Tue Aug 30th, 2016</td>
+                                    <td>Completed - Billed August 16 2016</td>
+                                    <td>$520.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>49227</td>
+                                    <td>Gemini Pump &amp; Compressor Service Ltd.</td>
+                                    <td>Centex Cedarbrae - Supply vinyl for one pump door - Customer to pick up</td>
+                                    <td>Thu Sep 8th, 2016/td>
+                                    <td>Not started</td>
+                                    <td>$150.00</td>
+                                    <td>Date not set</td>
+                                    <td>NC</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>49218</td>
+                                    <td>Frilly Lilly - East Village</td>
+                                    <td>
+                                        S/I one set of illuminated channel letters on rails (1 1/2 aluminum tube rails mill finish)
+                                        S/I two faces for existing blade sign - white translucent lexan with UV painted graphics&nbsp;
+                                    </td>
+                                    <td>Tue Aug 30th, 2016&nbsp;</td>
+                                    <td>Completed - Billed August 24 2016&nbsp;</td>
+                                    <td>$7,235.00&nbsp;</td>
+                                    <td>Date not set&nbsp;</td>
+                                    <td>TS&nbsp;</td>
+                                    <td></td>
+                                    <td class="job-action">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <a href="#"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+                        <!-- end widget content -->
+                        </div>
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+            <!-- end widget -->
+        </article>
+        <!-- WIDGET END -->
+    </div>
+    <!-- end row -->
+    <!-- end row -->
+
+</section>
+<!-- end widget grid -->

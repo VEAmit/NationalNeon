@@ -1,0 +1,77 @@
+﻿
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+            <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal">New Department</button>
+            <button id="print" onclick="window.print()" class="btn btn-danger export-data pull-right"><i class="fa fa-print"></i> Print</button>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog" id="divAddPopup">
+
+                </div>
+            </div>
+        </div>
+        <!-- NEW WIDGET START -->
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+
+
+            <!-- Widget ID (each widget will need unique ID)-->
+            <div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-deletebutton="false">
+
+                <header><span class="widget-icon"> <i class="fa fa-briefcase"></i> </span><h2>Departments</h2></header>
+
+                <!-- widget div-->
+                <div>
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <!-- end widget edit box -->
+                    <!-- widget content -->
+                    <div class="widget-body no-padding">
+                        <div class="table-responsive" id="divList">
+                            
+                        </div>
+                    </div>
+                    <!-- end widget content -->
+
+                </div>
+                <!-- end widget div -->
+
+            </div>
+            <!-- end widget -->
+        </article>
+        <!-- WIDGET END -->
+    </div>
+    <!-- end row -->
+    <!-- end row -->
+
+</section>
+<!-- end widget grid -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/Department/DepartmentList",
+            async: false,
+            success: function (result) {
+                $("#divList").html(result);
+            }
+        });
+       
+        $.ajax({        
+            url: "/Department/AddDepartment",
+            async: false,
+            success: function (result) {
+                $("#divAddPopup").html(result);
+            }
+        });
+    });
+</script>

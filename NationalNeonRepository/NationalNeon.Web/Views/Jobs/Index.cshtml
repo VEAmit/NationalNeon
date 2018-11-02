@@ -1,0 +1,114 @@
+﻿@model NationalNeon.Web.ViewModels.JobViewModel
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noprint form-group">
+            @*<button class="btn btn-danger"><i class="fa fa-refresh"></i> Reset Widgets</button>*@
+            <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal" id="newJob">New Job</button>
+            <button id="print" onclick="window.print()" class="btn btn-danger export-data pull-right"><i class="fa fa-print"></i> Print</button>
+
+            <div class="modal fade noprint" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <div class="modal-body" id="divAddPopup">
+                        <!-- Modal content-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jobsList">
+    </div>
+    <!-- NEW WIDGET START -->
+    <!-- WIDGET END -->
+    <!-- end row -->
+    <!-- end row -->
+
+</section>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+@*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>*@
+@*<script src="~/js/bootstrap/bootstrap.min.js"></script>*@
+@*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>*@
+<!-- BS JavaScript -->
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+   
+    $(document).ready(function () {
+        
+        var jobId = 0;
+        jobList();
+        $.ajax({
+            url: "/Jobs/AddJobs",
+            type: "GET",
+            async: false,
+            success: function (result) {
+                $("#divAddPopup").html(result);
+            }
+        });
+
+        $('#divAddPopup').delegate('.btn_addUpdateJobs', 'click', function () {
+            var curEvent = $(this);
+            var formValue = $("#addUpdateJobForm").serialize();
+            saveOrUpdate(formValue);
+           
+        });
+
+        $("#newJob").click(function () {
+            $('#addUpdateForm').find("input[type=text], textarea, select, number").val("");
+           
+        });
+    });
+
+    function jobList() {
+        $.ajax({
+            url: "/Jobs/JobsList",
+            async: false,
+            success: function (result) {
+                $(".jobsList").html(result);
+            }
+        });
+    }
+
+    function saveOrUpdate(formValue) {
+        $.ajax({
+            type: 'POST',
+            url: "/Jobs/AddJobs",
+            async: false,
+            data: formValue,
+            success: function (result) {
+                if (result.success) {
+                    jobList();                  
+                  // jQuery.noConflict();
+                    $('#closePop').click();
+                    window.location.reload();
+                   // $('#myModal').modal("hide");
+                   // event.preventDefault();
+                }
+            }
+        });
+    }
+
+    function setJobID(jobid) {
+        jobId = jobid;
+    }
+
+    function deleteJob() {
+        callDelete(jobId);
+        $("#btn_closeConfirm").click();
+    }
+
+    function callDelete(jobId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Jobs/Delete?id=' + jobId + '',
+            success: function () {
+                jobList();
+            }
+        });
+    }
+</script>

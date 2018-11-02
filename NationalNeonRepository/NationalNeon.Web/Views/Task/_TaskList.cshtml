@@ -1,0 +1,163 @@
+﻿@model List<NationalNeon.Web.ViewModels.TaskDepartmentViewModel>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="~/scripts/Task.js"></script>
+
+<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <!-- Widget ID (each widget will need unique ID)-->
+    <div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-deletebutton="false">
+
+        <header><span class="widget-icon"> <i class="fa fa-briefcase"></i> </span><h2>Incomplete Tasks</h2></header>
+
+        <!-- widget div-->
+        <div>
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+                <!-- This area used as dropdown edit box -->
+            </div>
+            <!-- end widget edit box -->
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+                <div class="table-responsive" id="divList">
+                    <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Job</th>
+                                <th>Department</th>
+                                <th>Task Name</th>
+                                <th>Budgeted Hours</th>
+                                <th>Target Completion Date</th>
+                                <th>Progress</th>
+                                <th>Employee</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.Completed == 0)
+                                {
+                                    <tr>
+                                        <td>@item.job_name </td>
+                                        <td>@item.departmentname</td>
+                                        <td>@item.TaskName</td>
+                                        <td>@item.BudgetedHours</td>
+                                        <td>@item.TargetCompletionDate.ToString("D")</td>
+                                        <td>@item.Status</td>
+                                        <td>@item.Employee</td>
+                                        <td class="job-action">
+                                            <a href="#" data-toggle="modal" data-target="#myModal" onClick="showTaskDetails(@item.TaskId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+
+                                            <a href="#" data-toggle="modal" data-target="#opener" onclick="setTaskID(@item.TaskId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+
+                                            <button class="fa fa-check-square btn_complete" taskId="@item.TaskId" ></button>
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+            </div>
+            <!-- end widget content -->
+
+        </div>
+        <!-- end widget div -->
+
+    </div>
+    <!-- end widget -->
+</article>
+<!-- WIDGET END -->
+<!-- NEW WIDGET START -->
+<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <!-- Widget ID (each widget will need unique ID)-->
+    <div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-deletebutton="false">
+
+        <header><span class="widget-icon"> <i class="fa fa-briefcase"></i> </span><h2>Complete Tasks</h2></header>
+
+        <!-- widget div-->
+        <div>
+            <!-- widget edit box -->
+            <div class="jarviswidget-editbox">
+                <!-- This area used as dropdown edit box -->
+            </div>
+            <!-- end widget edit box -->
+            <!-- widget content -->
+            <div class="widget-body no-padding">
+                <div class="table-responsive" id="completeTaskList">
+                    <table id="dt_basic1" class="table table-striped table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Job</th>
+                                <th>Department</th>
+                                <th>Task Name</th>
+                                <th>Budgeted Hours</th>
+                                <th>Target Completion Date</th>
+                                <th>Progress</th>
+                                <th>Employee</th>
+                                <th>Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var completetask in Model)
+                            {
+                                if (completetask.Completed == 1)
+                                {
+                                    <tr>
+                                        <td>@completetask.job_name </td>
+                                        <td>@completetask.departmentname</td>
+                                        <td>@completetask.TaskName</td>
+                                        <td>@completetask.BudgetedHours</td>
+                                        <td>@completetask.TargetCompletionDate</td>
+                                        <td>@completetask.Status</td>
+                                        <td>@completetask.Employee</td>
+                                        <td><i class="fa fa-fw fa-check"></i></td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+
+
+                    </table>
+                    <!-- end widget content -->
+                </div>
+            </div>
+
+            <!-- end widget div -->
+
+        </div>
+    </div>
+    <!-- end widget -->
+</article>
+
+<div class="clearfix"></div>
+
+
+
+<div class="modal fade noprint" id="opener" role="dialog">
+    <div class="modal-dialog" style="width: 320px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header modal-popup-header">
+                <button type="button" class="close" data-dismiss="modal" id="btn_closeConfirm">&times;</button>
+                <h1 class="modal-title">Do You Want To Delete?</h1>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Are you sure want to delete this Task</h5>
+                <button onclick="deleteTask()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1" >Yes</button>
+                <button data-dismiss="modal" class="btn btn-danger form-submit-btn" >No</button>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@model NationalNeon.Web.ViewModels.DepartmentViewModel
+
+
+<div class="modal-header modal-popup-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h1 class="modal-title">New Department</h1>
+</div>
+<div class="modal-body">
+    <form class="smart-form" asp-action="Edit" asp-controller="Department" data-ajax="true" data-ajax-method="POST">
+        <section>
+            <label asp-for="DepartmentName" class="label"></label>
+            <label class="textarea textarea-resizable">
+                <textarea asp-for="DepartmentName" required="required" rows="6" class="custom-scroll"></textarea>
+            </label>
+            <span asp-validation-for="DepartmentName" class="text-danger"></span>
+        </section>
+
+        <section>
+            <label asp-for="Description" class="label"></label>
+            <label class="textarea textarea-resizable">
+                <textarea asp-for="Description" rows="6" required="required" class="custom-scroll"></textarea>
+            </label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </section>
+
+
+        <input type="hidden" asp-for="DepartmentId" />
+        <footer class="text-center form-submit">
+            <button type="submit" class="btn btn-danger form-submit-btn">Submit</button>
+        </footer>
+
+    </form>
+</div>

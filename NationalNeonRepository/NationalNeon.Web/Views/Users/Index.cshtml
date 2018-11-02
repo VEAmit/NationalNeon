@@ -1,0 +1,86 @@
+﻿@model NationalNeon.Web.ViewModels.UserViewModel
+<!-- widget grid -->
+
+<section id="widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noprint form-group">
+            <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal">New User</button>
+            <button id="print" onclick="window.print()" class="btn btn-danger export-data pull-right"><i class="fa fa-print"></i> Print</button>
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-body" id="divAddPopup">
+                        <!-- Modal content-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="userList">
+            </div>
+            <!-- NEW WIDGET START -->
+            <!-- WIDGET END -->
+       
+        <!-- end row -->
+        <!-- end row -->
+    </div>
+</section>
+<!-- end widget grid -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    var userId = 0;
+    $(document).ready(function () {
+        userList();
+        $.ajax({
+            url: "/Users/AddUsers",
+            type: "GET",
+            async: false,
+            success: function (result) {
+                $("#divAddPopup").html(result);
+                userList();
+            }
+        });
+        
+
+        $('#opener').click(function () {
+            userId = $(this).attr('userId');
+        });
+    });
+
+    function userList() {
+        $.ajax({
+            url: "/Users/UserList",
+            async: false,
+            success: function (result) {
+                $(".userList").html(result);              
+            }
+        });
+    }
+
+    function setUserID(_userId) {
+        userId = _userId;
+    }
+
+    function deleteUsers() {
+
+        callDelete(userId);
+        $(this).parent().parent().parent().hide();
+        $("#" + userId).hide();
+        $('#opener').modal('hide')
+        $(".btn btn-danger form-submit-btn").trigger("click");
+        window.location.href = "/Users";
+    }
+
+    function callDelete(userId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Users/Delete?id=' + userId + '',
+            success: function () {
+            }
+        });
+    }
+
+</script>

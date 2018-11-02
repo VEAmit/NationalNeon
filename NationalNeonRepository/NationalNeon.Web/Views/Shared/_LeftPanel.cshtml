@@ -1,0 +1,62 @@
+﻿@*@model NationalNeon.Web.ViewModels.DashboardViewModel;*@
+<aside id="left-panel" class="noprint">
+    <!-- User info -->
+    <div class="login-info">
+        <span>
+            <!-- User image size is adjusted inside CSS, it should stay as it -->
+            @*<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                    <img src="~/img/sunny.png" alt="me" class="online" />
+                    <span>Welcome,Ryan</span>
+                    @*<i class="fa fa-angle-down"></i>
+                </a>*@
+
+            <a style="color: rgba(10, 152, 135, 1)" href="#" data-toggle="modal" data-target="#">
+                <i style="margin: 10px;" class="fa fa-lg fa-fw fa-user"></i>
+                <span>
+                    Welcome,
+                    <span id="username"></span>
+                    @*@Model.User.username*@
+                    @*@HttpContext.Session.GetString("FirstSeen")*@
+                    @*@ViewBag.Message*@
+
+                    @*@Html.Raw(HttpContext.Current.Session["MySession"])*@
+                    @*<%=this.Session["abc"]%>
+                        @HttpContextAccessor.HttpContext.Session.GetString("abc")*@
+
+                    @{
+
+                        //var currentUserName = HttpContextAccessor.HttpContext.Request.Cookies["UserName"].ToString();
+                        @*<text>Welcome, @currentUserName </text>*@
+                    }
+                </span>
+            </a>
+
+            <span id="logout" class="pull-right" style="border: none;">
+                <span> <a asp-controller="Login" asp-action="Login" title="Logout" data-action="userLogout" data-logout-msg="Are you sure you wish to log out?"><i class="glyphicon glyphicon-log-out"></i></a> </span>
+            </span>
+
+        </span>
+
+
+    </div>
+    <!-- end user info -->
+    <!-- NAVIGATION : This navigation is also responsive-->
+    <nav>
+        <ul>
+            <li><a asp-area="" asp-controller="Home" asp-action="dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a></li>
+            <li class="top-menu-invisible">
+                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">Jobs</span></a>
+                <ul>
+                    <li><a asp-area="" asp-controller="Jobs" asp-action="Index"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Jobs List</span></a></li>
+                    <li><a asp-area="" asp-controller="Archived" asp-action="Index"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Archived</span></a></li>
+                </ul>
+            </li>
+            <li><a asp-area="" asp-controller="Task" asp-action="Index"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Tasks</span></a></li>
+            <li><a asp-area="" asp-controller="Department" asp-action="Index"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Departments</span></a></li>
+            <li><a asp-area="" asp-controller="Users" asp-action="Index"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Users</span></a></li>
+        </ul>
+    </nav>
+    <span class="minifyme" data-action="minifyMenu">
+        <i class="fa fa-arrow-circle-left hit"></i>
+    </span>
+</aside>

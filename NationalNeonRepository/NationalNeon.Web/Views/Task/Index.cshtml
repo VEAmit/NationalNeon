@@ -1,0 +1,122 @@
+﻿<!-- widget grid -->
+<section id="widget-grid" class="">
+
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noprint form-group">
+            <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal" id="newTask">New Task</button>
+            <button id="print" onclick="window.print()" class="btn btn-danger export-data pull-right"><i class="fa fa-print"></i> Print</button>
+            <button class="btn btn-danger new-jobs export-data" style="display:none">Export All Work Orders</button>
+
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <div class="modal-body" id="divAddPopup">
+                        <!-- Modal content-->
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+        <div class="tasksList">
+        </div>
+        <!-- NEW WIDGET START -->
+        <!-- WIDGET END -->
+  
+
+    <!-- end row -->
+    <!-- end row -->
+
+</section>
+<!-- end widget grid -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var TaskId = 0;
+        taskList();
+        $.ajax({
+            url: "/Task/AddTask",
+            type:"GET",
+            async: false,
+            success: function (result) {
+                $("#divAddPopup").html(result);
+            }
+        });
+
+        $(".tasksList").delegate(".btn_complete", "click", function (e) { 
+            var curEvent = $(this);
+            const taskId = curEvent.attr('taskid');
+            $.ajax({
+                type: "POST",
+                url: "/Task/TaskCompleted?id=" + taskId + "",
+                async: false,
+                success: function (result) {
+                    if (result.success) {
+                        taskList();
+                    }
+
+                }
+            });
+        });
+
+        $(".btn_addUpdateTask").on('click', function () {
+            var curEvent = $(this);
+            var formValue = $("#addUpdateForm").serialize();
+            saveOrUpdate(formValue);
+        });
+
+        $("#newTask").click(function () {
+            $('#addUpdateForm').find("input[type=text], textarea, select, number").val("");
+        });
+
+    });
+
+    function taskList() {
+        $.ajax({
+            url: "/Task/TaskList",
+            async: false,
+            success: function (result) {
+                // $(".tasksList").html('');
+                $(".tasksList").html(result);
+            }
+        });
+    }
+
+    function saveOrUpdate(formValue) {
+        $.ajax({
+            type: 'POST',
+            url: "/Task/AddTask",
+            async: false,
+            data: formValue,
+            success: function (result) {
+                if (result.success) {
+                    taskList();
+                    $('#closePop').click();
+                }
+            }
+        });
+
+    }
+
+    function deleteTask() {
+        callDelete(TaskId);
+        $("#btn_closeConfirm").click();
+    }
+
+    function setTaskID(Taskid) {
+        TaskId = Taskid;
+    }
+
+    function callDelete(TaskId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Task/DeleteTasks?id=' + TaskId + '',
+            success: function () {
+                taskList();
+            }
+        });
+    }
+</script>
