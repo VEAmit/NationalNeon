@@ -19,6 +19,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\netcoreapp2.0\NationalNeon.Web.deps.json" />
+    <Content Include="bin\Debug\netcoreapp2.0\NationalNeon.Web.runtimeconfig.dev.json" />
+    <Content Include="bin\Debug\netcoreapp2.0\NationalNeon.Web.runtimeconfig.json" />
+    <Content Include="bin\Release\netcoreapp2.0\NationalNeon.Web.deps.json" />
+    <Content Include="bin\Release\netcoreapp2.0\NationalNeon.Web.runtimeconfig.dev.json" />
+    <Content Include="bin\Release\netcoreapp2.0\NationalNeon.Web.runtimeconfig.json" />
+    <Content Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\project.assets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.1.0" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="Expressmapper" Version="1.9.1" />
@@ -39,6 +54,43 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="bin\Debug\netcoreapp2.0\Microsoft.DiaSymReader.Native.amd64.dll" />
+    <None Include="bin\Debug\netcoreapp2.0\Microsoft.DiaSymReader.Native.x86.dll" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Business.dll" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Business.dll.config" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Business.pdb" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Domain.dll" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Domain.dll.config" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Domain.pdb" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Repository.dll" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Repository.dll.config" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Repository.pdb" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Utility.dll" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Utility.pdb" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Web.dll" />
+    <None Include="bin\Debug\netcoreapp2.0\NationalNeon.Web.pdb" />
+    <None Include="bin\Release\netcoreapp2.0\Microsoft.DiaSymReader.Native.amd64.dll" />
+    <None Include="bin\Release\netcoreapp2.0\Microsoft.DiaSymReader.Native.x86.dll" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Business.dll" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Business.dll.config" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Business.pdb" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Domain.dll" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Domain.dll.config" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Domain.pdb" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Repository.dll" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Repository.dll.config" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Repository.pdb" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Utility.dll" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Utility.pdb" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Web.dll" />
+    <None Include="bin\Release\netcoreapp2.0\NationalNeon.Web.pdb" />
+    <None Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.assets.cache" />
+    <None Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.csprojAssemblyReference.cache" />
+    <None Include="obj\NationalNeon.Web.csproj.nuget.cache" />
+    <None Include="obj\NationalNeon.Web.csproj.nuget.g.props" />
+    <None Include="obj\NationalNeon.Web.csproj.nuget.g.targets" />
     <None Include="Views\Department\Index.cshtml" />
     <None Include="wwwroot\js\plugin\bootstrap-progressbar\bootstrap-progressbar.js" />
     <None Include="wwwroot\js\plugin\bootstrap-slider\bootstrap-slider.js" />
