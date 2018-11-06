@@ -1,6 +1,5 @@
 ﻿
 $(document).ready(function () {
-    getuserDetail();
     $('#opener').click(function () {
         TaskId = $(this).attr('TaskId');
         return false;

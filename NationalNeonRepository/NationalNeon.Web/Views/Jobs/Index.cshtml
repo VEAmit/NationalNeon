@@ -111,4 +111,27 @@
             }
         });
     }
+
+    function ArchivedJobs(jobid) {
+        jobId = jobid;
+    }
+
+    function ArchivedJobSave() {
+        UpdateArchive(jobId);
+
+        //jobList();
+    }
+    function UpdateArchive(jobId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Archived/UpdateArchive?id=' + jobId + '',
+            success: function () {              
+                $("#archived").click();
+                jobList();
+                //window.location.reload();
+            }
+        });
+    }
+
+
 </script>

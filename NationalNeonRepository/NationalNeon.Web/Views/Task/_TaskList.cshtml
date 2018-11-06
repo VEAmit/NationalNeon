@@ -47,11 +47,11 @@
                                         <td>@item.Status</td>
                                         <td>@item.Employee</td>
                                         <td class="job-action">
-                                            <a href="#" data-toggle="modal" data-target="#myModal" onClick="showTaskDetails(@item.TaskId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                            <a href="#" data-toggle="modal" data-target="#myModal" title="Edit" onClick="showTaskDetails(@item.TaskId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
 
-                                            <a href="#" data-toggle="modal" data-target="#opener" onclick="setTaskID(@item.TaskId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            <a href="#" data-toggle="modal" data-target="#opener" title="Delete" onclick="setTaskID(@item.TaskId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 
-                                            <button class="fa fa-check-square btn_complete" taskId="@item.TaskId" ></button>
+                                            <button class="fa fa-check-square btn_complete" title="InComplete Task" taskId="@item.TaskId" ></button>
 
                                         </td>
                                     </tr>
@@ -117,7 +117,7 @@
                                         <td>@completetask.TargetCompletionDate</td>
                                         <td>@completetask.Status</td>
                                         <td>@completetask.Employee</td>
-                                        <td><i class="fa fa-fw fa-check"></i></td>
+                                        <td><i class="fa fa-fw fa-check" title="Completed Task"></i></td>
                                     </tr>
                                 }
                             }

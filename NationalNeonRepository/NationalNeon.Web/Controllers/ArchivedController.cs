@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpressMapper;
 using Microsoft.AspNetCore.Mvc;
 using NationalNeon.Business.Interfaces;
+using NationalNeon.Domain.Job;
+using NationalNeon.Web.ViewModels;
 
 namespace NationalNeon.Web.Controllers
 {
@@ -19,7 +22,33 @@ namespace NationalNeon.Web.Controllers
         [Route("Archived")]
         public IActionResult Index()
         {
-            return View();
+            List<JobModel> archievedJobs = new List<JobModel>();
+            try
+            {
+                JobModel model = new JobModel();
+                archievedJobs = ijobBusiness.GetAllJobsByArcheivedJobs();
+               // ViewBag.archievedJobs = archievedJobs;
+            }
+            catch(Exception ex)
+            {
+                ViewBag.ErrorMessage = "Something went wrong.";
+            }
+            return View(archievedJobs);
         }
+
+        [HttpPost]
+        public void UpdateArchive(int id)
+        {
+            try
+            {
+                ijobBusiness.UpdateArchiveModel(id);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Something went wrong.";
+            }
+            //return null;
+        }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿<!-- widget grid -->
+﻿@model List<NationalNeon.Domain.Job.JobModel>
+
+<!-- widget grid -->
 <section id="widget-grid" class="">
 
     <!-- row -->
@@ -36,29 +38,25 @@
                                         <th>Scheduled Date</th>
                                         <th>Sales Person</th>
                                         <th>Documents</th>
-                                        <th>Actions</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+                                    @foreach (var item in Model)
+                                    {
                                         <tr>
-
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
+                                            <td>@item.job_number</td>
+                                            <td>@item.job_name</td>
+                                            <td>@item.description</td>
+                                            <td>@item.target_completion_date.ToString("D")</td>
+                                            <td>@item.status</td>
+                                            <td>@item.revenue</td>
+                                            <td>@item.scheduled_date.ToString("D")</td>
+                                            <td>@item.sales_person</td>
                                             <td></td>
-                                            <td>
-                                           
-                                            </td>
                                         </tr>
+                                    }
 
-                                 
                                 </tbody>
                             </table>
                         </div>

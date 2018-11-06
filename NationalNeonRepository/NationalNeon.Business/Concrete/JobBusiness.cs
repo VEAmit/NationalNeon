@@ -64,6 +64,13 @@ namespace NationalNeon.Business.Concrete
             var model = jobRepositorty.GetAll().Where(a => a.scheduled_date >= DateTime.Today).OrderByDescending(a => a.scheduled_date).ToList();
             return Mapper.Map(model, jobmodel);
         }
+
+        public List<JobModel> GetAllJobsByArcheivedJobs()
+        {
+            var jobmodel = new List<JobModel>();
+            var model = jobRepositorty.GetAll().Where(a => a.status=="Archived").ToList();
+            return Mapper.Map(model, jobmodel);
+        }
         public void DeleteJobs(int Id)
         {
             jobRepositorty.Delete(u => u.jobId == Id);
@@ -92,6 +99,17 @@ namespace NationalNeon.Business.Concrete
                 data.target_completion_date = model.target_completion_date;
                 data.scheduled_date = model.scheduled_date;
                 data.status = model.status;
+                jobRepositorty.Update(data);
+            }
+        }
+
+
+        public void UpdateArchiveModel(int id)
+        {
+            var data = jobRepositorty.FindBy(x => x.jobId == id);
+            if (data != null)
+            {               
+                data.status = "Archived";
                 jobRepositorty.Update(data);
             }
         }

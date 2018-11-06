@@ -50,11 +50,13 @@
                                     <td>@item.sales_person</td>
                                     <td></td>
                                     <td class="job-action">
-                                        <a href="#" data-toggle="modal" data-target="#myModal" onClick="showJobDetails(@item.jobId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a href="#" title="Edit" data-toggle="modal" data-target="#myModal" onClick="showJobDetails(@item.jobId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                         @*@Html.ActionLink("Delete", "Delete", new { id = item.jobId })*@
-                                        <a href="#" data-toggle="modal" data-target="#opener" onclick="setJobID(@item.jobId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        <a href="#" title="Delete" data-toggle="modal" data-target="#opener" onclick="setJobID(@item.jobId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         @*<button id="opener">dialog</button>*@
-                                        <a href="#"><i class="fa fa-upload" aria-hidden="true"></i></a>
+                                        <a href="" title="Upload"><i class="fa fa-upload" aria-hidden="true"></i></a>
+                                        <a href="" title="Archive"  data-toggle="modal" data-target="#archived" onclick="ArchivedJobs(@item.jobId)"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
+                                        @*<i class="far fa-archive"></i>*@
                                     </td>
                                 </tr>
 
@@ -88,6 +90,28 @@
             <div class="modal-body text-center">
                 <h5>Are you sure want to delete this Jobs</h5>
                 <button onclick="deleteJob()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Yes</button>
+                <button data-dismiss="modal" class="btn btn-danger form-submit-btn">No</button>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade noprint" id="archived" role="dialog">
+    <div class="modal-dialog" style="width: 466px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header modal-popup-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h1 class="modal-title">Send Jobs To Archived?</h1>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Are you sure want to Send this Jobs In Archived</h5>
+                <button onclick="ArchivedJobSave()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Yes</button>
                 <button data-dismiss="modal" class="btn btn-danger form-submit-btn">No</button>
             </div>
             @*<div class="modal-footer">

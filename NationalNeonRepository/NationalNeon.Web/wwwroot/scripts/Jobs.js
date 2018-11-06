@@ -17,9 +17,7 @@ $(document).ready(function () {
     $('#opener').click(function () {
         jobId = $(this).attr('jobId');
         return false;
-    });
-  
-    
+    });    
 });
 
 function callGetJob(jobId) {
@@ -40,12 +38,8 @@ function callGetJob(jobId) {
             $('#status').val(data.data.status);
             $('#revenue').val(data.data.revenue);
             $('#sales_person').val(data.data.sales_person);
-            $('#scheduled_date').val(tscheduledate);
-          
-           
-        }
-         
-      
+            $('#scheduled_date').val(tscheduledate);           
+        }               
     });
 
    // $('#target_completion_date').datepicker('option', 'dateFormat', 'dd-mm-yy');
@@ -58,3 +52,5 @@ function showJobDetails(jobId) {
 function Dialogueclose() {
     $(".ui-dialog-titlebar-close").trigger("click");
 }
+
+

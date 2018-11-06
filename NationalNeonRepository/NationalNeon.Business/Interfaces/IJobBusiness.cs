@@ -18,6 +18,8 @@ namespace NationalNeon.Business.Interfaces
         List<JobModel> GetCalenderJobsList();
 
         List<JobModel> GetAllJobsByScheduledJobs();
+
+        List<JobModel> GetAllJobsByArcheivedJobs();
         JobModel AddJobs(JobModel data);
 
         void DeleteJobs(int jobId);
@@ -25,7 +27,7 @@ namespace NationalNeon.Business.Interfaces
         JobModel GetJob(int id);
 
         void UpdateJobModel(JobModel model);
-
-
+        void UpdateArchiveModel(int id);
+        
     }
 }

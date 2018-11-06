@@ -11,15 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="obj\**" />
+    <Content Remove="obj\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="ViewModels\DashboardViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Views\Home\jobs.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.AssemblyInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,8 +32,6 @@
     <Content Include="bin\Release\netcoreapp2.0\NationalNeon.Web.deps.json" />
     <Content Include="bin\Release\netcoreapp2.0\NationalNeon.Web.runtimeconfig.dev.json" />
     <Content Include="bin\Release\netcoreapp2.0\NationalNeon.Web.runtimeconfig.json" />
-    <Content Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\project.assets.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,13 +85,6 @@
     <None Include="bin\Release\netcoreapp2.0\NationalNeon.Utility.pdb" />
     <None Include="bin\Release\netcoreapp2.0\NationalNeon.Web.dll" />
     <None Include="bin\Release\netcoreapp2.0\NationalNeon.Web.pdb" />
-    <None Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.AssemblyInfoInputs.cache" />
-    <None Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.assets.cache" />
-    <None Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\Debug\netcoreapp2.0\NationalNeon.Web.csprojAssemblyReference.cache" />
-    <None Include="obj\NationalNeon.Web.csproj.nuget.cache" />
-    <None Include="obj\NationalNeon.Web.csproj.nuget.g.props" />
-    <None Include="obj\NationalNeon.Web.csproj.nuget.g.targets" />
     <None Include="Views\Department\Index.cshtml" />
     <None Include="wwwroot\js\plugin\bootstrap-progressbar\bootstrap-progressbar.js" />
     <None Include="wwwroot\js\plugin\bootstrap-slider\bootstrap-slider.js" />
