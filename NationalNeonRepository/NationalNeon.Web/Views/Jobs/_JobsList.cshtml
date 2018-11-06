@@ -54,8 +54,8 @@
                                         @*@Html.ActionLink("Delete", "Delete", new { id = item.jobId })*@
                                         <a href="#" title="Delete" data-toggle="modal" data-target="#opener" onclick="setJobID(@item.jobId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                         @*<button id="opener">dialog</button>*@
-                                        <a href="" title="Upload"><i class="fa fa-upload" aria-hidden="true"></i></a>
-                                        <a href="" title="Archive"  data-toggle="modal" data-target="#archived" onclick="ArchivedJobs(@item.jobId)"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
+                                        <a href="#" title="Upload"><i class="fa fa-upload" aria-hidden="true"></i></a>
+                                        <a href="#" title="Archive"  data-toggle="modal" data-target="#archived" onclick="ArchivedJobs(@item.jobId)"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
                                         @*<i class="far fa-archive"></i>*@
                                     </td>
                                 </tr>

@@ -5,7 +5,7 @@
 <div class="row mb-2 noprint">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <button onclick="window.history.back();" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Back</button>
-        <button onclick="$(window).trigger('hashchange');" class="btn btn-danger export-data"><i class="fa fa-repeat"></i> Refresh</button>
+        <button onclick="refresh()"  id="refresh" class="btn btn-danger export-data"><i class="fa fa-repeat"></i> Refresh</button>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
         <button id="print" onclick="window.print()" class="btn btn-danger export-data"><i class="fa fa-print"></i> Print</button>
@@ -42,7 +42,7 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="#" data-toggle="modal" class="selectAction" data-target="#myModal" action="newTask">Task</a>
+                                <a href="#" data-toggle="modal" class="selectAction" data-target="#myModal" action="newTask" id="newTask">Task</a>
                             </li>
                             @*<li class="divider"></li>
                                 <li>
@@ -73,7 +73,7 @@
 
                 </header>
                 <!-- widget div-->
-                <div class="widget-body">
+                <div class="widget-body" id="refresh">
                     <div class="row">
                         <div class="col-md-4  text-center">
                             <h6>Active Jobs:</h6>
@@ -477,9 +477,19 @@
         $("#newTask").click(function () {
             $('#addUpdateForm').find("input[type=text], textarea, select, number").val("");
 
-        });
-
+        });      
     });
+
+    //$("#refresh").click(function () {
+    //    debugger;
+    //    $(window).trigger('hashchange');
+    //});
+
+    //function refresh() {
+    //    debugger;
+    //    window.location.reload();
+    //    //$(window).trigger('hashchange');
+    //}
 
     //function getuserDetail() {
     //    debugger;
@@ -557,7 +567,7 @@
             async: false,
             success: function (result) {
                 $("#divAddPopup").html('');
-                $("#divAddPopup").html(result);
+                $("#divAddPopup").html(result);                
             }
         });
     }
@@ -586,4 +596,5 @@
             }
         });
     }
+
 </script>
