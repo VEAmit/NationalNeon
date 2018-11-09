@@ -46,7 +46,19 @@
                                     <td>@item.target_completion_date.ToString("D")</td>
                                     <td>@item.status</td>
                                     <td>@item.revenue</td>
-                                    <td>@item.scheduled_date.ToString("D")</td>
+                                    <td>@{ 
+                                        var test = "";
+                                            //item.scheduled_date.ToString("MM/dd/yyyy") == "1/01/0001" ? "abc" : "123" </ td >
+                                            if (item.scheduled_date.ToString("MM/dd/yyyy") == "01/01/0001")
+                                            { test = "Date Not Set"; }
+                                            else
+                                            {
+                                                test = item.scheduled_date.ToString("D");
+                                            }
+                                            @test
+                                        }
+
+
                                     <td>@item.sales_person</td>
                                     <td></td>
                                     <td class="job-action">

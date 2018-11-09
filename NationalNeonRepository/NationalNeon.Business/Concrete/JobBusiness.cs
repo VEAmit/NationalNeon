@@ -24,6 +24,7 @@ namespace NationalNeon.Business.Concrete
             Job job = new Job();
             data.created_on = DateTime.Now;
             data.updated_on = DateTime.Now;
+            
             Mapper.Map(data, job);
             jobRepositorty.Insert(job);
             Mapper.Map(job, data);
@@ -34,7 +35,7 @@ namespace NationalNeon.Business.Concrete
         public List<JobModel> GetAllJobsOnView()
         {
             var jobmodel = new List<JobModel>();
-            var model = jobRepositorty.GetAll().ToList();
+            var model = jobRepositorty.GetAll().Where(a=>a.status !="Archived").ToList();
             return Mapper.Map(model, jobmodel);
         }
 

@@ -163,13 +163,13 @@
         </environment>*@
 </head>
 <body>
-
+    @*class="smart-style-1"*@
 
     <!-- HEADER -->
     <header id="header" class="noprint">
         <div id="logo-group">
             <!-- PLACE YOUR LOGO HERE -->
-            <span id="logo"> <img src="~/img/Finallogo.png" alt="SmartAdmin"> </span>
+            <span id="logo"> <a asp-controller="Login" asp-action="Login"><img src="~/img/Finallogo.png" alt="National Neon"></a> </span>
             <!-- END LOGO PLACEHOLDER -->
             <!-- Note: The activity badge color changes when clicked and resets the number to 0
             Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
@@ -241,7 +241,7 @@
 
             <!-- collapse menu button -->
             <div id="hide-menu" class="btn-header pull-right">
-                <span> <a href="javascript:void(0);" data-action="toggleMenu" class="topButton"  title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
+                <span> <a href="javascript:void(0);" data-action="toggleMenu" class="topButton" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
             </div>
             <!-- end collapse menu -->
             <!-- #MOBILE -->
@@ -279,8 +279,11 @@
 
             <!-- logout button -->
             <div id="logout" class="btn-header transparent pull-right">
-                <span> <a asp-area="" asp-controller="Login" asp-action="Login" title="Sign Out" class="topButton" data-action="userLogout" data-logout-msg="Are you sure you wish to log out?">
-                        <i class="glyphicon glyphicon-log-out"></i></a> </span>
+                <span>
+                    <a asp-area="" asp-controller="Login" asp-action="Login" title="Sign Out" class="topButton" data-action="userLogout" data-logout-msg="Are you sure you wish to log out?">
+                        <i class="glyphicon glyphicon-log-out"></i>
+                    </a>
+                </span>
             </div>
             <!-- end logout button -->
             <!-- search mobile button (this is hidden till mobile view port) -->
