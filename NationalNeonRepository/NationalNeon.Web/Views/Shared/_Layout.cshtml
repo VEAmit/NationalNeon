@@ -648,7 +648,8 @@
                     }
                 };
 
-                var plot = $.plot($("#updating-chart"), [getRandomData()], options);
+                 /* Invalid dimensions for plot, width = null, height = null */
+               // var plot = $.plot($("#updating-chart"), [getRandomData()], options);
 
                 /* live switch */
                 $('input[type="checkbox"]#start_interval').click(function () {
