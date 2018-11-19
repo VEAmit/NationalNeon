@@ -41,7 +41,9 @@
                         @*<button type="button" id="delete_department" class="btn btn-danger">
             Delete Department
         </button>*@
-                        @Html.ActionLink("Delete Department", "Delete", "Department", new { id = Model.departmentId }, new { @class = "btn btn-danger", @id = "delete_department" })
+                        @*@Html.ActionLink("Delete Department", "Delete", "Department", new { id = Model.departmentId }, new { @class = "btn btn-danger", @id = "delete_department" })*@
+
+                        <button type="button" data-toggle="modal" class="btn btn-danger" data-target="#opener" onclick="setDepartmentID(@Model.departmentId)">Delete Department</button>
                         <!-- this is what the user will see -->
 
                     </div>
@@ -61,31 +63,39 @@
             <div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-deletebutton="false" data-widget-editbutton="false" role="widget">
 
                 <header role="heading">
-                    <div class="jarviswidget-ctrls" role="menu">   
-                    <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse">
-                        <i class="fa fa-minus "></i></a> <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen">
-                        <i class="fa fa-expand "></i></a> </div>
-                    <div class="widget-toolbar" role="menu"><a data-toggle="dropdown" class="dropdown-toggle color-box selector" href="javascript:void(0);"></a>
-                    <ul class="dropdown-menu arrow-box-up-right color-select pull-right">
-                        <li><span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green" rel="tooltip" data-placement="left" data-original-title="Green Grass"></span></li>
-                        <li><span class="bg-color-greenDark" data-widget-setstyle="jarviswidget-color-greenDark" rel="tooltip" data-placement="top" data-original-title="Dark Green"></span></li><li>
-                        <span class="bg-color-greenLight" data-widget-setstyle="jarviswidget-color-greenLight" rel="tooltip" data-placement="top" data-original-title="Light Green"></span></li>
-                        <li><span class="bg-color-purple" data-widget-setstyle="jarviswidget-color-purple" rel="tooltip" data-placement="top" data-original-title="Purple"></span></li>
-                        <li><span class="bg-color-magenta" data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip" data-placement="top" data-original-title="Magenta"></span></li>
-                        <li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink" rel="tooltip" data-placement="right" data-original-title="Pink"></span></li><li>
-                        <span class="bg-color-pinkDark" data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip" data-placement="left" data-original-title="Fade Pink"></span></li>
-                        <li><span class="bg-color-blueLight" data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip" data-placement="top" data-original-title="Light Blue"></span></li>
-                        <li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal" rel="tooltip" data-placement="top" data-original-title="Teal"></span></li>
-                        <li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue" rel="tooltip" data-placement="top" data-original-title="Ocean Blue"></span></li>
-                        <li><span class="bg-color-blueDark" data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip" data-placement="top" data-original-title="Night Sky"></span></li>
-                        <li><span class="bg-color-darken" data-widget-setstyle="jarviswidget-color-darken" rel="tooltip" data-placement="right" data-original-title="Night"></span></li>
-                        <li><span class="bg-color-yellow" data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip" data-placement="left" data-original-title="Day Light"></span></li>
-                        <li><span class="bg-color-orange" data-widget-setstyle="jarviswidget-color-orange" rel="tooltip" data-placement="bottom" data-original-title="Orange"></span></li>
-                        <li><span class="bg-color-orangeDark" data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip" data-placement="bottom" data-original-title="Dark Orange"></span></li>
-                        <li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red" rel="tooltip" data-placement="bottom" data-original-title="Red Rose"></span></li>
-                        <li><span class="bg-color-redLight" data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip" data-placement="bottom" data-original-title="Light Red"></span></li>
-                        <li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white" rel="tooltip" data-placement="right" data-original-title="Purity"></span></li>
-                        <li><a href="javascript:void(0);" class="jarviswidget-remove-colors" data-widget-setstyle="" rel="tooltip" data-placement="bottom" data-original-title="Reset widget color to default">Remove</a></li>
+                    <div class="jarviswidget-ctrls" role="menu">
+                        <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse">
+                            <i class="fa fa-minus "></i>
+                        </a> <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen">
+                            <i class="fa fa-expand "></i>
+                        </a>
+                    </div>
+                    <div class="widget-toolbar" role="menu">
+                        <a data-toggle="dropdown" class="dropdown-toggle color-box selector" href="javascript:void(0);"></a>
+                        <ul class="dropdown-menu arrow-box-up-right color-select pull-right">
+                            <li><span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green" rel="tooltip" data-placement="left" data-original-title="Green Grass"></span></li>
+                            <li><span class="bg-color-greenDark" data-widget-setstyle="jarviswidget-color-greenDark" rel="tooltip" data-placement="top" data-original-title="Dark Green"></span></li>
+                            <li>
+                                <span class="bg-color-greenLight" data-widget-setstyle="jarviswidget-color-greenLight" rel="tooltip" data-placement="top" data-original-title="Light Green"></span>
+                            </li>
+                            <li><span class="bg-color-purple" data-widget-setstyle="jarviswidget-color-purple" rel="tooltip" data-placement="top" data-original-title="Purple"></span></li>
+                            <li><span class="bg-color-magenta" data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip" data-placement="top" data-original-title="Magenta"></span></li>
+                            <li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink" rel="tooltip" data-placement="right" data-original-title="Pink"></span></li>
+                            <li>
+                                <span class="bg-color-pinkDark" data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip" data-placement="left" data-original-title="Fade Pink"></span>
+                            </li>
+                            <li><span class="bg-color-blueLight" data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip" data-placement="top" data-original-title="Light Blue"></span></li>
+                            <li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal" rel="tooltip" data-placement="top" data-original-title="Teal"></span></li>
+                            <li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue" rel="tooltip" data-placement="top" data-original-title="Ocean Blue"></span></li>
+                            <li><span class="bg-color-blueDark" data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip" data-placement="top" data-original-title="Night Sky"></span></li>
+                            <li><span class="bg-color-darken" data-widget-setstyle="jarviswidget-color-darken" rel="tooltip" data-placement="right" data-original-title="Night"></span></li>
+                            <li><span class="bg-color-yellow" data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip" data-placement="left" data-original-title="Day Light"></span></li>
+                            <li><span class="bg-color-orange" data-widget-setstyle="jarviswidget-color-orange" rel="tooltip" data-placement="bottom" data-original-title="Orange"></span></li>
+                            <li><span class="bg-color-orangeDark" data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip" data-placement="bottom" data-original-title="Dark Orange"></span></li>
+                            <li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red" rel="tooltip" data-placement="bottom" data-original-title="Red Rose"></span></li>
+                            <li><span class="bg-color-redLight" data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip" data-placement="bottom" data-original-title="Light Red"></span></li>
+                            <li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white" rel="tooltip" data-placement="right" data-original-title="Purity"></span></li>
+                            <li><a href="javascript:void(0);" class="jarviswidget-remove-colors" data-widget-setstyle="" rel="tooltip" data-placement="bottom" data-original-title="Reset widget color to default">Remove</a></li>
                         </ul>
                     </div>
                     <span class="widget-icon"> <i class="fa fa-building"></i> </span>
@@ -149,7 +159,7 @@
 
     <!-- end row -->
     <div class="row">
-        
+
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content" id="divEditModel">
@@ -159,6 +169,28 @@
         </div>
 
     </div>
+
+    <div class="modal fade" id="opener" role="dialog">
+        <div class="modal-dialog" style="width: 320px;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header modal-popup-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h1 class="modal-title">Do You Want To Delete ?</h1>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 style="color:brown">Are you sure you want to delete Department :  @Model.departmentname</h5>
+                    <button onclick="deleteDepartment()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Yes</button>
+                    <button data-dismiss="modal" class="btn btn-danger form-submit-btn">No</button>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>*@
+            </div>
+
+        </div>
+    </div>
+
 
     <!-- row -->
 
@@ -170,6 +202,12 @@
 
 <script>
     $(document).ready(function () {
+        var departmentId = 0;
+        $('#opener').click(function () {
+            departmentId = $(this).attr('departmentId');
+            // $('#wrapper').dialog('open');
+        });
+
         $('#edit_Department').on('click', function () {
         $.ajax({
             url: "/Department/Edit",
@@ -180,7 +218,7 @@
             });
         });
 
-        $('#delete_department').on('click', function () {
+        @*$('#delete_department').on('click', function () {
             if (confirm("Are you sure you want to delete Department " + "" + "@Model.departmentname" + "?")) {
                 return true;
             }
@@ -188,6 +226,28 @@
                 return false;
             }
 
-        });
+        });*@
     });
+    function setDepartmentID(_departmentId) {
+        departmentId = _departmentId;
+    }
+
+
+    function deleteDepartment() {
+        callDelete(departmentId);
+        $(this).parent().parent().parent().hide();
+        $("#" + departmentId).hide();
+        $('#opener').modal('hide')
+        $(".btn btn-danger form-submit-btn").trigger("click");
+        window.location.href = "/Department";
+    }
+
+    function callDelete(departmentId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Department/Delete?id=' + departmentId + '',
+            success: function () {
+            }
+        })
+    }
 </script>

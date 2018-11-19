@@ -76,7 +76,8 @@ namespace NationalNeon.Web.Controllers
                             BudgetedHours = g.Sum(s => s.BudgetedHours),
                             description = g.First().Department.description,
                             created_on = g.First().Department.created_on,
-                            updated_on = g.First().Department.updated_on
+                            updated_on = g.First().Department.updated_on,
+                            departmentId = g.First().Department.departmentId
                         }).FirstOrDefault();
             }
             else
