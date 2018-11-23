@@ -1,0 +1,149 @@
+﻿@model List<NationalNeon.Web.ViewModels.TaskDepartmentViewModel>
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Export_Work_Order_NationalNeon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Latest compiled and minified CSS -->
+
+</head>
+
+<body>
+
+    @foreach (var item in Model)
+    {
+        <div>
+            <div style="width: 1170px; margin: 0 auto;">
+                <div class="gray-bg" style="background: #333;"><img src="~/img/Finallogo_white.png" class="img-responsive" style="width:100%;" alt="" /></div>
+                <div style="width: 50%; float: left; border-bottom: 2px #333 dotted; margin-bottom: 20px;"><h1 style="margin-bottom: 5px;">Work Order</h1></div>
+                <div style="width: 50%; float: left; border-bottom: 2px #333 dotted; margin-bottom: 20px;"><h1 style="margin-bottom: 5px;"><strong>Assigned Department:</strong> <span style="font-weight:normal !important;">@item.departmentname</span></h1></div>
+                <br>
+
+                <h2 style="border-bottom: 2px #333 dotted; line-height: 30px; display: inline-block; margin: 0px;">Job Details:</h2>
+                <p style="line-height: 30px;font-size:24px !important;margin-top:0 !important;font-weight:normal;">
+                    <strong>Job #:</strong> @item.jobId<br>
+                    <strong>Job Name:</strong> @item.job_name<br>
+                    <strong>Due Date:</strong> @item.targetdate<br>
+                    <strong>Job Description:</strong><br>
+                    @item.description
+                    @**Simmons - Confluence Way - S/I router cut acrylic letters on customer supplied wood (dropped off to NN)*@
+                </p>
+
+                <h2 style="border-bottom: 2px #333 dotted; line-height: 30px; display: inline-block; margin: 0px;font-size:30px;">Work Order Details:</h2>
+                <p style="line-height: 30px;font-size:24px !important;margin-top:0;font-weight:normal;">
+                    <strong>Task:</strong> @item.TaskName<br>
+                    <strong>Budgeted Hours:</strong> @item.BudgetedHours<br>
+                    <strong>Assigned Employee:</strong> <span style="border-bottom: 1px #333 solid;"> @item.Employee</span>
+                </p>
+
+
+                <table width="100%" border="1" cellspacing="0" cellpadding="5" style="border: 1px #222 solid;font-size:24px !important;">
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;"><strong>Date</strong></td>
+                            <td style="text-align: center;"><strong>Name</strong></td>
+                            <td style="text-align: center;"><strong>Hours Budgeted</strong></td>
+                            <td style="text-align: center;"><strong>Hours Used</strong></td>
+                            <td style="text-align: center;"><strong>Hours Left</strong></td>
+                            <td style="text-align: center;"><strong>Initial</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+        <div style="clear: both;page-break-after:always;">
+          
+        </div>
+        @*<p><span style="page-break-before:always">NationalNeon-2018</span></p>*@
+        <p style="page-break-after:auto;"></p>
+    }
+</body>
+</html>
+

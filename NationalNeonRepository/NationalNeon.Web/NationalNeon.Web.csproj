@@ -47,6 +47,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="RotativaCore" Version="2.2.0" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
   </ItemGroup>
 
@@ -432,6 +434,8 @@
     <None Include="wwwroot\js\plugin\x-editable\moment.min.js" />
     <None Include="wwwroot\js\plugin\x-editable\x-editable.js" />
     <None Include="wwwroot\js\plugin\x-editable\x-editable.min.js" />
+    <None Include="wwwroot\Rotativa\wkhtmltoimage.exe" />
+    <None Include="wwwroot\Rotativa\wkhtmltopdf.exe" />
     <None Include="wwwroot\scripts\Jobs.js" />
   </ItemGroup>
 

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NationalNeon.Business.Intrastructure;
 using NationalNeon.Repository.DB;
+using Rotativa.AspNetCore;
 
 namespace NationalNeon.Web
 {
@@ -60,6 +61,8 @@ namespace NationalNeon.Web
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
             //app.UseMvc();
-        }
-    }
+             
+            RotativaConfiguration.Setup(env);
+        }       
+    }  
 }

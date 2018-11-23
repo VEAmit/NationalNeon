@@ -3,6 +3,10 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="~/scripts/Task.js"></script>
+@*<button class="btn btn-danger new-jobs export-data" onclick="exportTask()">Export All Work Orders</button>*@
+@*<input type="button" value="Export All Work Orders" onclick="location.href='@Url.Action("DownloadViewPDF", "Task")'" />*@
+
+@*<a href="@Url.Action("DownloadViewPDF","Task")" class="btn btn-danger new-jobs export-data">Export All Work Orders</a>*@
 
 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <!-- Widget ID (each widget will need unique ID)-->
@@ -51,7 +55,7 @@
 
                                             <a href="#" data-toggle="modal" data-target="#opener" title="Delete" onclick="setTaskID(@item.TaskId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 
-                                            <button class="fa fa-check-square btn_complete" title="InComplete Task" taskId="@item.TaskId" ></button>
+                                            <button class="fa fa-check-square btn_complete" title="InComplete Task" taskId="@item.TaskId"></button>
 
                                         </td>
                                     </tr>
@@ -79,7 +83,7 @@
     <!-- Widget ID (each widget will need unique ID)-->
     <div class="jarviswidget jarviswidget-color-darken" data-widget-editbutton="false" data-widget-deletebutton="false">
 
-        <header><span class="widget-icon"> <i class="fa fa-briefcase"></i> </span><h2>Complete Tasks</h2></header>
+        <header><span class="widget-icon"> <i class="fa fa-briefcase"></i> </span><h2>Completed Tasks</h2></header>
 
         <!-- widget div-->
         <div>
@@ -151,8 +155,8 @@
             </div>
             <div class="modal-body text-center">
                 <h5>Are you sure want to delete this Task</h5>
-                <button onclick="deleteTask()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1" >Yes</button>
-                <button data-dismiss="modal" class="btn btn-danger form-submit-btn" >No</button>
+                <button onclick="deleteTask()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Yes</button>
+                <button data-dismiss="modal" class="btn btn-danger form-submit-btn">No</button>
             </div>
             @*<div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

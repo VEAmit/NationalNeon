@@ -13,6 +13,7 @@ namespace NationalNeon.Web.ViewModels
         public string TaskName { get; set; }
         public int BudgetedHours { get; set; }
         public DateTime TargetCompletionDate { get; set; }
+        public string targetdate { get; set; }
         public string Status { get; set; }
         public string Employee { get; set; }
         public int Completed { get; set; }

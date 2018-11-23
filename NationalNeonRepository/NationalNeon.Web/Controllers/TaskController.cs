@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using ExpressMapper;
@@ -11,6 +12,7 @@ using NationalNeon.Domain.Department;
 using NationalNeon.Domain.Task;
 using NationalNeon.Repository.DB;
 using NationalNeon.Web.ViewModels;
+using Rotativa.AspNetCore;
 
 namespace NationalNeon.Web.Controllers
 {
@@ -153,6 +155,31 @@ namespace NationalNeon.Web.Controllers
             itaskBusiness.DeleteTasks(id);
             return RedirectToAction("TaskList");
         }
+        public ActionResult DownloadViewPDF()
+        {
+            //var model = new GeneratePDFModel();
+            // var model = new TaskViewModel();
+            var taskDeptList = (from task in db.Tasks
+                                join dept in db.Departments on task.departmentId equals dept.departmentId
+                                join job in db.Jobs on task.jobId equals job.jobId
+                                select new TaskDepartmentViewModel
+                                {
+                                    jobId = job.jobId,
+                                    job_name = job.job_name,
+                                    TaskId = task.TaskId,
+                                    TaskName = task.TaskName,
+                                    BudgetedHours = task.BudgetedHours,
+                                    targetdate = task.TargetCompletionDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                                    Status = task.Status,
+                                    Employee = task.Employee,
+                                    departmentname = dept.departmentname,
+                                    Completed = task.Completed,
+                                    description = job.description
+                                }).ToList();
+            //Code to get content
+            return new ViewAsPdf("TaskPdf", taskDeptList) { FileName ="export_work_order_National Neon _ Work Order " + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf" };
+        }
+        
 
     }
 }

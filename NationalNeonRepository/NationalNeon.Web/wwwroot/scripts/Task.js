@@ -28,8 +28,7 @@ function callGetTask(TaskId) {
 
 function showTaskDetails(TaskId) {
     callGetTask(TaskId);
-
-}
+ }
 
 function Dialogueclose() {
     $(".ui-dialog-titlebar-close").trigger("click");
