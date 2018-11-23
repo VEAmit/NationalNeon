@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "2801876cee14289b8e7e7718aafadb1677740590"
+    "signature": "41a5a0749235866ef7792d416fb687513cf6f639"
   },
   "compilationOptions": {
     "defines": [
@@ -40,6 +40,8 @@
           "NationalNeon.Domain": "1.0.0",
           "NationalNeon.Repository": "1.0.0",
           "NationalNeon.Utility": "1.0.0",
+          "Rotativa.AspNetCore": "1.1.1",
+          "RotativaCore": "2.2.0",
           "System.Data.Common": "4.3.0",
           "bootstrap": "4.1.0",
           "jQuery": "3.3.1"
@@ -3095,6 +3097,35 @@
         },
         "compile": {
           "lib/netstandard1.0/Remotion.Linq.dll": {}
+        }
+      },
+      "Rotativa.AspNetCore/1.1.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc": "2.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Rotativa.AspNetCore.dll": {
+            "assemblyVersion": "1.1.1.0",
+            "fileVersion": "1.1.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Rotativa.AspNetCore.dll": {}
+        }
+      },
+      "RotativaCore/2.2.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Cookies": "2.0.1",
+          "Microsoft.AspNetCore.Mvc": "2.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/RotativaCore.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/RotativaCore.dll": {}
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -6214,6 +6245,20 @@
       "sha512": "sha512-IJn0BqkvwEDpP+2qjvci7n4/a9f7DhKESLWb2/uG4xQh3rTkGTBUz69bI4IivCoKkTFAqjXxYDZw2K/npohjsw==",
       "path": "remotion.linq/2.1.1",
       "hashPath": "remotion.linq.2.1.1.nupkg.sha512"
+    },
+    "Rotativa.AspNetCore/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8G2uvsUCWhqVON2EBp01zzcHRG9btkkO1u5B5byalSyyxgCL0iUpz5mYq5+HUQFIJ5DWEfSBx5vwVQSvx6L6DQ==",
+      "path": "rotativa.aspnetcore/1.1.1",
+      "hashPath": "rotativa.aspnetcore.1.1.1.nupkg.sha512"
+    },
+    "RotativaCore/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OIxrnyn4Q0mmht9wj49+ECXi8JR60tuZaXdAU+2XHbP/p/d0OMi6BZahcuRqKhbd5oCvafl2fwWdzoh/wZsjtA==",
+      "path": "rotativacore/2.2.0",
+      "hashPath": "rotativacore.2.2.0.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",
