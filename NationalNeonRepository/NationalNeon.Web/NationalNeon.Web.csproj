@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\jobs.cshtml" />
+    <Content Remove="Views\Jobs\Jobs.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

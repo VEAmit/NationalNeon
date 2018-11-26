@@ -43,20 +43,29 @@ namespace NationalNeon.Web.Controllers
         [HttpPost]
         public IActionResult AddUsers(UserViewModel userModel)
         {
-            try
+            if (userModel.Role != null)
             {
-                UserModel model = new UserModel();
-                Mapper.Map(userModel, model);
-                model.created_on = DateTime.Now;
-                model.updated_on = DateTime.Now;
-                iuserBusiness.AddNewUser(model);
+                try
+                {
+                    UserModel model = new UserModel();
+                    Mapper.Map(userModel, model);
+                    model.created_on = DateTime.Now;
+                    model.updated_on = DateTime.Now;
+                    iuserBusiness.AddNewUser(model);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorMessage = "Something went wrong.";
+                }
             }
-            catch (Exception ex)
+            else
             {
                 ViewBag.ErrorMessage = "Something went wrong.";
             }
             return RedirectToAction("Index");
         }
+         
+
 
         [Route("UserDetails")]
         public IActionResult UserDetails(int userId)
