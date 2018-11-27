@@ -129,6 +129,21 @@ namespace NationalNeon.Web.Controllers
             return RedirectToAction("JobsList");
         }
 
-      
+
+        [HttpPost]
+        public ActionResult saveUploadFile(int id)
+        {
+            try
+            {
+               
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Something went wrong.";
+            }
+            return RedirectToAction("JobsList");
+        }
+
+
     }
 }

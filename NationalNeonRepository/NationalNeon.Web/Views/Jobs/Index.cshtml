@@ -133,5 +133,24 @@
         });
     }
 
+    function UploadFileJobs() {
+        jobId = jobid;
+    }
+
+    function UploadFileSave() {
+        saveUploadFile(jobId);
+    }
+    function saveUploadFile(jobId) {
+        $.ajax({
+            type: 'POST',
+            url: '/Jobs/saveUploadFile?id=' + jobId + '',
+            success: function () {
+                $("#uploadfile").click();
+                jobList();
+                window.location.reload();
+            }
+        });
+    }
+
 
 </script>
