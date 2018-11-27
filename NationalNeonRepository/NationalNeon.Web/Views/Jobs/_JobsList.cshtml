@@ -38,40 +38,41 @@
                         <tbody>
                             @foreach (var item in ViewBag.Model)
                             {
-                                <tr id="@item.jobId">
+                            <tr id="@item.jobId">
 
-                                    <td>@item.job_number</td>
-                                    <td>@item.job_name</td>
-                                    <td>@item.description</td>
-                                    <td>@item.target_completion_date.ToString("D")</td>
-                                    <td>@item.status</td>
-                                    <td>@item.revenue</td>
-                                    <td>
-                                        @{
-                                            var scheduledate = "";
-                                            //item.scheduled_date.ToString("MM/dd/yyyy") == "1/01/0001" ? "abc" : "123" </ td >
-                                            if (item.scheduled_date.ToString("MM/dd/yyyy") == "01/01/0001")
-                                            { scheduledate = "Date Not Set"; }
-                                            else
-                                            {
-                                                scheduledate = item.scheduled_date.ToString("D");
-                                            }
-                                            @scheduledate
+                                <td>@item.job_number</td>
+                                <td>@item.job_name</td>
+                                <td>@item.description</td>
+                                <td>@item.target_completion_date.ToString("D")</td>
+                                <td>@item.status</td>
+                                <td>@item.revenue</td>
+                                <td>
+                                    @{
+                                        var scheduledate = "";
+                                        //item.scheduled_date.ToString("MM/dd/yyyy") == "1/01/0001" ? "abc" : "123" </ td >
+                                        if (item.scheduled_date.ToString("MM/dd/yyyy") == "01/01/0001")
+                                        { scheduledate = "Date Not Set"; }
+                                        else
+                                        {
+                                            scheduledate = item.scheduled_date.ToString("D");
                                         }
+                                        @scheduledate
+                                    }
 
 
-                                    <td>@item.sales_person</td>
-                                    <td></td>
-                                    <td class="job-action">
-                                        <a href="#" title="Edit" data-toggle="modal" data-target="#myModal" onClick="showJobDetails(@item.jobId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                        @*@Html.ActionLink("Delete", "Delete", new { id = item.jobId })*@
-                                        <a href="#" title="Delete" data-toggle="modal" data-target="#opener" onclick="setJobID(@item.jobId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        @*<button id="opener">dialog</button>*@
-                                        <a href="#" title="Upload file" data-toggle="modal" data-target="#uploadfile" onclick="ArchivedJobs(@item.jobId)"><i class="fa fa-upload" aria-hidden="true"></i></a>
-                                        <a href="#" title="Archive" data-toggle="modal" data-target="#archived" onclick="UploadFileJobs(@item.jobId)"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
-                                        @*<i class="far fa-archive"></i>*@
-                                    </td>
-                                </tr>
+                                <td>@item.sales_person</td>
+                                <td></td>
+                                <td class="job-action">
+                                    <a href="#" title="Edit" data-toggle="modal" data-target="#myModal" onClick="showJobDetails(@item.jobId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.jobId })*@
+                                    <a href="#" title="Delete" data-toggle="modal" data-target="#opener" onclick="setJobID(@item.jobId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                    @*<button id="opener">dialog</button>*@
+                                    <a href="#" title="Upload file" data-toggle="modal" data-target="#uploadfile" onclick="UploadFileJobs(@item.jobId)"><i class="fa fa-upload" aria-hidden="true"></i></a>
+                                    <a href="#" title="Archive" data-toggle="modal" data-target="#archived" onclick="ArchivedJobs(@item.jobId)"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
+                                    @*<i class="far fa-archive"></i>*@
+                                </td>
+                                
+                            </tr>
 
                             }
                         </tbody>
@@ -135,7 +136,7 @@
 </div>
 
 
-<div class="modal fade noprint" id="uploadfileuploadfile" role="dialog">
+<div class="modal fade noprint" id="uploadfile" role="dialog">
     <div class="modal-dialog" style="width: 466px;">
         <!-- Modal content-->
         <div class="modal-content">
