@@ -43,17 +43,23 @@
     <!-- NAVIGATION : This navigation is also responsive-->
     <nav>
         <ul>
-            <li><a asp-area="" asp-controller="Home" asp-action="dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a></li>
-            <li class="top-menu-invisible">
+            <li><a asp-area="" asp-controller="Home" asp-action="dashboard"><i class="fa fa-lg fa-fw fa fa-dashboard"></i> <span class="menu-item-parent">Dashboard</span></a></li>
+            <li>
+                <a  asp-controller="Jobs" asp-action="Index" title="Jobs"><i class="glyphicon glyphicon-briefcase"></i> <span class="menu-item-parent">Jobs</span></a>
+                <ul style="display:block">
+                    <li><a asp-area="" asp-controller="Archived" asp-action="Index" title="Archived" class="font-sm"><i style="margin-right: 15px;" class="fa fa-archive"></i>Archived</a></li>
+                </ul>
+                </li>
+                @*<li class="top-menu-invisible">
                 <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">Jobs</span></a>
                 <ul>
                     <li><a asp-area="" asp-controller="Jobs" asp-action="Index"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Jobs List</span></a></li>
                     <li><a asp-area="" asp-controller="Archived" asp-action="Index"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Archived</span></a></li>
                 </ul>
-            </li>
-            <li><a asp-area="" asp-controller="Task" asp-action="Index"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Tasks</span></a></li>
-            <li><a asp-area="" asp-controller="Department" asp-action="Index"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Departments</span></a></li>
-            <li><a asp-area="" asp-controller="Users" asp-action="Index"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Users</span></a></li>
+            </li>*@
+            <li><a asp-area="" asp-controller="Task" asp-action="Index"><i class=" glyphicon glyphicon-tasks"></i> <span class="menu-item-parent">Tasks</span></a></li>
+            <li><a asp-area="" asp-controller="Department" asp-action="Index"><i class="fa fa-building"></i> <span class="menu-item-parent">Departments</span></a></li>
+            <li><a asp-area="" asp-controller="Users" asp-action="Index"><i class="glyphicon glyphicon-user"></i> <span class="menu-item-parent">Users</span></a></li>
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu">
