@@ -1,4 +1,5 @@
 ﻿@*@model NationalNeon.Web.ViewModels.DashboardViewModel;*@
+
 <aside id="left-panel" class="noprint">
     <!-- User info -->
     <div class="login-info">
@@ -42,27 +43,47 @@
     <!-- end user info -->
     <!-- NAVIGATION : This navigation is also responsive-->
     <nav>
-        <ul>
-            <li><a asp-area="" asp-controller="Home" asp-action="dashboard"><i class="fa fa-lg fa-fw fa fa-dashboard"></i> <span class="menu-item-parent">Dashboard</span></a></li>
-            <li>
-                <a  asp-controller="Jobs" asp-action="Index" title="Jobs"><i class="glyphicon glyphicon-briefcase"></i> <span class="menu-item-parent">Jobs</span></a>
+        <ul style="">
+            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">
+            <a  asp-area="" asp-controller="Home" asp-action="dashboard" title="Dashboard"><i class="fa fa-lg fa-fw fa fa-dashboard"></i> <span class="menu-item-parent">Dashboard</span></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Jobs" ? "active" : "")">
+                <a asp-controller="Jobs" asp-action="Index" title="Jobs"><i class="glyphicon glyphicon-briefcase"></i> <span class="menu-item-parent">Jobs</span></a>
                 <ul style="display:block">
-                    <li><a asp-area="" asp-controller="Archived" asp-action="Index" title="Archived" class="font-sm"><i style="margin-right: 15px;" class="fa fa-archive"></i>Archived</a></li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Archived" ? "active" : "")">
+                    <a asp-area="" asp-controller="Archived" asp-action="Index" title="Archived" class="font-sm"><i style="margin-right: 15px;" class="fa fa-archive"></i><span class="menu-item-parent">Archived</span></a>
+                    </li>
                 </ul>
-                </li>
-                @*<li class="top-menu-invisible">
-                <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">Jobs</span></a>
-                <ul>
-                    <li><a asp-area="" asp-controller="Jobs" asp-action="Index"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Jobs List</span></a></li>
-                    <li><a asp-area="" asp-controller="Archived" asp-action="Index"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Archived</span></a></li>
-                </ul>
-            </li>*@
-            <li><a asp-area="" asp-controller="Task" asp-action="Index"><i class=" glyphicon glyphicon-tasks"></i> <span class="menu-item-parent">Tasks</span></a></li>
-            <li><a asp-area="" asp-controller="Department" asp-action="Index"><i class="fa fa-building"></i> <span class="menu-item-parent">Departments</span></a></li>
-            <li><a asp-area="" asp-controller="Users" asp-action="Index"><i class="glyphicon glyphicon-user"></i> <span class="menu-item-parent">Users</span></a></li>
+            </li>
+            @*<li class="top-menu-invisible">
+                    <a href="#"><i class="fa fa-lg fa-fw fa-cube txt-color-blue"></i> <span class="menu-item-parent">Jobs</span></a>
+                    <ul>
+                        <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Jobs" ? "active" : "")">
+                        <a asp-area="" asp-controller="Jobs" asp-action="Index"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Jobs List</span></a>
+                        </li>
+                        <li  class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Archived" ? "active" : "")">
+                        <a asp-area="" asp-controller="Archived" asp-action="Index"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Archived</span></a>
+                        </li>
+                    </ul>
+                </li>*@
+            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Task" ? "active" : "")">
+            <a asp-area="" asp-controller="Task" asp-action="Index" title="Task"><i class=" glyphicon glyphicon-tasks"></i> <span class="menu-item-parent">Tasks</span></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Department" ? "active" : "")">
+            <a asp-area="" asp-controller="Department" asp-action="Index" title="Department"><i class="fa fa-building"></i> <span class="menu-item-parent">Departments</span></a>
+            </li>
+            <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Users" ? "active" : "")">
+            <a asp-area="" asp-controller="Users" asp-action="Index" title="User"><i class="glyphicon glyphicon-user"></i> <span class="menu-item-parent">Users</span></a>
+            </li>
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu">
         <i class="fa fa-arrow-circle-left hit"></i>
     </span>
 </aside>
+
+@*<ul class="nav navbar-nav">
+    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
+    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">@Html.ActionLink("About", "About", "Home")</li>
+    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")">@Html.ActionLink("Contact", "Contact", "Home")</li>
+</ul>*@

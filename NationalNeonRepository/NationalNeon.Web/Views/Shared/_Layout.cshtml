@@ -154,6 +154,9 @@
             color: #fff !important;
             cursor: pointer !important;
         }
+        .active {
+            background-color: rgba(11,136,115,1)
+        }
     </style>
     @*<environment exclude="Development">
             <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/~/css/bootstrap.min.css"
@@ -300,9 +303,9 @@
             <form action="javascript:void(0);" method="GET" id="search-form" class="header-search pull-right">
                 <input id="search" type="text" name="query" placeholder="Search by Job # or Name">
                 <button type="submit">
-                    <i class="fa fa-search"></i>
+                    <i class="glyphicon glyphicon-search"></i>
                 </button>
-                <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
+                <a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="glyphicon glyphicon-time"></i></a>
             </form>
             <!-- end input: search field -->
 
@@ -377,6 +380,7 @@
         <script src="~/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
         <!-- BOOTSTRAP JS -->
         <script src="~/js/bootstrap/bootstrap.min.js"></script>
+
 
         <!-- CUSTOM NOTIFICATION -->
         <script src="~/js/notification/SmartNotification.min.js"></script>
@@ -973,6 +977,12 @@
                         };
                     },
                 });
+
+                //$('nav li').click(function () {
+                //    $('nav li').removeClass('active');
+                //    $(this).addClass('active');
+                //});
+
 
 
                 //if ($("#calendar").length) {
