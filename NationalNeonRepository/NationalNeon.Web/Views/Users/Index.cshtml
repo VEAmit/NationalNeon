@@ -20,11 +20,10 @@
                 </div>
             </div>
         </div>
-            <div class="userList">
-            </div>
-            <!-- NEW WIDGET START -->
-            <!-- WIDGET END -->
-       
+        <div class="userList">
+        </div>
+        <!-- NEW WIDGET START -->
+        <!-- WIDGET END -->
         <!-- end row -->
         <!-- end row -->
     </div>
@@ -34,6 +33,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
     var userId = 0;
+    var userlist = [];
     $(document).ready(function () {
         userList();
         $.ajax({
@@ -45,7 +45,7 @@
                 userList();
             }
         });
-        
+
 
         $('#opener').click(function () {
             userId = $(this).attr('userId');
@@ -53,11 +53,12 @@
     });
 
     function userList() {
+
         $.ajax({
             url: "/Users/UserList",
             async: false,
             success: function (result) {
-                $(".userList").html(result);              
+                $(".userList").html(result);
             }
         });
     }
@@ -66,23 +67,53 @@
         userId = _userId;
     }
 
-    function deleteUsers() {
+    //function deleteUsers() {
 
-        callDelete(userId);
-        $(this).parent().parent().parent().hide();
-        $("#" + userId).hide();
-        $('#opener').modal('hide')
-        $(".btn btn-danger form-submit-btn").trigger("click");
-        window.location.href = "/Users";
-    }
+    //    callDelete(userId);
+    //    $(this).parent().parent().parent().hide();
+    //    $("#" + userId).hide();
+    //    $('#opener').modal('hide')
+    //    $(".btn btn-danger form-submit-btn").trigger("click");
+    //    window.location.href = "/Users";
+    //}
 
-    function callDelete(userId) {
+    //function callDelete(userId) {
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: '/Users/Delete?id=' + userId + '',
+    //        success: function () {
+    //        }
+    //    });
+    //}
+
+    $("#divAddPopup").delegate('.add_newUser_btn', 'click', function () {
+        var form = $('#addNewUserForm').serialize();
         $.ajax({
-            type: 'POST',
-            url: '/Users/Delete?id=' + userId + '',
-            success: function () {
+            url: "/Users/AddUsers",
+            type: "POST",
+            async: false,
+            data: form,
+            success: function (result) {
+                if (result.success) {
+
+                    $('.close').click();
+                    $.notify({
+                        title: "<strong>Success:</strong> ",
+                        message: "Users Addeded Succesfully",
+                    },
+                        {
+                            type: 'success',
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                },1000);
             }
         });
-    }
+    });
 
 </script>

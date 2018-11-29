@@ -354,7 +354,7 @@
 
     <environment include="Production,Development">
         @*<script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>*@
+        <script src="~/js/site.js" asp-append-version="true"></script>*@
 
         <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
         @*<script data-pace-options='{ "restartonrequestafter": true }' src="~/js/plugin/pace/pace.min.js"></script>*@
@@ -380,7 +380,7 @@
         <script src="~/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
         <!-- BOOTSTRAP JS -->
         <script src="~/js/bootstrap/bootstrap.min.js"></script>
-
+        <script src="~/js/bootstrap-notify.min.js"></script>
 
         <!-- CUSTOM NOTIFICATION -->
         <script src="~/js/notification/SmartNotification.min.js"></script>
@@ -404,9 +404,9 @@
         <script src="~/js/plugin/fastclick/fastclick.min.js"></script>
         <!--[if IE 8]>
 
-        <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
+    <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
 
-        <![endif]-->
+    <![endif]-->
         <!-- Demo purpose only -->
         @*<script src="~/js/demo.min.js"></script>*@
         <!-- MAIN APP JS FILE -->
@@ -653,8 +653,8 @@
                     }
                 };
 
-                 /* Invalid dimensions for plot, width = null, height = null */
-               // var plot = $.plot($("#updating-chart"), [getRandomData()], options);
+                /* Invalid dimensions for plot, width = null, height = null */
+                // var plot = $.plot($("#updating-chart"), [getRandomData()], options);
 
                 /* live switch */
                 $('input[type="checkbox"]#start_interval').click(function () {

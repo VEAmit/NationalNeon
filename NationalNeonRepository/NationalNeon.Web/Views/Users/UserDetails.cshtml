@@ -147,8 +147,8 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h1 class="modal-title">New User</h1>
                     </div>
-                    <div class="modal-body">
-                        <form asp-action="Edit" asp-controller="Users" data-ajax="true" data-ajax-method="POST">
+                    <div class="modal-body" id="editNewUser">
+                        <form asp-action="Edit" asp-controller="Users" data-ajax="true" data-ajax-method="POST" id="editNewUserForm">
                             <div class="form-group">
                                 <label class="control-label">User Name</label>
                                 <input asp-for="username" class="form-control" />
@@ -164,7 +164,9 @@
                                                 @class = "form-control" })
                             </div>
 
-                            <footer class="text-center form-submit"><button type="submit" class="btn btn-danger form-submit-btn">Submit</button></footer>
+                            <footer class="text-center form-submit">
+                            <button type="button" class="btn btn-danger form-submit-btn  edit_newUser_btn">Submit</button>
+                            </footer>
                         </form>
                     </div>
                 </div>
@@ -192,8 +194,8 @@
                                 <input type="password" id="id2" class="form-control" required autocomplete="off"/>
                             </div>
 
-                            <footer class="text-center form-submit">
-                                <button onclick="changepassword(@Model.userId)" class="btn btn-danger">Submit</button>
+                            <footer class="text-center form-submit">                              
+                                <button onclick="changepasswords()" class="btn btn-danger">Submit</button>
                             </footer>
                         </form>
                     </div>
@@ -241,9 +243,7 @@
 
         var userId = 0;
         $(document).ready(function () {
-
             $('#opener').click(function () {
-
                 userId = $(this).attr('userId');
                 // $('#wrapper').dialog('open');
             });
@@ -252,6 +252,10 @@
         function setUserID(_userId) {
 
             userId = _userId;
+        }
+
+        function changepasswords() {
+            changepassword(userId);
         }
 
         function changepassword(userId) {
@@ -264,40 +268,108 @@
             }
             if (id3 == id4) {
                 $.ajax({
+                    url: '/Users/ChangePassword?id=' + userId + '',
                     type: 'POST',
-                    data: obj,
-                    url: '/Users/ChangePassword',
-                    success: function () {
-                    window.location.href = "/Users";
+                    async: false,
+                    data: obj,                 
+                    success: function (result) {
+                        if (result.success) {
+                            $('.close').click();
+                            $.notify({
+                                title: "<strong>Success:</strong> ",
+                                message: "Password Change Succesfully",
+                            },
+                                {
+                                    type: 'success',
+                                    allow_dismiss: false,
+                                    showProgressbar: true,
+                                    delay: '100',
+                                    newest_on_top: true,
+                                });
+                        }
+                        setTimeout(() => {
+                            //window.location.reload();
+                            window.location.href = "/Users";
+                        }, 1000);
+                      
                     }
                 });
                 return false;
             }
-            alert("Password Does not match")
+            alert("Password Not Match ! Please enter Correct Password")
+          
         }
            
 
         function deleteUsers() {
 
             callDelete(userId);
-            $(this).parent().parent().parent().hide();
-            $("#" + userId).hide();
-            $('#opener').modal('hide')
-            $(".btn btn-danger form-submit-btn").trigger("click");
-            window.location.href = "/Users";
+            //$(this).parent().parent().parent().hide();
+            //$("#" + userId).hide();
+            //$('#opener').modal('hide')
+            //$(".btn btn-danger form-submit-btn").trigger("click");
+            //window.location.href = "/Users";
         }
 
             function callDelete(userId) {
                 $.ajax({
                     type: 'POST',
                     url: '/Users/Delete?id=' + userId + '',
-                    success: function () {
+                    success: function (result) {
+                        if (result.success) {
+                            $('.close').click();
+                            $.notify({
+                                title: "<strong>Deleted:</strong> ",
+                                message: "Users Deleted Succesfully",
+                            },
+                                {
+                                    type: 'danger',
+                                    allow_dismiss: false,
+                                    showProgressbar: true,
+                                    delay: '100',
+                                    newest_on_top: true,
+                                });
+                        }
+                        setTimeout(() => {
+                            window.location.reload();
+                            window.location.href = "/Users";
+                        }, 1000);
                     }
                 })
-            }
-        
+        }
 
-
+        //$("#editNewUser").delegate('.edit_newUser_btn', 'click', function () {
+        $(".edit_newUser_btn").click(function () {
+            var form = $('#editNewUserForm').serialize();
+            $.ajax({
+                url: '/Users/Edit?id=' + userId + '',
+                type: "POST",
+                async: false,
+                data: form,
+                success: function (result) {
+                    if (result.success) {
+                        $('.close').click();
+                        $.notify({
+                            title: "<strong>Success:</strong> ",
+                            message: "Users Updated Succesfully",
+                        },
+                            {
+                                type: 'success',
+                                allow_dismiss: false,
+                                showProgressbar: true,
+                                delay: '100',
+                                newest_on_top: true,
+                            });
+                    }
+                    setTimeout(() => {
+                        window.location.reload();
+                        window.location.href = "/Users";
+                    }, 1000);
+                   
+                }
+            });
+           
+        });       
     </script>
 
 </div>

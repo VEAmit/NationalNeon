@@ -52,6 +52,10 @@ namespace NationalNeon.Web.Controllers
                     model.created_on = DateTime.Now;
                     model.updated_on = DateTime.Now;
                     iuserBusiness.AddNewUser(model);
+                    return Json(new
+                    {
+                        success = true
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -62,7 +66,11 @@ namespace NationalNeon.Web.Controllers
             {
                 ViewBag.ErrorMessage = "Something went wrong.";
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index")
+            return Json(new
+            {
+                success = false
+            });
         }
          
 
@@ -90,22 +98,32 @@ namespace NationalNeon.Web.Controllers
         public ActionResult Edit(UserModel model)
         {
             iuserBusiness.Update(model);
-            //  return RedirectToAction("UserList");
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return Json(new
+            {
+                success = true
+            });
         }
 
         public ActionResult Delete(int id)
         {
             iuserBusiness.DeleteUsers(id);
-            return RedirectToAction("UserList");
+            //return RedirectToAction("UserList");
+            return Json(new
+            {
+                success = true
+            });
         }
 
         public ActionResult ChangePassword(PasswordViewModel passwordModel)
         {
 
             iuserBusiness.passwordUpdate(passwordModel.Password,passwordModel.userId);
-            //  return RedirectToAction("UserList");
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return Json(new
+            {
+                success = true
+            });
         }
     }
 }
