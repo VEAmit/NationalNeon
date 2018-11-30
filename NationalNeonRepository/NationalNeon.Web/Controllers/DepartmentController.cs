@@ -51,7 +51,11 @@ namespace NationalNeon.Web.Controllers
                 data.created_on = DateTime.Now;
                 data.updated_on = DateTime.Now;
                 idepartmentBusiness.AddDepartment(data);
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return Json(new
+                {
+                    success = true
+                });
             }
             else
             {
@@ -107,13 +111,21 @@ namespace NationalNeon.Web.Controllers
             data.departmentname = model.DepartmentName;
             data.description = model.Description;
             idepartmentBusiness.Update(data);
-            return RedirectToAction("Index");
+            // return RedirectToAction("Index");
+            return Json(new
+            {
+                success = true
+            });
         }
 
         public ActionResult Delete(int id)
         {
             idepartmentBusiness.DeleteDepartment(id);
-            return RedirectToAction("Index");
+            return Json(new
+            {
+                success = true
+            });
+           // return RedirectToAction("Index");
         }     
     }
 }

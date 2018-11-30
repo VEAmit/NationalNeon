@@ -60,6 +60,21 @@
 
 <script>
     $(document).ready(function () {
+        departmentList();
+      
+       
+        $.ajax({        
+            url: "/Department/AddDepartment",
+            async: false,
+            success: function (result) {
+                $("#divAddPopup").html(result);
+            }
+        });
+    });
+
+
+
+    function departmentList() {
         $.ajax({
             url: "/Department/DepartmentList",
             async: false,
@@ -67,12 +82,34 @@
                 $("#divList").html(result);
             }
         });
-       
-        $.ajax({        
+    }
+
+    $("#divAddPopup").delegate('.add_newDepartment_btn', 'click', function () {
+        var form = $('#addNewDepartmentForm').serialize();
+        $.ajax({
             url: "/Department/AddDepartment",
+            type: "POST",
             async: false,
+            data: form,
             success: function (result) {
-                $("#divAddPopup").html(result);
+                if (result.success) {
+
+                    $('.close').click();
+                    $.notify({
+                        title: "<strong>Success:</strong> ",
+                        message: "Department Addeded Succesfully",
+                    },
+                        {
+                            type: 'success',
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             }
         });
     });

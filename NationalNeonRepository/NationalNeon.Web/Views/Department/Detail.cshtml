@@ -217,36 +217,79 @@
             }
             });
         });
-
-        @*$('#delete_department').on('click', function () {
-            if (confirm("Are you sure you want to delete Department " + "" + "@Model.departmentname" + "?")) {
-                return true;
-            }
-            else {
-                return false;
-            }
-
-        });*@
+     
     });
     function setDepartmentID(_departmentId) {
         departmentId = _departmentId;
     }
 
 
+    $("#divEditModel").delegate('.edit_department_btn', 'click', function () {
+    //$(".edit_newUser_btn").click(function () {
+        var form = $('#editDepartmentForm').serialize();
+        $.ajax({
+            url: '/Department/Edit',
+            type: "POST",
+            async: false,
+            data: form,
+            success: function (result) {
+                if (result.success) {
+                    $('.close').click();
+                    $.notify({
+                        title: "<strong>Success:</strong> ",
+                        message: "Department Updated Succesfully",
+                    },
+                        {
+                            type: 'success',
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                    window.location.href = "/Department";
+                }, 1000);
+
+            }
+        });
+
+    });       
+
+
     function deleteDepartment() {
         callDelete(departmentId);
-        $(this).parent().parent().parent().hide();
-        $("#" + departmentId).hide();
-        $('#opener').modal('hide')
-        $(".btn btn-danger form-submit-btn").trigger("click");
-        window.location.href = "/Department";
+        //$(this).parent().parent().parent().hide();
+        //$("#" + departmentId).hide();
+        //$('#opener').modal('hide')
+        //$(".btn btn-danger form-submit-btn").trigger("click");
+        //window.location.href = "/Department";
     }
 
     function callDelete(departmentId) {
         $.ajax({
             type: 'POST',
             url: '/Department/Delete?id=' + departmentId + '',
-            success: function () {
+            success: function (result) {
+                if (result.success) {
+                    $('.close').click();
+                    $.notify({
+                        title: "<strong>Deleted:</strong> ",
+                        message: "Department Deleted Succesfully",
+                    },
+                        {
+                            type: 'danger',
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                    window.location.href = "/Department";
+                }, 1000);
             }
         })
     }
