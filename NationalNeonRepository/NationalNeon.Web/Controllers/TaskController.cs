@@ -121,7 +121,11 @@ namespace NationalNeon.Web.Controllers
 
                 return Json(new
                 {
-                    success = true
+                    success = true,
+                    title = "<strong>Success:</strong>",
+                    type = "success",
+                    message = "Task added Succesfully",
+                    action = "added"
                 });
             }
 
@@ -139,21 +143,33 @@ namespace NationalNeon.Web.Controllers
                 itaskBusiness.UpdateTask(datamodal);
                 return Json(new
                 {
-                    success = true
+                    success = true,
+                    title = "<strong>Update:</strong>",
+                    type = "info",
+                    message = "Task updated Succesfully",
+                    action = "edit"
                 });
             }
             //else{
             //    //ModelState.AddModelError("", "Some Error.");
 
             //}
-             return PartialView("_AddTask", model);
-           // return RedirectToAction("Index");
+            // return PartialView("_AddTask", model);
+            return Json(new
+            {
+                success = true
+            });
+            // return RedirectToAction("Index");
         }
 
         public ActionResult DeleteTasks(int id)
         {
             itaskBusiness.DeleteTasks(id);
-            return RedirectToAction("TaskList");
+            return Json(new
+            {
+                success = true
+            });
+            //return RedirectToAction("TaskList");
         }
         public ActionResult DownloadViewPDF()
         {

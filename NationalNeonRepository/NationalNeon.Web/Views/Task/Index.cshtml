@@ -23,20 +23,17 @@
                 </div>
             </div>
         </div>
-                </div>
-        <div class="tasksList">
-        </div>
-        <!-- NEW WIDGET START -->
-        <!-- WIDGET END -->
-  
-
+    </div>
+    <div class="tasksList">
+    </div>
+    <!-- NEW WIDGET START -->
+    <!-- WIDGET END -->
     <!-- end row -->
     <!-- end row -->
 
 </section>
 <!-- end widget grid -->
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
 
 <script>
     $(document).ready(function () {
@@ -44,14 +41,14 @@
         taskList();
         $.ajax({
             url: "/Task/AddTask",
-            type:"GET",
+            type: "GET",
             async: false,
             success: function (result) {
                 $("#divAddPopup").html(result);
             }
         });
 
-        $(".tasksList").delegate(".btn_complete", "click", function (e) { 
+        $(".tasksList").delegate(".btn_complete", "click", function (e) {
             var curEvent = $(this);
             const taskId = curEvent.attr('taskid');
             $.ajax({
@@ -91,16 +88,37 @@
     }
 
     function saveOrUpdate(formValue) {
+        $.noConflict();
         $.ajax({
             type: 'POST',
             url: "/Task/AddTask",
             async: false,
             data: formValue,
+            //success: function (result) {
+            //    if (result.success) {
+            //        taskList();
+            //        $('#closePop').click();
+            //    }
+            //}
             success: function (result) {
                 if (result.success) {
-                    taskList();
-                    $('#closePop').click();
+                    $('.close').click();
+                    $.notify({
+                        title: result.title,
+                        message: result.message,
+                    },
+                        {
+                            type: result.type,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
                 }
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             }
         });
 
@@ -116,11 +134,30 @@
     }
 
     function callDelete(TaskId) {
+        $.noConflict();
         $.ajax({
             type: 'POST',
             url: '/Task/DeleteTasks?id=' + TaskId + '',
-            success: function () {
-                taskList();
+            success: function (result) {
+                if (result.success) {
+                    $('.close').click();
+                    $.notify({
+                        title: "<strong>Deleted:</strong> ",
+                        message: "Tasks Deleted Succesfully",
+                    },
+                        {
+                            type: 'danger',
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                    //window.location.href = "/Department";
+                    //taskList();
+                }, 2000);
             }
         });
     }
