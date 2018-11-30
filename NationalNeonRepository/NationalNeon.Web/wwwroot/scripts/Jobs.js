@@ -6,13 +6,6 @@ $(document).ready(function () {
         autoclose: true,
     });
 
-    //$(".dateCalender").datepicker({
-    //    dateFormat: 'dd/mm/y',//check change
-    //    changeMonth: true,
-    //    changeYear: true
-    //});
-   
-
   
     $('#opener').click(function () {
         jobId = $(this).attr('jobId');
@@ -41,8 +34,6 @@ function callGetJob(jobId) {
             $('#scheduled_date').val(tscheduledate);           
         }               
     });
-
-   // $('#target_completion_date').datepicker('option', 'dateFormat', 'dd-mm-yy');
 }
 
 function showJobDetails(jobId) {

@@ -66,7 +66,11 @@ namespace NationalNeon.Web.Controllers
                     ijobBusiness.AddJobs(data);
                     return Json(new
                     {
-                        success = true
+                        success = true,
+                        title = "<strong>Success:</strong>",
+                        type = "success",
+                        message = "Jobs added Succesfully",
+                        action = "added"
                     });
                 }
                 else
@@ -86,7 +90,11 @@ namespace NationalNeon.Web.Controllers
                 }
                 return Json(new
                 {
-                    success = true
+                    success = true,
+                    title = "<strong>Update:</strong>",
+                    type = "info",
+                    message = "Jobs updated Succesfully",
+                    action = "edit"
                 });
             }
             catch (Exception ex)
@@ -99,7 +107,11 @@ namespace NationalNeon.Web.Controllers
         public ActionResult Delete(int id)
         {
             ijobBusiness.DeleteJobs(id);
-            return RedirectToAction("JobsList");
+            return Json(new
+            {
+                success = true
+            });
+            // return RedirectToAction("JobsList");
         }
 
         public ActionResult GetJobs(int id)
@@ -141,7 +153,11 @@ namespace NationalNeon.Web.Controllers
             {
                 ViewBag.ErrorMessage = "Something went wrong.";
             }
-            return RedirectToAction("JobsList");
+            return Json(new
+            {
+                success = true
+            });
+            //return RedirectToAction("JobsList");
         }
 
 

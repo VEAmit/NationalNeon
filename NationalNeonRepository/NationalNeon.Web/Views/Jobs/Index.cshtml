@@ -77,20 +77,39 @@
     }
 
     function saveOrUpdate(formValue) {
+        $.noConflict();
         $.ajax({
             type: 'POST',
             url: "/Jobs/AddJobs",
             async: false,
             data: formValue,
+            //success: function (result) {
+            //    if (result.success) {
+            //        jobList();                  
+            //        $('#closePop').click();
+            //        window.location.reload();
+                 
+            //    }
+            //}
             success: function (result) {
                 if (result.success) {
-                    jobList();                  
-                  // jQuery.noConflict();
-                    $('#closePop').click();
-                    window.location.reload();
-                   // $('#myModal').modal("hide");
-                   // event.preventDefault();
+                    $('.close').click();
+                    $.notify({
+                        title: result.title,
+                        message: result.message,
+                    },
+                        {
+                            type: result.type,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
                 }
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             }
         });
     }
@@ -105,11 +124,33 @@
     }
 
     function callDelete(jobId) {
+        $.noConflict();
         $.ajax({
             type: 'POST',
             url: '/Jobs/Delete?id=' + jobId + '',
-            success: function () {
-                jobList();
+            //success: function () {
+            //    jobList();
+            //}
+            success: function (result) {
+                if (result.success) {
+                    $('.close').click();
+                    $.notify({
+                        title: "<strong>Deleted:</strong> ",
+                        message: "Jobs Deleted Succesfully",
+                    },
+                        {
+                            type: 'danger',
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                    //window.location.href = "/Department";
+                    //taskList();
+                }, 2000);
             }
         });
     }
@@ -143,13 +184,36 @@
         saveUploadFile(jobId);
     }
     function saveUploadFile(jobId) {
+        $.noConflict();
         $.ajax({
             type: 'POST',
             url: '/Jobs/saveUploadFile?id=' + jobId + '',
-            success: function () {
-                $("#uploadfile").click();
-                jobList();
-                window.location.reload();
+            //success: function () {
+            //    $("#uploadfile").click();
+            //    jobList();
+            //    window.location.reload();
+            //}
+            success: function (result) {
+                if (result.success) {
+                    $("#uploadfile").click();
+                    $('.close').click();
+                    $.notify({
+                        title: "<strong>Success:</strong> ",
+                        message: "Upload File Succesfully",
+                    },
+                        {
+                            type: 'success',
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                    //window.location.href = "/Department";
+                    //taskList();
+                }, 2000);
             }
         });
     }
