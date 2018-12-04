@@ -87,7 +87,25 @@
     //}
 
     $("#divAddPopup").delegate('.add_newUser_btn', 'click', function () {
+        let isValid = true;
         var form = $('#addNewUserForm').serialize();
+        if (form !== undefined) {
+            if ($('input[name="username"]').val() == '' || $('input[name="username"]').val() == undefined) {
+                $("#invalid_username").show();
+                isValid = false;               
+            }
+            if ($('input[name="password"]').val() == '' || $('input[name="password"]').val() == undefined) {
+                $("#invalid_password").show();
+                isValid = false; 
+               
+            }
+            if ($('select[name="role"]').val() == '' || $('select[name="role"]').val() == undefined) {
+                $("#invalid_role").show();
+                isValid = false;
+                return;
+            }     
+          
+        }
         $.ajax({
             url: "/Users/AddUsers",
             type: "POST",

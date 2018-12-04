@@ -1,5 +1,10 @@
 ﻿@model NationalNeon.Domain.User.UserModel
-
+<style>
+    .has-error {
+        color: red;
+        display: none;
+    }
+</style>
 <div id="content" style="opacity: 1;">
     <section id="widget-grid" class="">
 
@@ -151,7 +156,8 @@
                         <form asp-action="Edit" asp-controller="Users" data-ajax="true" data-ajax-method="POST" id="editNewUserForm">
                             <div class="form-group">
                                 <label class="control-label">User Name</label>
-                                <input asp-for="username" class="form-control" />
+                                <input asp-for="username" class="form-control" required onchange="$(this).parent().find('.has-error').hide();"/>
+                                <span class="has-error" id="invalid_username">Please enter user name</span>
                             </div>
 
                             <input type="hidden" asp-for="userId" />
@@ -160,8 +166,11 @@
                                 @Html.DropDownListFor(x => x.role, new[]{
                                             new SelectListItem(){ Text = "Admin" , Value = "Admin"},
                                             new SelectListItem(){ Text = "Manager", Value = "Manager"},
-                                            }, "", new {
-                                                @class = "form-control" })
+                                            }, "---Please Select Role---", new {
+                                                @class = "form-control",
+                                                @onchange = "drp(this)"
+                                            }),
+                                  <span class="has-error" id="invalid_role">Please Select Role</span>
                             </div>
 
                             <footer class="text-center form-submit">
@@ -331,7 +340,20 @@
 
         //$("#editNewUser").delegate('.edit_newUser_btn', 'click', function () {
         $(".edit_newUser_btn").click(function () {
+            let isValid = true;
             var form = $('#editNewUserForm').serialize();
+            if (form !== undefined) {
+                if ($('input[name="username"]').val() == '' || $('input[name="username"]').val() == undefined) {
+                    $("#invalid_username").show();
+                    isValid = false;
+                    return;
+                }              
+                if ($('select[name="role"]').val() == '' || $('select[name="role"]').val() == undefined) {
+                    $("#invalid_role").show();
+                    isValid = false;
+                    return;
+                }
+            }
             $.ajax({
                 url: '/Users/Edit?id=' + userId + '',
                 type: "POST",
@@ -360,7 +382,13 @@
                 }
             });
            
-        });       
+        }); 
+
+        function drp(obj) {
+            if (obj.parentNode.children[2] != undefined) {
+                obj.parentNode.children[2].remove();
+            }
+        }
     </script>
 
 </div>
