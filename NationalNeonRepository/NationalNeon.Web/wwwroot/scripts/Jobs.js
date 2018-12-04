@@ -14,7 +14,6 @@ $(document).ready(function () {
 });
 
 function callGetJob(jobId) {
-   
     $.ajax({
         type: 'POST',
         url: '/Jobs/GetJobs?id=' + jobId + '',
@@ -31,7 +30,10 @@ function callGetJob(jobId) {
             $('#status').val(data.data.status);
             $('#revenue').val(data.data.revenue);
             $('#sales_person').val(data.data.sales_person);
-            $('#scheduled_date').val(tscheduledate);           
+           // $('#scheduled_date').val(tscheduledate);  
+            if (tscheduledate == "01/1/1") {
+                $('#scheduled_date').val("");
+            }
         }               
     });
 }

@@ -115,7 +115,7 @@ namespace NationalNeon.Web.Controllers
             data.jobId = model.jobId;
             data.departmentId = model.departmentId;
 
-            if (ModelState.IsValid && model.TaskId == 0) 
+            if (model.TaskId == 0) 
             {
                 itaskBusiness.AddTask(data);
 

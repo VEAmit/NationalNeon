@@ -32,6 +32,7 @@ namespace NationalNeon.Business.Concrete
         {
             Task task = new Task();
             model.CreatedOn = DateTime.Now;
+            model.UpdatedOn = DateTime.Now;
             Mapper.Map(model, task);
             taskRepository.Insert(task);
             Mapper.Map(task, model);

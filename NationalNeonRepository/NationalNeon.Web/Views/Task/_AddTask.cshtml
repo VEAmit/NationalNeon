@@ -1,7 +1,12 @@
 ﻿@model NationalNeon.Domain.Task.TaskModel
-
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<style>
+    .has-error {
+        color: red;
+        display: none;
+    }
+</style>
+@*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
 
 <div class="modal-content">
     <div class="modal-header modal-popup-header">
@@ -14,51 +19,53 @@
             <section>
                 <div class="form-group">
                     <label class="control-label">Job</label>
-                    @Html.DropDownListFor(m => m.jobId, (SelectList)ViewBag.jobList, "---- Select ----", new { @class = "form-control" })
-
+                    @Html.DropDownListFor(m => m.jobId, (SelectList)ViewBag.jobList, "---- Select ----", new { @class = "form-control", @onchange = "drp(this)" })
+                    <span class="has-error" id="invalid_JobName">Please Select Job Name</span>
                 </div>
             </section>
 
             <section>
                 <div class="form-group">
-
                     <label class="control-label">Department</label>
                     @*@Html.DropDownList("")*@
                     @*@Html.DropDownListFor()*@
-                    @Html.DropDownListFor(m => m.departmentId, (SelectList)ViewBag.departmentList, "---- Select ----", new { @class = "form-control" })
-
-
+                    @Html.DropDownListFor(m => m.departmentId, (SelectList)ViewBag.departmentList, "---- Select ----", new { @class = "form-control", @onchange = "drp(this)" })
+                    <span class="has-error" id="invalid_DepartmentName">Please Select Department Name</span>
                 </div>
+
             </section>
 
             <section class="form-group">
                 <label class="control-label">Task Name</label>
-                <input asp-for="TaskName" type="text" class="form-control" autocomplete="off"/>
-                <span asp-validation-for="TaskName" class="text-danger"></span>
+                <input asp-for="TaskName" type="text" class="form-control" autocomplete="off" onchange="$(this).parent().find('.has-error').hide();"/>
+                @*<span asp-validation-for="TaskName" class="text-danger"></span>*@
+                <span class="has-error" id="invalid_TaskName">Please enter Task Name</span>
             </section>
 
             <section class="form-group">
                 <label class="control-label">Budgeted Hours</label>
-                <input asp-for="BudgetedHours" type="number" step="1" min="0" class="form-control" autocomplete="off"/>
-                <span asp-validation-for="BudgetedHours" class="text-danger"></span>
+                <input asp-for="BudgetedHours" type="number" step="1" min="0" class="form-control" autocomplete="off" />
+                @*<span class="has-error" id="invalid_BudgetedHours">Please enter Budgeted Hours</span>*@
+                @*<span asp-validation-for="BudgetedHours" class="text-danger"></span>*@
             </section>
 
             <section class="form-group">
                 <label class="control-label">Target Completion Date</label>
-                <input asp-for="TargetCompletionDate" type="text" data-provide="datepicker" class="form-control dateCalender" autocomplete="off"/>
-                <span asp-validation-for="TargetCompletionDate" class="text-danger"></span>
+                <input asp-for="TargetCompletionDate" type="text" data-provide="datepicker" class="form-control dateCalender" autocomplete="off" onchange="$(this).parent().find('.has-error').hide();" />
+                <span class="has-error" id="invalid_TargetCompletionDate">Please enter Target Completion Date</span>
+                @*<span asp-validation-for="TargetCompletionDate" class="text-danger"></span>*@
             </section>
 
             <section class="form-group">
                 <label class="control-label">Employee</label>
                 <input asp-for="Employee" type="text" class="form-control" autocomplete="off"/>
-                <span asp-validation-for="Employee" class="text-danger"></span>
+                @*<span asp-validation-for="Employee" class="text-danger"></span>*@
             </section>
 
             <section class="form-group">
                 <label class="control-label">Status</label>
                 <input type="text" asp-for="Status" class="form-control" autocomplete="off"/>
-                <span asp-validation-for="Status" class="text-danger"></span>
+                @*<span asp-validation-for="Status" class="text-danger"></span>*@
             </section>
 
             <input type="hidden" asp-for="TaskId" />
@@ -71,5 +78,12 @@
     $('.dateCalender').datepicker({
         autoclose: true,
     });
+
+    function drp(obj) {
+        if (obj.parentNode.children[2] != undefined) {
+            obj.parentNode.children[2].remove();
+        }
+    }
+
 </script>
 

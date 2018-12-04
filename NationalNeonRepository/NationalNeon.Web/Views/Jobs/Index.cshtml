@@ -40,8 +40,7 @@
 @*<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*@
 <script>
    
-    $(document).ready(function () {
-        
+    $(document).ready(function () {        
         var jobId = 0;
         jobList();
         $.ajax({
@@ -54,17 +53,44 @@
         });
 
         $('#divAddPopup').delegate('.btn_addUpdateJobs', 'click', function () {
-            var curEvent = $(this);
+            let isValid = true;
             var formValue = $("#addUpdateJobForm").serialize();
-            saveOrUpdate(formValue);
-           
+            if (formValue !== undefined) {
+                if ($('input[name="job_number"]').val() == '' || $('input[name="job_number"]').val() == undefined) {
+                    $("#invalid_Job").show();
+                    isValid = false;
+                }
+                if ($('input[name="job_name"]').val() == '' || $('input[name="job_name"]').val() == undefined) {
+                    $("#invalid_JobName").show();
+                    isValid = false;
+                }
+
+                if ($('input[name="target_completion_date"]').val() == '' || $('input[name="target_completion_date"]').val() == undefined) {
+                    $("#invalid_target_completion_date").show();
+                    isValid = false;
+                }
+                if ($('input[name="revenue"]').val() == '' || $('input[name="revenue"]').val() == undefined) {
+                    $("#invalid_revenue").show();
+                    isValid = false;
+                }
+            }
+            
+            if (isValid) {
+                $('#divAddPopup [id^="invalid_"]').hide();
+                saveOrUpdate(formValue);
+            }           
         });
 
         $("#newJob").click(function () {
-            $('#addUpdateForm').find("input[type=text], textarea, select, number").val("");
-           
+            $('#addUpdateJobForm').find("input[type=text], textarea, select, number").val("");
         });
+       
     });
+
+    //function getContent(current) {
+    //    $("invalid_Job").remove();
+    //    debugger;
+    //}
 
     function jobList() {
         $.ajax({

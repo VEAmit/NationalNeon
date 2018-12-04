@@ -48,6 +48,10 @@
             }
         });
 
+        $("#newTask").click(function () {
+            $('#addUpdateForm').find("input[type=text], textarea, select, number").val("");
+        });
+
         $(".tasksList").delegate(".btn_complete", "click", function (e) {
             var curEvent = $(this);
             const taskId = curEvent.attr('taskid');
@@ -59,20 +63,43 @@
                     if (result.success) {
                         taskList();
                     }
-
                 }
             });
         });
 
         $(".btn_addUpdateTask").on('click', function () {
+            let isValid = true;
             var curEvent = $(this);
             var formValue = $("#addUpdateForm").serialize();
-            saveOrUpdate(formValue);
-        });
+            if (formValue !== undefined) {
+                if ($('select[name="jobId"]').val() == '' || $('select[name="jobId"]').val() == undefined) {
+                    $("#invalid_JobName").show();
+                    isValid = false;
+                }     
 
-        $("#newTask").click(function () {
-            $('#addUpdateForm').find("input[type=text], textarea, select, number").val("");
-        });
+                if ($('select[name="departmentId"]').val() == '' || $('select[name="departmentId"]').val() == undefined) {
+                    $("#invalid_DepartmentName").show();
+                    isValid = false;
+                }    
+                if ($('input[name="TaskName"]').val() == '' || $('input[name="TaskName"]').val() == undefined) {
+                    $("#invalid_TaskName").show();
+                    isValid = false;
+                }  
+                //if ($('number[name="BudgetedHours"]').val() == '' || $('number[name="BudgetedHours"]').val() == undefined) {
+                //    $("#invalid_BudgetedHours").show();
+                //    isValid = false;
+                //}  
+                if ($('input[name="TargetCompletionDate"]').val() == '' || $('input[name="TargetCompletionDate"]').val() == undefined) {
+                    $("#invalid_TargetCompletionDate").show();
+                    isValid = false;
+                }  
+                                
+            }
+            if (isValid) {
+                $('#divAddPopup [id^="invalid_"]').hide();
+                saveOrUpdate(formValue);
+            }
+        });      
 
     });
 
