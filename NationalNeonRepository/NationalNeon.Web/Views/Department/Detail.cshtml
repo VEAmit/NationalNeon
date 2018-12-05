@@ -167,7 +167,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="modal fade" id="opener" role="dialog">
@@ -198,7 +197,7 @@
 
 @*<input type="hidden" value="@Model.departmentId" id="hdnId" />*@
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
 
 <script>
     $(document).ready(function () {
@@ -216,8 +215,7 @@
                 $("#divEditModel").html(result);
             }
             });
-        });
-     
+        });     
     });
     function setDepartmentID(_departmentId) {
         departmentId = _departmentId;
@@ -225,8 +223,18 @@
 
 
     $("#divEditModel").delegate('.edit_department_btn', 'click', function () {
-    //$(".edit_newUser_btn").click(function () {
+        let isValid = true;
         var form = $('#editDepartmentForm').serialize();
+        if (form !== undefined) {
+            if ($('input[name="DepartmentName"]').val() == '' || $('input[name="DepartmentName"]').val() == undefined) {
+                $("#invalid_departmentname").show();
+                isValid = false;
+            }
+            if ($('input[name="Description"]').val() == '' || $('input[name="Description"]').val() == undefined) {
+                $("#invalid_departmentdescription").show();
+                isValid = false;
+            }
+        }
         $.ajax({
             url: '/Department/Edit',
             type: "POST",

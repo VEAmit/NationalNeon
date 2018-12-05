@@ -1,5 +1,10 @@
 ﻿@model NationalNeon.Web.ViewModels.DepartmentViewModel
-
+<style>
+    .has-error {
+        color: red;
+        display: none;
+    }
+</style>
 <div class="modal-content">
     <div class="modal-header modal-popup-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -10,17 +15,22 @@
             <section>
                 <label asp-for="DepartmentName" class="label"></label>
                 <label class="textarea textarea-resizable">
-                    <textarea asp-for="DepartmentName" required="required" rows="6" class="custom-scroll"></textarea>
+                    <textarea asp-for="DepartmentName" required="required" rows="6" class="custom-scroll" onchange="$(this).parent().find('.has-error').remove();"></textarea>
+                    <span class="has-error" id="invalid_departmentname">Please enter department name</span>
                 </label>
-                <span asp-validation-for="DepartmentName" class="text-danger"></span>
+               
+
+                @*<span asp-validation-for="DepartmentName" class="text-danger"></span>*@
             </section>
 
             <section>
                 <label asp-for="Description" class="label"></label>
                 <label class="textarea textarea-resizable">
-                    <textarea asp-for="Description" rows="6" required="required" class="custom-scroll"></textarea>
+                    <textarea asp-for="Description" rows="6" required="required" class="custom-scroll" onchange="$(this).parent().find('.has-error').remove();"></textarea>
+                    <span class="has-error" id="invalid_departmentdescription">Please enter department description</span>
                 </label>
-                <span asp-validation-for="Description" class="text-danger"></span>
+               
+                @*<span asp-validation-for="Description" class="text-danger"></span>*@
             </section>
 
             <footer class="text-center form-submit">
