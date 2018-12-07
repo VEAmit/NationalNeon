@@ -191,19 +191,21 @@
                         <h1 class="modal-title">Change Password</h1>
                     </div>
                     <div class="modal-body">
-                        <form data-ajax="true" data-ajax-method="POST">
+                        <form data-ajax="true" data-ajax-method="POST" id="changePasswordForm">
                             <div class="form-group">
                                 <label class="control-label">Password</label>
-                                <input type="password" id="id1" class="form-control" required autocomplete="off"/>
+                                <input type="password" name="password" id="id1" class="form-control" required autocomplete="off" onchange="$(this).parent().find('.has-error').hide();" />
+                                <span class="has-error" id="invalid_password">Please enter Password</span>
                             </div>
 
                             <input type="hidden" asp-for="userId" />
                             <div class="form-group">
                                 <label class="control-label">Re Type Password</label>
-                                <input type="password" id="id2" class="form-control" required autocomplete="off"/>
+                                <input type="password" name="password" id="id2" class="form-control" required autocomplete="off" onchange="$(this).parent().find('.has-error').hide();" />
+                                <span class="has-error" id="invalid_retypepassword">Please enterRe Type Password</span>
                             </div>
 
-                            <footer class="text-center form-submit">                              
+                            <footer class="text-center form-submit">
                                 <button onclick="changepasswords()" class="btn btn-danger">Submit</button>
                             </footer>
                         </form>
@@ -250,18 +252,34 @@
         });
 
         function setUserID(_userId) {
-
             userId = _userId;
         }
 
         function changepasswords() {
-            changepassword(userId);
+            let isValid = true;
+            var form = $('#changePasswordForm').serialize();
+            if (form !== undefined) {
+                if ($('input[name="password"]').val() == '' || $('input[name="password"]').val() == undefined) {
+                    $("#invalid_password").show();
+                    isValid = false;
+                }
+                if ($('input[name="password"]').val() == '' || $('input[name="password"]').val() == undefined) {
+                    $("#invalid_retypepassword").show();
+                    isValid = false;
+                }
+            }
+            if (isValid) {
+                $('#divAddPopup [id^="invalid_"]').hide();
+                changepassword(form);
+            }              
+            //changepassword(userId);
         }
 
-        function changepassword(userId) {
+        function changepassword(form) {
             var id3 = $(id1).val();
             var id4 = $(id2).val();
             // userId = $(this).attr('userId');
+            var userId = $('input[name="userId"]').val()
             var obj = {
                 userId: userId,
                 Password: id3
@@ -331,7 +349,7 @@
                         setTimeout(() => {
                             window.location.reload();
                             window.location.href = "/Users";
-                        }, 1000);
+                        }, 2000);
                     }
                 })
         }
@@ -352,7 +370,7 @@
                     return;
                 }
             }
-            $.ajax({
+            $.ajax({              
                 url: '/Users/Edit?id=' + userId + '',
                 type: "POST",
                 async: false,

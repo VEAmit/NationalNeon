@@ -5,7 +5,7 @@
 <div class="row mb-2 noprint">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <button onclick="window.history.back();" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Back</button>
-        <button onclick="refresh()"  id="refresh" class="btn btn-danger export-data"><i class="fa fa-repeat"></i> Refresh</button>
+        <button id="refreshdashboard"  class="btn btn-danger export-data"><i class="fa fa-repeat"></i> Refresh</button>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
         <button id="print" onclick="window.print()" class="btn btn-danger export-data"><i class="fa fa-print"></i> Print</button>
@@ -66,8 +66,8 @@
             <div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false">
                 <header>
                     @*style="        border-color: #508180!important;
-                    background: #568a89;
-                    color: #fff;"*@
+                        background: #568a89;
+                        color: #fff;"*@
                     <span class="widget-icon"> <i class="fa fa-camera"></i> </span>
                     <h2>Snap Shot</h2>
 
@@ -100,7 +100,7 @@
     <!-- end row -->
     <!-- row -->
     <div class="row ">
-        <article class="col-sm-12 col-md-12 col-lg-6"> 
+        <article class="col-sm-12 col-md-12 col-lg-6">
             <!-- new widget -->
 
             <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-deletebutton="false">
@@ -147,44 +147,44 @@
 
         <article class="col-sm-12 col-md-12 col-lg-6 noprint">
             <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-6">                    
-                        <!-- new widget -->
-                        <div class="jarviswidget jarviswidget-sortable" id="wid-id-3" data-widget-editbutton="false" data-widget-deletebutton="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-clock-o"></i> </span>
-                                <h2>Jobs Target Completion </h2>
-                            </header>
-                            <!-- widget div-->
-                            <!-- widget div-->
-                            <div class="padding0">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Jobs</th>
-                                                <th>Target</th>
-                                                <th>Completion</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{var job_number = 0;
-                                                @foreach (var item in ViewBag.jobs)
-                                                {
-                                                    <tr>
-                                                        <td><strong>@(++job_number)</strong></td>
-                                                        <td>@item.job_name</td>
-                                                        <td>@item.target_completion_date.ToString("D")</td>
-                                                    </tr>
-                                                }
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                    <!-- new widget -->
+                    <div class="jarviswidget jarviswidget-sortable" id="wid-id-3" data-widget-editbutton="false" data-widget-deletebutton="false">
+                        <header>
+                            <span class="widget-icon"> <i class="fa fa-clock-o"></i> </span>
+                            <h2>Jobs Target Completion </h2>
+                        </header>
+                        <!-- widget div-->
+                        <!-- widget div-->
+                        <div class="padding0">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Jobs</th>
+                                            <th>Target</th>
+                                            <th>Completion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{var job_number = 0;
+                                            @foreach (var item in ViewBag.jobs)
+                                            {
+                                                <tr>
+                                                    <td><strong>@(++job_number)</strong></td>
+                                                    <td>@item.job_name</td>
+                                                    <td>@item.target_completion_date.ToString("D")</td>
+                                                </tr>
                                             }
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-                            <!-- end widget div -->
-                            <!-- end widget div -->
                         </div>
-                        <!-- end widget -->                   
+                        <!-- end widget div -->
+                        <!-- end widget div -->
+                    </div>
+                    <!-- end widget -->
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <!-- new widget -->
@@ -243,7 +243,7 @@
     <div class="row noprint">
         <article class="col-sm-12 col-md-12 col-lg-6">
             <!-- new widget -->
-            <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-5"  data-widget-editbutton="false" data-widget-deletebutton="false">
+            <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-5" data-widget-editbutton="false" data-widget-deletebutton="false">
                 <header>
                     <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
                     @*<h2>Production Calendar</h2>*@
@@ -279,11 +279,11 @@
                         <!-- content goes here -->
                         <div class="widget-body-toolbar">
                             @*<div class="pull-left">
-                                <ul class="list-inline" style:"margin: 0;">
-                                    <li style="padding-right: 15px;"><label class="badge bg-color-blue" style="color: white;padding: 5px;">Archived Job</label></li>
-                                    <li style="padding-right: 15px;"><label class="badge bg-color-red" style="color: white;padding: 5px;">Live Job</label></li>
-                                </ul>
-                            </div>*@
+                                    <ul class="list-inline" style:"margin: 0;">
+                                        <li style="padding-right: 15px;"><label class="badge bg-color-blue" style="color: white;padding: 5px;">Archived Job</label></li>
+                                        <li style="padding-right: 15px;"><label class="badge bg-color-red" style="color: white;padding: 5px;">Live Job</label></li>
+                                    </ul>
+                                </div>*@
                             <div id="calendar-buttons">
                                 <div class="btn-group">
                                     <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
@@ -305,11 +305,11 @@
             <!-- new widget -->
             <div class="jarviswidget jarviswidget-color-blue jarviswidget-sortable" id="wid-id-6" data-widget-editbutton="false" data-widget-colorbutton="false" role="widget">
                 <header role="heading" class="ui-sortable-handle">
-                    <div class="jarviswidget-ctrls" role="menu"> 
+                    <div class="jarviswidget-ctrls" role="menu">
 
-                    <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse"><i class="fa fa-minus "></i></a> 
-                    <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> 
-                    @*<a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete"><i class="fa fa-times"></i></a>*@
+                        <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse"><i class="fa fa-minus "></i></a>
+                        <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a>
+                        @*<a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete"><i class="fa fa-times"></i></a>*@
                     </div>
                     <span class="widget-icon"> <i class="fa fa-check txt-color-white"></i> </span>
                     <h2>Message Center / To Do List</h2>
@@ -345,7 +345,7 @@
                                 <p>
                                     Coming Soon This Feature...
                                     @*<strong>Ticket #17643</strong> - Hotfix for WebApp interface issue [<a href="javascript:void(0);" class="font-xs">More Details</a>] <span class="text-muted">Sea deep blessed bearing under darkness from God air living isn't. </span>
-                                    <span class="date">Jan 1, 2014</span>*@
+                                        <span class="date">Jan 1, 2014</span>*@
                                 </p>
                             </li>
                         </ul>
@@ -433,13 +433,12 @@
     <!-- end row -->
 </section>
 <!-- end widget grid -->
-
 @*<style>
-    	@media print{
-			header,nav,aside,hr,.btn-group,#ribbon{
-			display: none;
-			}
-</style>*@
+            @media print{
+                header,nav,aside,hr,.btn-group,#ribbon{
+                display: none;
+                }
+    </style>*@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
@@ -461,98 +460,95 @@
                 case "newUser": getAddUserView();
                     break;
             }
-           
-           
         });
 
-       // getuserDetail();
-        
-        $('#divAddPopup').delegate('.btn_addUpdateJobs', 'click', function () {
-            var curEvent = $(this);
-            var formValue = $("#addUpdateJobForm").serialize();
-            saveOrUpdatejob(formValue);
-        });
+        // getuserDetail();
+
+        /* Here Task Pop Up Page Open and Save the data     */
+
+        function getAddTaskView() {
+            $.ajax({
+                url: "/Task/AddTask",
+                type: "GET",
+                async: false,
+                success: function (result) {
+                    $("#divAddPopup").html('');
+                    $("#divAddPopup").html(result);
+                }
+            });
+        }
 
         $('#divAddPopup').delegate('.btn_addUpdateTask', 'click', function () {
             var curEvent = $(this);
+            let isValid = true;
             var formValue = $("#addUpdateForm").serialize();
-            saveOrUpdate(formValue);
+            if (formValue !== undefined) {
+                if ($('select[name="jobId"]').val() == '' || $('select[name="jobId"]').val() == undefined) {
+                    $("#invalid_JobName").show();
+                    isValid = false;
+                }
+
+                if ($('select[name="departmentId"]').val() == '' || $('select[name="departmentId"]').val() == undefined) {
+                    $("#invalid_DepartmentName").show();
+                    isValid = false;
+                }
+                if ($('input[name="TaskName"]').val() == '' || $('input[name="TaskName"]').val() == undefined) {
+                    $("#invalid_TaskName").show();
+                    isValid = false;
+                }
+                if ($('input[name="TargetCompletionDate"]').val() == '' || $('input[name="TargetCompletionDate"]').val() == undefined) {
+                    $("#invalid_TargetCompletionDate").show();
+                    isValid = false;
+                }
+
+            }
+            if (isValid) {
+                $('#divAddPopup [id^="invalid_"]').hide();
+                saveOrUpdate(formValue);
+            }
+            // saveOrUpdate(formValue);
         });
+
+        function saveOrUpdate(formValue) {
+            $.ajax({
+                type: 'POST',
+                url: "/Task/AddTask",
+                async: false,
+                data: formValue,
+                success: function (result) {
+                    if (result.success) {
+                        $('#closePop').click();
+                        $.notify({
+                            title: result.title,
+                            message: result.message,
+                        },
+                            {
+                                type: result.type,
+                                allow_dismiss: false,
+                                showProgressbar: true,
+                                delay: '100',
+                                newest_on_top: true,
+                            });
+                    }
+                    setTimeout(() => {
+                        //window.location.reload();
+                        history.go(0)
+                    }, 2000)
+                }
+            });
+        }
+
 
         $("#newTask").click(function () {
             $('#addUpdateForm').find("input[type=text], textarea, select, number").val("");
 
-        });      
+        });
+        /* End Tasks Pop Up Page Save the data     */
+
     });
 
-    //$("#refresh").click(function () {
-    //    debugger;
-    //    $(window).trigger('hashchange');
-    //});
 
-    //function refresh() {
-    //    debugger;
-    //    window.location.reload();
-    //    //$(window).trigger('hashchange');
-    //}
-
-    //function getuserDetail() {
-    //    debugger;
-    //    $.ajax({
-    //        type: 'GET',
-    //        url: '/Users/UserInfo',
-    //        success: function (data) {
-    //            debugger;
-    //            // localStorage.setItem('username', data.data.username);
-    //            $('#username').text(data.username);
-    //        }
-    //    });
-    //}
-    function saveOrUpdatejob(formValue) {
-        $.ajax({
-            type: 'POST',
-            url: "/Jobs/AddJobs",
-            async: false,
-            data: formValue,
-            success: function (result) {
-                if (result.success) {
-                    $('#closePop').click();
-                }
-            }
-        });
-
-    }
-
-    function completetask(TaskId) {
-        //var curEvent = $(this);
-        //const TaskId = curEvent.attr('TaskId');
-        $.ajax({
-            type: 'POST',
-            url: "/Home/updateCompleteTask?TaskId=" + TaskId + "",
-            async: false,
-            success: function (result) {
-                if (result.success) {
-
-                }
-            }
-        });
-
-    }
-
-    function saveOrUpdate(formValue) {
-        $.ajax({
-            type: 'POST',
-            url: "/Task/AddTask",
-            async: false,
-            data: formValue,
-            success: function (result) {
-                if (result.success) {
-                    $('#closePop').click();
-                }
-            }
-        });
-    }
-
+    /* Here Jobs Pop Up Page Open and Save the data     */
     function getAddJobView() {
         $.ajax({
             url: "/Jobs/AddJobs",
@@ -565,18 +561,70 @@
         });
     }
 
-    function getAddTaskView() {
+    $('#divAddPopup').delegate('.btn_addUpdateJobs', 'click', function () {
+        var curEvent = $(this);
+        //var formValue = $("#addUpdateJobForm").serialize();
+        let isValid = true;
+        var formValue = $("#addUpdateJobForm").serialize();
+        if (formValue !== undefined) {
+            if ($('input[name="job_number"]').val() == '' || $('input[name="job_number"]').val() == undefined) {
+                $("#invalid_Job").show();
+                isValid = false;
+            }
+            if ($('input[name="job_name"]').val() == '' || $('input[name="job_name"]').val() == undefined) {
+                $("#invalid_JobName").show();
+                isValid = false;
+            }
+
+            if ($('input[name="target_completion_date"]').val() == '' || $('input[name="target_completion_date"]').val() == undefined) {
+                $("#invalid_target_completion_date").show();
+                isValid = false;
+            }
+            if ($('input[name="revenue"]').val() == '' || $('input[name="revenue"]').val() == undefined) {
+                $("#invalid_revenue").show();
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            $('#divAddPopup [id^="invalid_"]').hide();
+            saveOrUpdatejob(formValue);
+        }
+        // saveOrUpdatejob(formValue);
+    });
+
+
+    function saveOrUpdatejob(formValue) {
         $.ajax({
-            url: "/Task/AddTask",
-            type: "GET",
+            type: 'POST',
+            url: "/Jobs/AddJobs",
             async: false,
+            data: formValue,
             success: function (result) {
-                $("#divAddPopup").html('');
-                $("#divAddPopup").html(result);                
+                if (result.success) {
+                    $('#closePop').click();
+                    $.notify({
+                        title: result.title,
+                        message: result.message,
+                    },
+                        {
+                            type: result.type,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                    //window.location.reload();
+                    history.go(0)
+                }, 2000)
             }
         });
+
     }
 
+    /* End Jobs Pop Up Page Save the data     */
 
     function getAddDepartmentView() {
         $.ajax({
@@ -601,5 +649,69 @@
             }
         });
     }
+
+    $("#divAddPopup").delegate('.add_newUser_btn', 'click', function () {
+        let isValid = true;
+        var form = $('#addNewUserForm').serialize();
+        if (form !== undefined) {
+            if ($('input[name="username"]').val() == '' || $('input[name="username"]').val() == undefined) {
+                $("#invalid_username").show();
+                isValid = false;
+            }
+            if ($('input[name="password"]').val() == '' || $('input[name="password"]').val() == undefined) {
+                $("#invalid_password").show();
+                isValid = false;
+
+            }
+            if ($('select[name="role"]').val() == '' || $('select[name="role"]').val() == undefined) {
+                $("#invalid_role").show();
+                isValid = false;
+                return;
+            }
+
+        }
+        $.ajax({
+            url: "/Users/AddUsers",
+            type: "POST",
+            async: false,
+            data: form,
+            success: function (result) {
+                if (result.success) {
+
+                    $('.close').click();
+                    $.notify({
+                        title: "<strong>Success:</strong> ",
+                        message: "Users Addeded Succesfully",
+                    },
+                        {
+                            type: 'success',
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                setTimeout(() => {
+                }, 2000);
+            }
+        });
+    });
+
+
+    function completetask(TaskId) {
+        $.ajax({
+            type: 'POST',
+            url: "/Home/updateCompleteTask?TaskId=" + TaskId + "",
+            async: false,
+            success: function (result) {
+                if (result.success) {
+                }
+            }
+        });
+    }
+
+    $("#refreshdashboard").click(function () {
+        history.go(0);
+    });
 
 </script>

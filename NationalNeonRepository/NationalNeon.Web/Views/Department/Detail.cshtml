@@ -226,15 +226,22 @@
         let isValid = true;
         var form = $('#editDepartmentForm').serialize();
         if (form !== undefined) {
-            if ($('input[name="DepartmentName"]').val() == '' || $('input[name="DepartmentName"]').val() == undefined) {
+            if ($('textarea[name="DepartmentName"]').val() == '' || $('textarea[name="DepartmentName"]').val() == undefined) {
                 $("#invalid_departmentname").show();
                 isValid = false;
             }
-            if ($('input[name="Description"]').val() == '' || $('input[name="Description"]').val() == undefined) {
+            if ($('textarea[name="Description"]').val() == '' || $('textarea[name="Description"]').val() == undefined) {
                 $("#invalid_departmentdescription").show();
                 isValid = false;
             }
         }
+        if (isValid) {
+            $('#divAddPopup [id^="invalid_"]').hide();
+            editDepartment(form);
+        }               
+    });
+
+    function editDepartment(form) {
         $.ajax({
             url: '/Department/Edit',
             type: "POST",
@@ -262,8 +269,7 @@
 
             }
         });
-
-    });       
+    }
 
 
     function deleteDepartment() {

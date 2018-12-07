@@ -72,7 +72,7 @@ namespace NationalNeon.Web.Controllers
                 success = false
             });
         }
-         
+
 
 
         [Route("UserDetails")]
@@ -118,7 +118,7 @@ namespace NationalNeon.Web.Controllers
         public ActionResult ChangePassword(PasswordViewModel passwordModel)
         {
 
-            iuserBusiness.passwordUpdate(passwordModel.Password,passwordModel.userId);
+            iuserBusiness.passwordUpdate(passwordModel.Password, passwordModel.userId);
             //return RedirectToAction("Index");
             return Json(new
             {
