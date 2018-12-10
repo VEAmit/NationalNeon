@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - NationalNeon.Web</title>
 </head>
+<style>
+    .has-error {
+        color: red;
+        display: none;
+    }
+</style>
 <link href="~/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 <link href="~/css/demo.min.css" rel="stylesheet" />
@@ -68,7 +74,7 @@
 
 
 
-                        <form asp-action="LoginMethod" asp-controller="Login" data-ajax="true" data-ajax-method="POST" class="smart-form client-form">
+                        <form asp-action="LoginMethod" asp-controller="Login" data-ajax="true" data-ajax-method="POST" class="smart-form client-form" id="loginForm">
                             <header>Sign In</header>
                             @*@ViewBag.ErrorMessage*@
 
@@ -77,8 +83,9 @@
                                     <label class="label">E-mail</label>
                                     <label class="input">
                                         <i class="icon-append fa fa-user"></i>
-                                        <input type="text" asp-for="Username" autocomplete="off" />
-                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b>
+                                        <input type="text" asp-for="Username" name="Username" autocomplete="off" required  onchange="$(this).parent().find('.has-error').hide();"/>
+                                        <span class="has-error" id="invalid_Username">Please enter email address/username</span>
+                                        @*<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b>*@
                                     </label>
                                 </section>
 
@@ -86,8 +93,9 @@
                                     <label class="label">Password</label>
                                     <label class="input">
                                         <i class="icon-append fa fa-lock"></i>
-                                        <input type="password" asp-for="Password" autocomplete="off" />
-                                        <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
+                                        <input type="password" asp-for="Password" name="Password" autocomplete="off" required  onchange="$(this).parent().find('.has-error').hide();"/>
+                                        <span class="has-error" id="invalid_password"> Enter your password</span>
+                                        @*<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>*@
                                     </label>
                                     @*<div class="note">
                                             <a href="forgotpassword.html">Forgot password?</a>
@@ -99,7 +107,7 @@
                                 </section>
 
 
-                                <footer><button type="submit" class="btn btn-primary">Login</button></footer>
+                                <footer><button type="submit" class="btn btn-primary btn_submit">Login</button></footer>
                             </fieldset>
                         </form>
                     </div>
@@ -116,6 +124,56 @@
 
     </div>
 </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $('.btn_submit').click(function () {
+        let isValid = true;
+        var formValue = $("#loginForm").serialize();
+        if (formValue !== undefined) {
+            if ($('input[name="Username"]').val() == '' || $('input[name="Username"]').val() == undefined) {
+                $("#invalid_Username").show();
+                isValid = false;
+            }
+            if ($('input[name="Password"]').val() == '' || $('input[name="Password"]').val() == undefined) {
+                $("#invalid_password").show();
+                isValid = false;
+            }
+        }
+
+        if (isValid) {
+            UserLogin(formValue);
+        }           
+    });
+
+    function UserLogin(formValue) {
+        $.ajax({
+            type: 'POST',
+            url: "/Login/LoginMethod",
+            async: false,
+            data: formValue,
+            success: function (result) {
+                if (result.success) {
+                    $('.close').click();                   
+                    $.notify({
+                        title: result.title,
+                        message: result.message,
+                    },
+                        {
+                            type: result.type,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            }
+        });
+    }
+</script>
 
 
 

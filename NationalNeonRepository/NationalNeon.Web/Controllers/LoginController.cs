@@ -51,9 +51,20 @@ namespace NationalNeon.Web.Controllers
                 //}
 
                 //read cookie from Request object  
-                //set the key value in Cookie                                      
+                //set the key value in Cookie   
+
                 return RedirectToAction("dashboard", "Home", ViewBag.message);
-                }
+
+                //return Json(new
+                //{
+                //    success = true,
+                //    title = "<strong>success:</strong>",
+                //    type = "success",
+                //    message = "users login succesfully",
+                //    // action = "added"
+                //});
+
+            }
                 else
                 {
                     //ModelState.AddModelError("", "please fill all the required fields");
