@@ -61,7 +61,8 @@
                 async: false,
                 success: function (result) {
                     if (result.success) {
-                        taskList();
+                        //taskList();
+                        window.location.reload();
                     }
                 }
             });
@@ -75,31 +76,31 @@
                 if ($('select[name="jobId"]').val() == '' || $('select[name="jobId"]').val() == undefined) {
                     $("#invalid_JobName").show();
                     isValid = false;
-                }     
+                }
 
                 if ($('select[name="departmentId"]').val() == '' || $('select[name="departmentId"]').val() == undefined) {
                     $("#invalid_DepartmentName").show();
                     isValid = false;
-                }    
+                }
                 if ($('input[name="TaskName"]').val() == '' || $('input[name="TaskName"]').val() == undefined) {
                     $("#invalid_TaskName").show();
                     isValid = false;
-                }  
+                }
                 //if ($('number[name="BudgetedHours"]').val() == '' || $('number[name="BudgetedHours"]').val() == undefined) {
                 //    $("#invalid_BudgetedHours").show();
                 //    isValid = false;
-                //}  
+                //}
                 if ($('input[name="TargetCompletionDate"]').val() == '' || $('input[name="TargetCompletionDate"]').val() == undefined) {
                     $("#invalid_TargetCompletionDate").show();
                     isValid = false;
-                }  
-                                
+                }
+
             }
             if (isValid) {
                 $('#divAddPopup [id^="invalid_"]').hide();
                 saveOrUpdate(formValue);
             }
-        });      
+        });
 
     });
 
@@ -115,7 +116,7 @@
     }
 
     function saveOrUpdate(formValue) {
-        $.noConflict();
+        //$.noConflict();
         $.ajax({
             type: 'POST',
             url: "/Task/AddTask",
@@ -161,7 +162,7 @@
     }
 
     function callDelete(TaskId) {
-        $.noConflict();
+       // $.noConflict();
         $.ajax({
             type: 'POST',
             url: '/Task/DeleteTasks?id=' + TaskId + '',

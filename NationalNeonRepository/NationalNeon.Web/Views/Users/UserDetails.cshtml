@@ -202,7 +202,7 @@
                             <div class="form-group">
                                 <label class="control-label">Re Type Password</label>
                                 <input type="password" name="password" id="id2" class="form-control" required autocomplete="off" onchange="$(this).parent().find('.has-error').hide();" />
-                                <span class="has-error" id="invalid_retypepassword">Please enterRe Type Password</span>
+                                <span class="has-error" id="invalid_retypepassword">Please Enter Re Type Password</span>
                             </div>
 
                             <footer class="text-center form-submit">
@@ -294,11 +294,11 @@
                         if (result.success) {
                             $('.close').click();
                             $.notify({
-                                title: "<strong>Success:</strong> ",
-                                message: "Password Change Succesfully",
+                                title: result.title,
+                                message: result.message,
                             },
                                 {
-                                    type: 'success',
+                                    type: result.type,
                                     allow_dismiss: false,
                                     showProgressbar: true,
                                     delay: '100',
@@ -306,7 +306,7 @@
                                 });
                         }
                         setTimeout(() => {
-                            //window.location.reload();
+                            window.location.reload();
                             window.location.href = "/Users";
                         }, 2000);                      
                     }
@@ -335,11 +335,11 @@
                         if (result.success) {
                             $('.close').click();
                             $.notify({
-                                title: "<strong>Deleted:</strong> ",
-                                message: "Users Deleted Succesfully",
+                                title: result.title,
+                                message: result.message,
                             },
                                 {
-                                    type: 'danger',
+                                    type: result.type,
                                     allow_dismiss: false,
                                     showProgressbar: true,
                                     delay: '100',
@@ -379,11 +379,11 @@
                     if (result.success) {
                         $('.close').click();
                         $.notify({
-                            title: "<strong>Success:</strong> ",
-                            message: "Users Updated Succesfully",
+                            title: result.title,
+                            message: result.message,
                         },
                             {
-                                type: 'info',
+                                type: result.type,
                                 allow_dismiss: false,
                                 showProgressbar: true,
                                 delay: '100',
@@ -393,8 +393,7 @@
                     setTimeout(() => {
                         window.location.reload();
                         window.location.href = "/Users";
-                    }, 2000);
-                   
+                    }, 2000);                   
                 }
             });
            

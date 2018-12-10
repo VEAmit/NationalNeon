@@ -31,13 +31,14 @@
 
 </section>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 @*<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
 @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>*@
 @*<script src="~/js/bootstrap/bootstrap.min.js"></script>*@
 @*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>*@
 <!-- BS JavaScript -->
 @*<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*@
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
 <script>
    
     $(document).ready(function () {        
@@ -102,7 +103,7 @@
     }
 
     function saveOrUpdate(formValue) {
-        $.noConflict();
+        //$.noConflict();
         $.ajax({
             type: 'POST',
             url: "/Jobs/AddJobs",
@@ -149,7 +150,7 @@
     }
 
     function callDelete(jobId) {
-        $.noConflict();
+        //$.noConflict();
         $.ajax({
             type: 'POST',
             url: '/Jobs/Delete?id=' + jobId + '',
@@ -195,8 +196,8 @@
             url: '/Archived/UpdateArchive?id=' + jobId + '',
             success: function () {              
                 $("#archived").click();
-                jobList();
-                //window.location.reload();
+                //jobList();
+                window.location.reload();
             }
         });
     }
@@ -209,7 +210,7 @@
         saveUploadFile(jobId);
     }
     function saveUploadFile(jobId) {
-        $.noConflict();
+        //$.noConflict();
         $.ajax({
             type: 'POST',
             url: '/Jobs/saveUploadFile?id=' + jobId + '',

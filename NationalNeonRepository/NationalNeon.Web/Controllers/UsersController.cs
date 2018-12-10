@@ -101,7 +101,10 @@ namespace NationalNeon.Web.Controllers
             //return RedirectToAction("Index");
             return Json(new
             {
-                success = true
+                success = true,
+                title = "<strong>Update:</strong>",
+                type = "info",
+                message = "Users Updated Succesfully",
             });
         }
 
@@ -111,7 +114,10 @@ namespace NationalNeon.Web.Controllers
             //return RedirectToAction("UserList");
             return Json(new
             {
-                success = true
+                success = true,
+                title = "<strong>Deleted:</strong>",
+                type = "danger",
+                message = "Users Deleted Succesfully",
             });
         }
 
@@ -122,7 +128,11 @@ namespace NationalNeon.Web.Controllers
             //return RedirectToAction("Index");
             return Json(new
             {
-                success = true
+                success = true,
+                title = "<strong>success:</strong>",
+                type = "success",
+                message = "Password Updated Succesfully",
+                // action = "added"
             });
         }
     }
