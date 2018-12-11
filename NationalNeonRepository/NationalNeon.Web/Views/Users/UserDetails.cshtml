@@ -59,7 +59,7 @@
             <article class="col-md-10 users-summary sortable-grid ui-sortable">
 
                 <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-sortable"  id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" role="widget">
+                <div class="jarviswidget jarviswidget-sortable" id="wid-id-1" data-widget-editbutton="false" data-widget-deletebutton="false" role="widget">
                     <header role="heading">
                         <div class="jarviswidget-ctrls" role="menu">
                             <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse"><i class="fa fa-minus "></i></a>
@@ -156,7 +156,7 @@
                         <form asp-action="Edit" asp-controller="Users" data-ajax="true" data-ajax-method="POST" id="editNewUserForm">
                             <div class="form-group">
                                 <label class="control-label">User Name</label>
-                                <input asp-for="username" class="form-control" required onchange="$(this).parent().find('.has-error').hide();"/>
+                                <input asp-for="username" class="form-control" required onchange="$(this).parent().find('.has-error').hide();" />
                                 <span class="has-error" id="invalid_username">Please enter user name</span>
                             </div>
 
@@ -168,13 +168,13 @@
                                             new SelectListItem(){ Text = "Manager", Value = "Manager"},
                                             }, "---Please Select Role---", new {
                                                 @class = "form-control",
-                                                @onchange = "drp(this)"
+                                                @onchange = "dropdown(this)"
                                             }),
-                                  <span class="has-error" id="invalid_role">Please Select Role</span>
+                                <span class="has-error" id="invalid_role">Please Select Role</span>
                             </div>
 
                             <footer class="text-center form-submit">
-                            <button type="button" class="btn btn-danger form-submit-btn  edit_newUser_btn">Submit</button>
+                                <button type="button" class="btn btn-danger form-submit-btn  edit_newUser_btn">Submit</button>
                             </footer>
                         </form>
                     </div>
@@ -198,15 +198,15 @@
                                 <span class="has-error" id="invalid_password">Please enter Password</span>
                             </div>
 
-                            <input type="hidden" asp-for="userId" />
+                            <input type="hidden" passwordUserID="@Model.userId" id="passwordUserID" />
                             <div class="form-group">
                                 <label class="control-label">Re Type Password</label>
-                                <input type="password" name="password" id="id2" class="form-control" required autocomplete="off" onchange="$(this).parent().find('.has-error').hide();" />
+                                <input type="password" name="confirmPassword" id="id2" class="form-control" required autocomplete="off" onchange="$(this).parent().find('.has-error').hide();" />
                                 <span class="has-error" id="invalid_retypepassword">Please Enter Re Type Password</span>
                             </div>
 
                             <footer class="text-center form-submit">
-                                <button onclick="changepasswords()" class="btn btn-danger">Submit</button>
+                                <input type="button" onclick="changepasswords()" class="btn btn-danger" value="Submit">
                             </footer>
                         </form>
                     </div>
@@ -242,7 +242,6 @@
     <!-- end widget grid -->
     @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
     <script type="text/javascript">
-
         var userId = 0;
         $(document).ready(function () {
             $('#opener').click(function () {
@@ -263,95 +262,84 @@
                     $("#invalid_password").show();
                     isValid = false;
                 }
-                if ($('input[name="password"]').val() == '' || $('input[name="password"]').val() == undefined) {
+                if ($('input[name="confirmPassword"]').val() == '' || $('input[name="confirmPassword"]').val() == undefined) {
                     $("#invalid_retypepassword").show();
+                    isValid = false;
+                }
+                if ($('input[name="password"]').val() != $('input[name="confirmPassword"]').val() && isValid === true) {
+                    alert("Password Not Match ! Please enter Correct Password")
                     isValid = false;
                 }
             }
             if (isValid) {
+                const data = {
+                    password: $('input[name="password"]').val(),
+                    userId: $('#passwordUserID').attr('passwordUserID'),
+                }
                 $('#divAddPopup [id^="invalid_"]').hide();
-                changepassword(form);
-            }              
-            //changepassword(userId);
+                changepassword(data);
+            }
         }
 
         function changepassword(form) {
-            var id3 = $(id1).val();
-            var id4 = $(id2).val();
-            // userId = $(this).attr('userId');
-            var userId = $('input[name="userId"]').val()
-            var obj = {
-                userId: userId,
-                Password: id3
-            }
-            if (id3 == id4) {
-                $.ajax({
-                    url: '/Users/ChangePassword?id=' + userId + '',
-                    type: 'POST',
-                    async: false,
-                    data: obj,                 
-                    success: function (result) {
-                        if (result.success) {
-                            $('.close').click();
-                            $.notify({
-                                title: result.title,
-                                message: result.message,
-                            },
-                                {
-                                    type: result.type,
-                                    allow_dismiss: false,
-                                    showProgressbar: true,
-                                    delay: '100',
-                                    newest_on_top: true,
-                                });
-                        }
-                        setTimeout(() => {
-                            window.location.reload();
-                            window.location.href = "/Users";
-                        }, 2000);                      
+            $.ajax({
+                url: '/Users/ChangePassword',
+                type: 'POST',
+                async: false,
+                data: form,
+                success: function (result) {
+                    if (result.success) {
+                        $('.close').click();
+                        $.notify({
+                            title: result.title,
+                            message: result.message,
+                        },
+                            {
+                                type: result.type,
+                                allow_dismiss: false,
+                                showProgressbar: true,
+                                delay: '100',
+                                newest_on_top: true,
+                            });
                     }
-                });
-                return false;
-            }
-            alert("Password Not Match ! Please enter Correct Password")          
+                    setTimeout(() => {
+                        window.location.reload();
+                        window.location.href = "/Users";
+                    }, 2000);
+                }
+            });
         }
-           
+
 
         function deleteUsers() {
-
             callDelete(userId);
-            //$(this).parent().parent().parent().hide();
-            //$("#" + userId).hide();
-            //$('#opener').modal('hide')
-            //$(".btn btn-danger form-submit-btn").trigger("click");
-            //window.location.href = "/Users";
         }
 
-            function callDelete(userId) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/Users/Delete?id=' + userId + '',
-                    success: function (result) {
-                        if (result.success) {
-                            $('.close').click();
-                            $.notify({
-                                title: result.title,
-                                message: result.message,
-                            },
-                                {
-                                    type: result.type,
-                                    allow_dismiss: false,
-                                    showProgressbar: true,
-                                    delay: '100',
-                                    newest_on_top: true,
-                                });
-                        }
-                        setTimeout(() => {
-                            window.location.reload();
-                            window.location.href = "/Users";
-                        }, 2000);
+        function callDelete(userId) {
+            $.ajax({
+                type: 'POST',
+                url: '/Users/Delete?id=' + userId + '',
+                success: function (result) {
+                    if (result.success) {
+                        $('.close').click();
+                        $.notify({
+                            title: result.title,
+                            message: result.message,
+                        },
+                            {
+                                type: result.type,
+                                allow_dismiss: false,
+                                showProgressbar: true,
+                                delay: '100',
+                                newest_on_top: true,
+                            });
                     }
-                })
+                    setTimeout(() => {
+                        window.location.reload();
+                        window.location.href = "/Users";
+                    }, 2000);
+                }
+            })
         }
 
         //$("#editNewUser").delegate('.edit_newUser_btn', 'click', function () {
@@ -363,14 +351,22 @@
                     $("#invalid_username").show();
                     isValid = false;
                     return;
-                }              
+                }
                 if ($('select[name="role"]').val() == '' || $('select[name="role"]').val() == undefined) {
                     $("#invalid_role").show();
                     isValid = false;
                     return;
                 }
             }
-            $.ajax({              
+            if (isValid) {
+                $('#divAddPopup [id^="invalid_"]').hide();
+                editUsers(form);
+            }
+
+        });
+
+        function editUsers(form) {
+            $.ajax({
                 url: '/Users/Edit?id=' + userId + '',
                 type: "POST",
                 async: false,
@@ -393,13 +389,12 @@
                     setTimeout(() => {
                         window.location.reload();
                         window.location.href = "/Users";
-                    }, 2000);                   
+                    }, 2000);
                 }
             });
-           
-        }); 
+        }
 
-        function drp(obj) {
+        function dropdown(obj) {
             if (obj.parentNode.children[2] != undefined) {
                 obj.parentNode.children[2].remove();
             }
