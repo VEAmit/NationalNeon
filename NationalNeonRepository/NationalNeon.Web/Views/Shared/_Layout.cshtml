@@ -330,7 +330,33 @@
 
             <ol class="breadcrumb">
                 <li>Home</li>
-                <li>Dashboard</li>
+                <li>
+                    @*Dashboard*@
+                    @if (ViewContext.RouteData.Values["controller"].ToString() == "Home")
+                    {
+                        @Html.ActionLink("Dashboard", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["Controller"].ToString())
+                    }
+                    @if (ViewContext.RouteData.Values["controller"].ToString() == "Jobs")
+                    {
+                        @Html.ActionLink("Jobs", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["Controller"].ToString())
+                    }
+                    @if (ViewContext.RouteData.Values["controller"].ToString() == "Task")
+                    {
+                        @Html.ActionLink("Tasks", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["Controller"].ToString())
+                    }
+                    @if (ViewContext.RouteData.Values["controller"].ToString() == "Department")
+                    {
+                        @Html.ActionLink("Department", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["Controller"].ToString())
+                    }
+                    @if (ViewContext.RouteData.Values["controller"].ToString() == "Users")
+                    {
+                        @Html.ActionLink("Users", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["Controller"].ToString())
+                    }
+                    @if (ViewContext.RouteData.Values["controller"].ToString() == "Archived")
+                    {
+                        @Html.ActionLink("Archived", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["Controller"].ToString())
+                    }
+                </li>
             </ol>
             <!-- end breadcrumb -->
         </div>
@@ -1178,7 +1204,24 @@
                     });
 
                 }
+                 // manageBreadCrumb();
             });
+
+             //function manageBreadCrumb() {
+            //    var path = location.pathname;
+            //    var breadcrumb = $("ol[class='breadcrumb'] li:eq(1)");
+            //    if (path != null && path != "" && path != undefined)
+            //    {
+            //        if (path == "/Archived") {
+            //            breadcrumb.text("Job");
+            //            $("ol[class='breadcrumb']").append("<li>Archived</li>");
+            //        }
+            //        else {
+            //            path = (path == "/Home") ? "/Dashboard" : path;
+            //            breadcrumb.text(path.replace("/", ""));
+            //        }
+            //    }
+            //}
 
 
         </script>
