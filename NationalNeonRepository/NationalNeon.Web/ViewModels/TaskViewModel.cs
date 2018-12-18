@@ -33,7 +33,8 @@ namespace NationalNeon.Web.ViewModels
         public DateTime CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedOn { get; set; }
-        
-     
+        public int userId { get; set; }
+
+
     }
 }

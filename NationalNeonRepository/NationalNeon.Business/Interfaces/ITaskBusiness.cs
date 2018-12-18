@@ -29,5 +29,7 @@ namespace NationalNeon.Business.Interfaces
        void updateincompleteTask(int TaskId);
 
         List<TaskModel> getcompleteTask();
+
+        List<TaskModel> GetAssignedTasks(int userId, string role);
     }
 }

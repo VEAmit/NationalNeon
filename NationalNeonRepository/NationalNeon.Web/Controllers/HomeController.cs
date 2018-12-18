@@ -45,14 +45,25 @@ namespace NationalNeon.Web.Controllers
             BindGraph();
             IncompleteTask();
             CompleteTask();
+            AssignedTasks();
             //var dashboard = new DashboardViewModel();
             //var userData = HttpContext.Session.GetString("User");
-            
+
             //{
             //    dashboard.User = JsonConvert.DeserializeObject<Domain.User.UserModel>(userData);
             //}
-          
+
             return View();
+        }
+
+        public IActionResult AssignedTasks()
+        {
+            User deserialisedUserInfo = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("User"));
+
+            var assignedTasks = itaskBusiness.GetAssignedTasks(deserialisedUserInfo.userId, deserialisedUserInfo.role);
+            ViewBag.loginUserRoleType = deserialisedUserInfo.role;
+            ViewBag.assignedTasks = assignedTasks;
+            return RedirectToAction("dashboard");
         }
         public IActionResult Targetjobs()
         {

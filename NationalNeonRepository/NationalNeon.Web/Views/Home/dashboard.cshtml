@@ -1,11 +1,10 @@
-﻿
-<span id="updating-chart" class="chart-large txt-color-blue noprint" style="display:none;"></span>
+﻿<span id="updating-chart" class="chart-large txt-color-blue noprint" style="display:none;"></span>
 
 
 <div class="row mb-2 noprint">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <button onclick="window.history.back();" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Back</button>
-        <button id="refreshdashboard"  class="btn btn-danger export-data"><i class="fa fa-repeat"></i> Refresh</button>
+        <button id="refreshdashboard" class="btn btn-danger export-data"><i class="fa fa-repeat"></i> Refresh</button>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
         <button id="print" onclick="window.print()" class="btn btn-danger export-data"><i class="fa fa-print"></i> Print</button>
@@ -336,6 +335,88 @@
                         <h5 class="todo-group-title" style="color:black"><i class="fa fa-warning"></i> Assigned Tasks</h5>
                         <ul id="sortable1" class="todo ui-sortable">
                             <li>
+                                @*<span class="handle ui-sortable-handle">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="checkbox-inline">
+                                            <i></i>
+                                        </label>
+                                    </span>*@
+                                <p>
+                                    @*Coming Soon This Feature...*@
+                                    @*<strong>Ticket #17643</strong> - Hotfix for WebApp interface issue [<a href="javascript:void(0);" class="font-xs">More Details</a>] <span class="text-muted">Sea deep blessed bearing under darkness from God air living isn't. </span>
+                                        <span class="date">Jan 1, 2014</span>*@
+                                    <div class="padding0">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sno</th>
+                                                        <th>Task Name</th>
+                                                        <th>Budget Hours</th>
+                                                        <th>Completion Date</th>
+                                                        <th>Is Completed</th>
+                                                        @if (ViewBag.loginUserRoleType == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Admin) || ViewBag.loginUserRoleType == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Manager))
+                                                        {
+                                                            <th>Employee</th>
+                                                        }
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        var task_number = 0;
+                                                        @foreach (var task in ViewBag.assignedTasks)
+                                                        {
+                                                            <tr>
+                                                                <td>@(++task_number)</td>
+                                                                <td><strong>@task.TaskName</strong></td>
+                                                                <td>@task.BudgetedHours</td>
+                                                                <td>@task.TargetCompletionDate.ToString("D")</td>
+                                                                @if (task.Completed == 0)
+                                                                {
+                                                                    <td>No</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>Yes</td>
+                                                                }
+                                                                @if (ViewBag.loginUserRoleType == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Admin) || ViewBag.loginUserRoleType == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Manager))
+                                                                {
+                                                                    <td>@task.Employee</td>
+                                                                }
+
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h2 class="todo-group-title" style="color:black"><i class="fa fa-exclamation"></i> Incomplete Tasks </h2>
+                    <ul id="sortable2" class="todo ui-sortable">
+
+                        @foreach (var item in ViewBag.incompleteTask)
+                        {
+                            <li>
+
+                                <span class="handle ui-sortable-handle">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="checkbox-inline" onclick="completetask(@item.TaskId)">
+                                        <i></i>
+                                    </label>
+                                </span>
+                                <p>
+                                    <strong>@item.TaskName</strong>
+                                </p>
+                            </li>
+                        }
+
+                        @*<li>
                                 <span class="handle ui-sortable-handle">
                                     <label class="checkbox">
                                         <input type="checkbox" name="checkbox-inline">
@@ -343,90 +424,56 @@
                                     </label>
                                 </span>
                                 <p>
-                                    Coming Soon This Feature...
-                                    @*<strong>Ticket #17643</strong> - Hotfix for WebApp interface issue [<a href="javascript:void(0);" class="font-xs">More Details</a>] <span class="text-muted">Sea deep blessed bearing under darkness from God air living isn't. </span>
-                                        <span class="date">Jan 1, 2014</span>*@
+                                    <strong>Ticket #1314</strong> - Call customer support re: Issue <a href="javascript:void(0);" class="font-xs">#6134</a><small> (code review)</small>
+                                    <span class="date">Nov 22, 2013</span>
                                 </p>
                             </li>
-                        </ul>
-                        <h2 class="todo-group-title" style="color:black"><i class="fa fa-exclamation"></i> Incomplete Tasks </h2>
-                        <ul id="sortable2" class="todo ui-sortable">
+                            <li>
+                                <span class="handle ui-sortable-handle">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="checkbox-inline">
+                                        <i></i>
+                                    </label>
+                                </span>
+                                <p>
+                                    <strong>Ticket #17643</strong> - Hotfix for WebApp interface issue [<a href="javascript:void(0);" class="font-xs">More Details</a>] <span class="text-muted">Sea deep blessed bearing under darkness from God air living isn't. </span>
+                                    <span class="date">Jan 1, 2014</span>
+                                </p>
+                            </li>*@
+                    </ul>
 
-                            @foreach (var item in ViewBag.incompleteTask)
+                    <h5 class="todo-group-title" style="color:black"><i class="fa fa-check"></i> Completed Tasks</h5>
+                    <ul id="sortable3" class="todo">
+                        @if (ViewBag.completeTask != null)
+                        {
+
+                            @foreach (var item in ViewBag.completeTask)
                             {
-                                <li>
-
-                                    <span class="handle ui-sortable-handle">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="checkbox-inline" onclick="completetask(@item.TaskId)">
+                                <li class="complete">
+                                    <span class="handle">
+                                        <label class="checkbox state-disabled" style="display:none">
+                                            <input type="checkbox" name="checkbox-inline" checked="checked" disabled="disabled">
                                             <i></i>
                                         </label>
                                     </span>
                                     <p>
                                         <strong>@item.TaskName</strong>
+                                        @*<strong>Ticket #17643</strong> - Hotfix for WebApp interface issue [<a href="javascript:void(0);" class="font-xs">More Details</a>] <span class="text-muted">Sea deep blessed bearing under darkness from God air living isn't. </span>
+                                            <span class="date">Jan 1, 2014</span>*@
                                     </p>
                                 </li>
                             }
+                        }
+                    </ul>
 
-                            @*<li>
-                                    <span class="handle ui-sortable-handle">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="checkbox-inline">
-                                            <i></i>
-                                        </label>
-                                    </span>
-                                    <p>
-                                        <strong>Ticket #1314</strong> - Call customer support re: Issue <a href="javascript:void(0);" class="font-xs">#6134</a><small> (code review)</small>
-                                        <span class="date">Nov 22, 2013</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <span class="handle ui-sortable-handle">
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="checkbox-inline">
-                                            <i></i>
-                                        </label>
-                                    </span>
-                                    <p>
-                                        <strong>Ticket #17643</strong> - Hotfix for WebApp interface issue [<a href="javascript:void(0);" class="font-xs">More Details</a>] <span class="text-muted">Sea deep blessed bearing under darkness from God air living isn't. </span>
-                                        <span class="date">Jan 1, 2014</span>
-                                    </p>
-                                </li>*@
-                        </ul>
-
-                        <h5 class="todo-group-title" style="color:black"><i class="fa fa-check"></i> Completed Tasks</h5>
-                        <ul id="sortable3" class="todo">
-                            @if (ViewBag.completeTask != null)
-                            {
-
-                                @foreach (var item in ViewBag.completeTask)
-                                {
-                                    <li class="complete">
-                                        <span class="handle">
-                                            <label class="checkbox state-disabled" style="display:none">
-                                                <input type="checkbox" name="checkbox-inline" checked="checked" disabled="disabled">
-                                                <i></i>
-                                            </label>
-                                        </span>
-                                        <p>
-                                            <strong>@item.TaskName</strong>
-                                            @*<strong>Ticket #17643</strong> - Hotfix for WebApp interface issue [<a href="javascript:void(0);" class="font-xs">More Details</a>] <span class="text-muted">Sea deep blessed bearing under darkness from God air living isn't. </span>
-                                                <span class="date">Jan 1, 2014</span>*@
-                                        </p>
-                                    </li>
-                                }
-                            }
-                        </ul>
-
-                        <!-- end content -->
-                    </div>
-
+                    <!-- end content -->
                 </div>
-                <!-- end widget div -->
-            </div>
-            <!-- end widget -->
 
-        </article>
+            </div>
+            <!-- end widget div -->
+    </div>
+    <!-- end widget -->
+    </article>
 
 
     </div>
@@ -544,6 +591,7 @@
 
         });
         /* End Tasks Pop Up Page Save the data     */
+
 
     });
 
@@ -699,6 +747,7 @@
 
 
     function completetask(TaskId) {
+
         $.ajax({
             type: 'POST',
             url: "/Home/updateCompleteTask?TaskId=" + TaskId + "",
@@ -713,5 +762,6 @@
     $("#refreshdashboard").click(function () {
         history.go(0);
     });
+
 
 </script>

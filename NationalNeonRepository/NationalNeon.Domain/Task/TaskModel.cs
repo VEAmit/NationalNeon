@@ -1,4 +1,5 @@
 ﻿using NationalNeon.Domain.Department;
+using NationalNeon.Domain.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,7 +30,9 @@ namespace NationalNeon.Domain.Task
         public DateTime CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedOn { get; set; }
+        public int userId { get; set; }
+        public UserModel User { get; set; }
 
-      
+
     }
 }

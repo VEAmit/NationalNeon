@@ -69,6 +69,7 @@
         });
 
         $(".btn_addUpdateTask").on('click', function () {
+            debugger;
             let isValid = true;
             var curEvent = $(this);
             var formValue = $("#addUpdateForm").serialize();
@@ -86,6 +87,19 @@
                     $("#invalid_TaskName").show();
                     isValid = false;
                 }
+                if ($('select[name="userId"]').val() == '' || $('select[name="userId"]').val() == undefined) {
+                    $("#invalid_UserName").show();
+                    isValid = false;
+                }
+                if ($('input[name="Employee"]').val() == '' || $('input[name="Employee"]').val() == undefined) {
+                    $("#invalid_Employee").show();
+                    isValid = false;
+                }
+                if ($('input[name="Status"]').val() == '' || $('input[name="Status"]').val() == undefined) {
+                    $("#invalid_Status").show();
+                    isValid = false;
+                }
+
                 //if ($('number[name="BudgetedHours"]').val() == '' || $('number[name="BudgetedHours"]').val() == undefined) {
                 //    $("#invalid_BudgetedHours").show();
                 //    isValid = false;

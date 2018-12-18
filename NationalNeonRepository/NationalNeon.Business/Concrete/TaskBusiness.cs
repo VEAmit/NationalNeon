@@ -7,6 +7,7 @@ using ExpressMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using NationalNeon.Utility.Enums;
 
 namespace NationalNeon.Business.Concrete
 {
@@ -108,6 +109,18 @@ namespace NationalNeon.Business.Concrete
             var model = new List<TaskModel>();
             var abc = taskRepository.GetAll().Where(x => x.Completed == 1).ToList();
             Mapper.Map(abc, model);
+            return model;
+        }
+
+        public List<TaskModel> GetAssignedTasks(int userId, string role)
+        {
+            var model = new List<TaskModel>();
+            List<Task> taskList = new List<Task>();
+            if (role == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Admin) || role == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Manager))
+                taskList = taskRepository.GetAll(null, null, "User").ToList();
+            else
+                taskList = taskRepository.GetAll(null, null, "User").Where(x => x.userId == userId).ToList();
+            Mapper.Map(taskList, model);
             return model;
         }
     }

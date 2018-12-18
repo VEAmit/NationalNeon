@@ -7,7 +7,6 @@
 </style>
 @*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
-
 <div class="modal-content">
     <div class="modal-header modal-popup-header">
         <button type="button" class="close" data-dismiss="modal" id="closePop">&times;</button>
@@ -34,10 +33,19 @@
                 </div>
 
             </section>
+            <section>
+                <div class="form-group">
+                    <label class="control-label">Users</label>
+                    @*@Html.DropDownList("")*@
+                    @*@Html.DropDownListFor()*@
+                    @Html.DropDownListFor(m => m.userId, (SelectList)ViewBag.usersList, "---- Select ----", new { @class = "form-control", @onchange = "drp(this)" })
+                    <span class="has-error" id="invalid_UserName">Please Select User Name</span>
+                </div>
 
+            </section>
             <section class="form-group">
                 <label class="control-label">Task Name</label>
-                <input asp-for="TaskName" type="text" class="form-control" autocomplete="off" onchange="$(this).parent().find('.has-error').hide();"/>
+                <input asp-for="TaskName" type="text" class="form-control" autocomplete="off" onchange="$(this).parent().find('.has-error').hide();" />
                 @*<span asp-validation-for="TaskName" class="text-danger"></span>*@
                 <span class="has-error" id="invalid_TaskName">Please enter Task Name</span>
             </section>
@@ -51,20 +59,23 @@
 
             <section class="form-group">
                 <label class="control-label">Target Completion Date</label>
-                <input asp-for="TargetCompletionDate" type="text" data-provide="datepicker" class="form-control dateCalender" autocomplete="off" onchange="$(this).parent().find('.has-error').hide();" />
+                <input asp-for="TargetCompletionDate" type="text" data-provide="datepicker" class="form-control dateCalender" onchange="$(this).parent().find('.has-error').hide()" autocomplete="off" />
+                @*onchange="$(this).parent().find('.has-error').hide()"*@
                 <span class="has-error" id="invalid_TargetCompletionDate">Please enter Target Completion Date</span>
                 @*<span asp-validation-for="TargetCompletionDate" class="text-danger"></span>*@
             </section>
 
             <section class="form-group">
                 <label class="control-label">Employee</label>
-                <input asp-for="Employee" type="text" class="form-control" autocomplete="off"/>
+                <input asp-for="Employee" type="text" class="form-control" autocomplete="off" />
+                <span class="has-error" id="invalid_Employee">Please enter employee</span>
                 @*<span asp-validation-for="Employee" class="text-danger"></span>*@
             </section>
 
             <section class="form-group">
                 <label class="control-label">Status</label>
-                <input type="text" asp-for="Status" class="form-control" autocomplete="off"/>
+                <input type="text" asp-for="Status" class="form-control" autocomplete="off" />
+                <span class="has-error" id="invalid_Status">Please enter status</span>
                 @*<span asp-validation-for="Status" class="text-danger"></span>*@
             </section>
 
@@ -72,11 +83,17 @@
 
             <footer class="text-center form-submit"><button type="button" class="btn btn-danger form-submit-btn btn_addUpdateTask">Submit</button></footer>
         </form>
-        </div>
     </div>
+</div>
 <script>
-    $('.dateCalender').datepicker({
-        autoclose: true,
+    $(document).ready(function () {
+        $('.dateCalender').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+        }).on("change", function () {
+            $(this).attr('value', this.value);
+        });
+
     });
 
     function drp(obj) {

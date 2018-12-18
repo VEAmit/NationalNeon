@@ -82,6 +82,10 @@
       <Project>{3CC53D1C-87AB-42B0-A65A-67B06AC19739}</Project>
       <Name>NationalNeon.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NationalNeon.Utility\NationalNeon.Utility.csproj">
+      <Project>{c7fb35f0-b961-492a-90f4-a1896f431eb2}</Project>
+      <Name>NationalNeon.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

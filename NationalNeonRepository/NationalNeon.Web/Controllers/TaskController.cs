@@ -22,13 +22,15 @@ namespace NationalNeon.Web.Controllers
         private readonly ITaskBusiness itaskBusiness;
         private readonly IDepartmentBusiness idepartmentBusiness;
         private readonly IJobBusiness ijobBusiness;
+        private readonly IUserBusiness iUserBusiness;
 
-        public TaskController(ApplicationDbContext db, ITaskBusiness itaskBusiness, IDepartmentBusiness idepartmentBusiness, IJobBusiness ijobBusiness)
+        public TaskController(ApplicationDbContext db, ITaskBusiness itaskBusiness, IDepartmentBusiness idepartmentBusiness, IJobBusiness ijobBusiness, IUserBusiness iUserBusiness)
         {
             this.db = db;
             this.itaskBusiness = itaskBusiness;
             this.idepartmentBusiness = idepartmentBusiness;
             this.ijobBusiness = ijobBusiness;
+            this.iUserBusiness = iUserBusiness;
         }
         [Route("Task")]
         public IActionResult Index()
@@ -40,6 +42,9 @@ namespace NationalNeon.Web.Controllers
         {
             var jobList = ijobBusiness.ddlGetAllJobs();
             ViewBag.jobList = new SelectList(jobList, "jobId", "job_name");
+
+            var usersList = iUserBusiness.GetAllUser();
+            ViewBag.usersList = new SelectList(usersList, "userId", "username");
 
             var departmentList = idepartmentBusiness.GetAll();
             ViewBag.departmentList = new SelectList(departmentList, "departmentId", "departmentname");
@@ -113,6 +118,7 @@ namespace NationalNeon.Web.Controllers
             TaskModel data = new TaskModel();
             Mapper.Map(model, data);
             data.jobId = model.jobId;
+            data.userId = model.userId;
             data.departmentId = model.departmentId;
 
             if (model.TaskId == 0) 
@@ -134,6 +140,7 @@ namespace NationalNeon.Web.Controllers
                 var datamodal = new TaskModel();
                 datamodal.TaskId = model.TaskId;
                 datamodal.jobId = model.jobId;
+                datamodal.userId = model.userId;
                 datamodal.departmentId = model.departmentId;
                 datamodal.TaskName = model.TaskName;
                 datamodal.BudgetedHours = model.BudgetedHours;

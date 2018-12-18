@@ -18,6 +18,10 @@ namespace NationalNeon.Repository.DB
         public int? departmentId { get; set; }
         public Department Department { get; set; }
 
+        [ForeignKey("User")]
+        public int? userId { get; set; }
+        public User User { get; set; }
+
         [Required(ErrorMessage = "Enter Task Name")]
         public string TaskName { get; set; }
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace NationalNeon.Web.Helpers
+namespace NationalNeon.Utility.Enums
 {
     public class EnumHelper<T>
     {
