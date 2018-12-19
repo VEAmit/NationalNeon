@@ -72,6 +72,7 @@ namespace NationalNeon.Business.Concrete
                 data.Employee = model.Employee;
                 data.Status = model.Status;
                 data.UpdatedOn = DateTime.Now;
+                data.userId = model.userId;
                 taskRepository.Update(data);
             }
         }

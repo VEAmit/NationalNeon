@@ -21,6 +21,7 @@ function callGetTask(TaskId) {
             $('#TargetCompletionDate').val(ttargerdate);
             $('#Employee').val(data.data.employee);
             $('#Status').val(data.data.status);
+            $('#userId').val(data.data.userId);
            
         }
     });

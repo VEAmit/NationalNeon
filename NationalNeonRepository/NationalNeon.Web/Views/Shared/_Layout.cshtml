@@ -364,6 +364,9 @@
         <div id="content">
             @RenderBody()
         </div>
+        <div class="loading" align="center">
+            <img src="~/img/ajax-loader.gif" alt="" />
+        </div>
     </div>
 
 
@@ -1206,6 +1209,21 @@
                 }
                  // manageBreadCrumb();
             });
+            showProgress();
+            window.onload = function () {
+                setTimeout(function () {
+                    document.body.removeChild(modal);
+                    loading.style.display = "none";
+                }, 500);
+            };
+            function showProgress() {
+                modal = document.createElement("div");
+                modal.className = "modal";
+                document.body.appendChild(modal);
+                loading = document.getElementsByClassName("loading")[0];
+                loading.style.display = "block";
+
+            };
 
              //function manageBreadCrumb() {
             //    var path = location.pathname;

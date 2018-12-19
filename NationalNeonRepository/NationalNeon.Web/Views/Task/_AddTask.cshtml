@@ -81,7 +81,7 @@
 
             <input type="hidden" asp-for="TaskId" />
 
-            <footer class="text-center form-submit"><button type="button" class="btn btn-danger form-submit-btn btn_addUpdateTask">Submit</button></footer>
+            <footer class="text-center form-submit"><button type="button" class="btn btn-danger form-submit-btn btn_addUpdateTask" onclick="return settargetCompleteDate();">Submit</button></footer>
         </form>
     </div>
 </div>
@@ -89,13 +89,23 @@
     $(document).ready(function () {
         $('.dateCalender').datepicker({
             autoclose: true,
-            format: 'yyyy-mm-dd'
+            dateFormat: 'yyyy-mm-dd'
         }).on("change", function () {
             $(this).attr('value', this.value);
         });
 
     });
+    function settargetCompleteDate() {
 
+        var targetCompleteDate = $("#TargetCompletionDate").val();
+        var dateParameters = targetCompleteDate.split('/');
+        var month = dateParameters[0];
+        var day = dateParameters[1];
+        var year = dateParameters[2];
+        $("#TargetCompletionDate").val(year + "-" + month + "-" + day);
+        $("#TargetCompletionDate").attr('value', year + "-" + month + "-" + day);
+        return true;
+    }
     function drp(obj) {
         if (obj.parentNode.children[2] != undefined) {
             obj.parentNode.children[2].remove();
