@@ -309,11 +309,13 @@
     <Compile Include="DB\ApplicationDbContext.cs" />
     <Compile Include="DB\Department.cs" />
     <Compile Include="DB\Job.cs" />
+    <Compile Include="DB\JobFileUpload.cs" />
     <Compile Include="DB\Task.cs" />
     <Compile Include="DB\User.cs" />
     <Compile Include="DepartmentRepository.cs" />
     <Compile Include="Interface\IBaseRepository.cs" />
     <Compile Include="Interface\IUnitOfWork.cs" />
+    <Compile Include="JobFileUploadRepository.cs" />
     <Compile Include="JobRepositorty.cs" />
     <Compile Include="Migrations\20180914074952_first.cs" />
     <Compile Include="Migrations\20180914074952_first.designer.cs">
@@ -322,6 +324,10 @@
     <Compile Include="Migrations\20181218120925_tasktablechanges.cs" />
     <Compile Include="Migrations\20181218120925_tasktablechanges.designer.cs">
       <DependentUpon>20181218120925_tasktablechanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20181221115036_JobfileUploadchanges.cs" />
+    <Compile Include="Migrations\20181221115036_JobfileUploadchanges.designer.cs">
+      <DependentUpon>20181221115036_JobfileUploadchanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

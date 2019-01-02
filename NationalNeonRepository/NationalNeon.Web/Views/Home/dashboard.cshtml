@@ -1,4 +1,5 @@
-﻿<span id="updating-chart" class="chart-large txt-color-blue noprint" style="display:none;"></span>
+﻿
+<span id="updating-chart" class="chart-large txt-color-blue noprint" style="display:none;"></span>
 
 
 <div class="row mb-2 noprint">
@@ -354,7 +355,7 @@
                                                         <th>Task Name</th>
                                                         <th>Budget Hours</th>
                                                         <th>Completion Date</th>
-                                                        <th>Is Completed</th>
+                                                        <th>Completed</th>
                                                         @if (ViewBag.loginUserRoleType == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Admin) || ViewBag.loginUserRoleType == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Manager))
                                                         {
                                                             <th>Employee</th>
@@ -369,7 +370,7 @@
                                                         {
                                                             <tr>
                                                                 <td>@(++task_number)</td>
-                                                                <td><strong>@task.TaskName</strong></td>
+                                                                <td>@task.TaskName</td>
                                                                 <td>@task.BudgetedHours</td>
                                                                 <td>@task.TargetCompletionDate.ToString("D")</td>
                                                                 @if (task.Completed == 0)
@@ -534,7 +535,6 @@
                     $("#invalid_JobName").show();
                     isValid = false;
                 }
-
                 if ($('select[name="departmentId"]').val() == '' || $('select[name="departmentId"]').val() == undefined) {
                     $("#invalid_DepartmentName").show();
                     isValid = false;
@@ -547,11 +547,22 @@
                     $("#invalid_TargetCompletionDate").show();
                     isValid = false;
                 }
-
+                //----------------
+                if ($('select[name="userId"]').val() == '' || $('select[name="userId"]').val() == undefined) {
+                    $("#invalid_UserName").show();
+                    isValid = false;
+                }
+                if ($('input[name="Status"]').val() == '' || $('input[name="Status"]').val() == undefined) {
+                    $("#invalid_Status").show();
+                    isValid = false;
+                }
             }
             if (isValid) {
                 $('#divAddPopup [id^="invalid_"]').hide();
-                saveOrUpdate(formValue);
+                if (setTaskJobDates()) {
+                    formValue = $("#addUpdateForm").serialize();
+                    saveOrUpdate(formValue);
+                }
             }
             // saveOrUpdate(formValue);
         });
@@ -610,6 +621,7 @@
     }
 
     $('#divAddPopup').delegate('.btn_addUpdateJobs', 'click', function () {
+
         var curEvent = $(this);
         //var formValue = $("#addUpdateJobForm").serialize();
         let isValid = true;
@@ -628,17 +640,16 @@
                 $("#invalid_target_completion_date").show();
                 isValid = false;
             }
-            if ($('input[name="revenue"]').val() == '' || $('input[name="revenue"]').val() == undefined) {
-                $("#invalid_revenue").show();
-                isValid = false;
-            }
+
         }
 
         if (isValid) {
             $('#divAddPopup [id^="invalid_"]').hide();
-            saveOrUpdatejob(formValue);
+            if (setJobDates()) {
+                formValue = $("#addUpdateJobForm").serialize();
+                saveOrUpdatejob(formValue);
+            }
         }
-        // saveOrUpdatejob(formValue);
     });
 
 
@@ -763,5 +774,47 @@
         history.go(0);
     });
 
+    function setTaskJobDates() {
+        var targetCompleteDate = $("#TargetCompletionDate").val();
+        if (targetCompleteDate != null && targetCompleteDate != undefined && targetCompleteDate != "") {
+            var dateParameters = targetCompleteDate.split('/');
+            var month = dateParameters[0];
+            var day = dateParameters[1];
+            var year = dateParameters[2];
+            $("#TargetCompletionDate").val(year + "-" + month + "-" + day);
+            $("#TargetCompletionDate").attr('value', year + "-" + month + "-" + day);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    function setJobDates() {
 
+        var targetCompleteDate = $("#target_completion_date").val();
+        var scheduledDate = $("#scheduled_date").val();
+        var isValid = false;
+        if (targetCompleteDate != "" && targetCompleteDate != undefined) {
+            var targetDateParameters = targetCompleteDate.split('/');
+            var targetDatemonth = targetDateParameters[0];
+            var targetDateday = targetDateParameters[1];
+            var targetDateyear = targetDateParameters[2];
+            $("#target_completion_date").val(targetDateyear + "-" + targetDatemonth + "-" + targetDateday);
+            $("#target_completion_date").attr('value', targetDateyear + "-" + targetDatemonth + "-" + targetDateday);
+            isValid = true;
+        }
+
+        if (scheduledDate != "" && scheduledDate != undefined) {
+
+            var scheduledDateParameters = scheduledDate.split('/');
+            var scheduledDatemonth = scheduledDateParameters[0];
+            var scheduledDateday = scheduledDateParameters[1];
+            var scheduledDateyear = scheduledDateParameters[2];
+            $("#scheduled_date").val(scheduledDateyear + "-" + scheduledDatemonth + "-" + scheduledDateday);
+            $("#scheduled_date").attr('value', scheduledDateyear + "-" + scheduledDatemonth + "-" + scheduledDateday);
+
+        }
+
+        return isValid;
+    }
 </script>

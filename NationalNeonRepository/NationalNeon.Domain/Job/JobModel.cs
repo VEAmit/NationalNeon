@@ -17,7 +17,7 @@ namespace NationalNeon.Domain.Job
         public DateTime target_completion_date { get; set; }
         public string status { get; set; }
 
-       // [DataType(DataType.Date)]
+        // [DataType(DataType.Date)]
         public DateTime scheduled_date { get; set; }
         public string sales_person { get; set; }
         public Decimal revenue { get; set; }
@@ -25,5 +25,6 @@ namespace NationalNeon.Domain.Job
         public DateTime created_on { get; set; }
         public string updated_by { get; set; }
         public DateTime updated_on { get; set; }
+        public JobFileUploadModel JobFileUpload { get; set; }
     }
 }

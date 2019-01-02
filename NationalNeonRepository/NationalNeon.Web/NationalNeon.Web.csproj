@@ -447,4 +447,8 @@
     <ProjectReference Include="..\NationalNeon.Utility\NationalNeon.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>

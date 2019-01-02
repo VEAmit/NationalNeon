@@ -1,4 +1,4 @@
-﻿@model NationalNeon.Domain.Task.TaskModel
+@model NationalNeon.Domain.Task.TaskModel
 <style>
     .has-error {
         color: red;
@@ -6,7 +6,8 @@
     }
 </style>
 @*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+
 <div class="modal-content">
     <div class="modal-header modal-popup-header">
         <button type="button" class="close" data-dismiss="modal" id="closePop">&times;</button>
@@ -59,7 +60,7 @@
 
             <section class="form-group">
                 <label class="control-label">Target Completion Date</label>
-                <input asp-for="TargetCompletionDate" type="text" data-provide="datepicker" class="form-control dateCalender" onchange="$(this).parent().find('.has-error').hide()" autocomplete="off" />
+                <input asp-for="TargetCompletionDate" type="text" data-provide="datepicker" class="form-control dateCalender" onkeypress="return false;" onchange="$(this).parent().find('.has-error').hide()" autocomplete="off" />
                 @*onchange="$(this).parent().find('.has-error').hide()"*@
                 <span class="has-error" id="invalid_TargetCompletionDate">Please enter Target Completion Date</span>
                 @*<span asp-validation-for="TargetCompletionDate" class="text-danger"></span>*@
@@ -81,31 +82,24 @@
 
             <input type="hidden" asp-for="TaskId" />
 
-            <footer class="text-center form-submit"><button type="button" class="btn btn-danger form-submit-btn btn_addUpdateTask" onclick="return settargetCompleteDate();">Submit</button></footer>
+            <footer class="text-center form-submit"><button type="button" class="btn btn-danger form-submit-btn btn_addUpdateTask">Submit</button></footer>
+            @*onclick="return settargetCompleteDate();"*@
         </form>
     </div>
 </div>
 <script>
     $(document).ready(function () {
+
         $('.dateCalender').datepicker({
             autoclose: true,
-            dateFormat: 'yyyy-mm-dd'
+            dateFormat: 'mm/dd/yy'
+
         }).on("change", function () {
             $(this).attr('value', this.value);
         });
-
+        
     });
-    function settargetCompleteDate() {
-
-        var targetCompleteDate = $("#TargetCompletionDate").val();
-        var dateParameters = targetCompleteDate.split('/');
-        var month = dateParameters[0];
-        var day = dateParameters[1];
-        var year = dateParameters[2];
-        $("#TargetCompletionDate").val(year + "-" + month + "-" + day);
-        $("#TargetCompletionDate").attr('value', year + "-" + month + "-" + day);
-        return true;
-    }
+    
     function drp(obj) {
         if (obj.parentNode.children[2] != undefined) {
             obj.parentNode.children[2].remove();

@@ -15,16 +15,20 @@ namespace NationalNeon.Business.Concrete
     public class JobBusiness : IJobBusiness
     {
         private readonly JobRepositorty jobRepositorty;
+        private readonly JobFileUploadRepository jobFileUploadRepository;
+        private readonly TaskRepository taskRepository;
         public JobBusiness(IUnitOfWork unit)
         {
             jobRepositorty = new JobRepositorty(unit);
+            jobFileUploadRepository = new JobFileUploadRepository(unit);
+            taskRepository = new TaskRepository(unit);
         }
         public JobModel AddJobs(JobModel data)
         {
             Job job = new Job();
             data.created_on = DateTime.Now;
             data.updated_on = DateTime.Now;
-            
+
             Mapper.Map(data, job);
             jobRepositorty.Insert(job);
             Mapper.Map(job, data);
@@ -35,7 +39,7 @@ namespace NationalNeon.Business.Concrete
         public List<JobModel> GetAllJobsOnView()
         {
             var jobmodel = new List<JobModel>();
-            var model = jobRepositorty.GetAll().Where(a=>a.status !="Archived").ToList();
+            var model = jobRepositorty.GetAll(null, null, "JobFileUpload").Where(a => a.status != "Archived").ToList();
             return Mapper.Map(model, jobmodel);
         }
 
@@ -69,13 +73,21 @@ namespace NationalNeon.Business.Concrete
         public List<JobModel> GetAllJobsByArcheivedJobs()
         {
             var jobmodel = new List<JobModel>();
-            var model = jobRepositorty.GetAll().Where(a => a.status=="Archived").ToList();
+            var model = jobRepositorty.GetAll(null, null, "JobFileUpload").Where(a => a.status == "Archived").ToList();
             return Mapper.Map(model, jobmodel);
         }
+
         public void DeleteJobs(int Id)
         {
-            jobRepositorty.Delete(u => u.jobId == Id);
-
+            try
+            {
+                UpdateJobFileReference(Id);
+                UpdateTaskJobReference(Id);
+                jobRepositorty.Delete(u => u.jobId == Id);
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         public JobModel GetJob(int id)
@@ -109,10 +121,62 @@ namespace NationalNeon.Business.Concrete
         {
             var data = jobRepositorty.FindBy(x => x.jobId == id);
             if (data != null)
-            {               
+            {
                 data.status = "Archived";
                 jobRepositorty.Update(data);
             }
         }
+
+        public bool UpdateJobFileUploadPath(JobFileUploadModel jobFileUploadModel)
+        {
+            try
+            {
+                var jobFileUpload = jobFileUploadRepository.GetAll(x => x.JobId == jobFileUploadModel.JobId, null, "Job").FirstOrDefault();
+                if (jobFileUpload != null)
+                {
+                    jobFileUpload.FilePath = jobFileUploadModel.FilePath;
+                    jobFileUploadRepository.Update(jobFileUpload);
+                }
+                else
+                {
+                    jobFileUpload = new JobFileUpload();
+                    Mapper.Map(jobFileUploadModel, jobFileUpload);
+                    jobFileUploadRepository.Insert(jobFileUpload);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+        }
+        public void UpdateJobFileReference(int jobId)
+        {
+            var fileUploadList = jobFileUploadRepository.GetAll(row => row.JobId == jobId).ToList();
+            if (fileUploadList != null)
+            {
+                foreach (var fileUpload in fileUploadList)
+                {
+                    fileUpload.JobId = null;
+                    jobFileUploadRepository.Update(fileUpload);
+                }
+            }
+
+        }
+        public void UpdateTaskJobReference(int jobId)
+        {
+            var taskList = taskRepository.GetAll(row => row.jobId == jobId).ToList();
+            if (taskList != null)
+            {
+                foreach (var task in taskList)
+                {
+                    task.jobId = null;
+                    taskRepository.Update(task);
+                }
+            }
+
+        }
+
     }
 }

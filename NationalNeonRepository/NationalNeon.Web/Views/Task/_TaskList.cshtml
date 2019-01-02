@@ -1,4 +1,4 @@
-﻿@model List<NationalNeon.Web.ViewModels.TaskDepartmentViewModel>
+@model List<NationalNeon.Web.ViewModels.TaskDepartmentViewModel>
 
 <script src="~/scripts/Task.js"></script>
 @*<button class="btn btn-danger new-jobs export-data" onclick="exportTask()">Export All Work Orders</button>*@
@@ -45,7 +45,19 @@
                                         <td>@item.departmentname</td>
                                         <td>@item.TaskName</td>
                                         <td>@item.BudgetedHours</td>
-                                        <td>@item.TargetCompletionDate.ToString("D")</td>
+                                        <td>
+                                            @{
+                                                var targetdate = "";
+                                                if (item.TargetCompletionDate.ToString("MM/dd/yyyy") == "01-01-0001")
+                                                { targetdate = "Date Not Set"; }
+                                                else
+                                                {
+                                                    targetdate = item.TargetCompletionDate.ToString("D");
+                                                }
+                                                @targetdate
+                                            }
+                                        </td>
+
                                         <td>@item.Status</td>
                                         <td>@item.Employee</td>
                                         <td class="job-action">
@@ -53,7 +65,8 @@
 
                                             <a href="#" data-toggle="modal" data-target="#opener" title="Delete" onclick="setTaskID(@item.TaskId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 
-                                            <button class="fa fa-check-square btn_complete" title="InComplete Task" taskId="@item.TaskId"></button>
+                                            @*<button class="fa fa-check-square btn_complete" title="InComplete Task" taskId="@item.TaskId"></button>*@
+                                            <button data-toggle="modal" data-target="#taskConfirmation" class="fa fa-check-square btn_complete" title="Click to complete task" onclick="setTaskID(@item.TaskId)"></button>
 
                                         </td>
                                     </tr>
@@ -159,6 +172,24 @@
             @*<div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>*@
+        </div>
+
+    </div>
+</div>
+<div class="modal fade noprint" id="taskConfirmation" role="dialog">
+    <div class="modal-dialog" style="width: 320px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header modal-popup-header">
+                <button type="button" class="close" data-dismiss="modal" id="btn_taskCompleteConfirm">&times;</button>
+                <h1 class="modal-title">Task Completion</h1>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Do you want to complete this task?</h5>
+                <button onclick="completeTask()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Yes</button>
+                <button data-dismiss="modal" class="btn btn-danger form-submit-btn">No</button>
+            </div>
+
         </div>
 
     </div>

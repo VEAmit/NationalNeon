@@ -1,4 +1,4 @@
-﻿@model NationalNeon.Web.ViewModels.JobViewModel
+@model NationalNeon.Web.ViewModels.JobViewModel
 <!-- widget grid -->
 <section id="widget-grid" class="">
 
@@ -40,10 +40,13 @@
 @*<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*@
 @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
 <script>
-   
-    $(document).ready(function () {        
+
+    $(document).ready(function () {
         var jobId = 0;
         jobList();
+
+        applyDatePicker();
+
         $.ajax({
             url: "/Jobs/AddJobs",
             type: "GET",
@@ -52,8 +55,9 @@
                 $("#divAddPopup").html(result);
             }
         });
-
+        applyDatePicker();
         $('#divAddPopup').delegate('.btn_addUpdateJobs', 'click', function () {
+
             let isValid = true;
             var formValue = $("#addUpdateJobForm").serialize();
             if (formValue !== undefined) {
@@ -70,22 +74,39 @@
                     $("#invalid_target_completion_date").show();
                     isValid = false;
                 }
-                if ($('input[name="revenue"]').val() == '' || $('input[name="revenue"]').val() == undefined) {
-                    $("#invalid_revenue").show();
-                    isValid = false;
-                }
+                //if ($('input[name="revenue"]').val() == '' || $('input[name="revenue"]').val() == undefined) {
+                //    $("#invalid_revenue").show();
+                //    isValid = false;
+                //}
+                //if ($('input[name="scheduled_date"]').val() == '' || $('input[name="scheduled_date"]').val() == undefined) {
+                //    $("#invalid_scheduled_date").show();
+                //    isValid = false;
+                //}
             }
-            
+
             if (isValid) {
                 $('#divAddPopup [id^="invalid_"]').hide();
-                saveOrUpdate(formValue);
-            }           
+                if (setJobDates()) {
+                    formValue = $("#addUpdateJobForm").serialize();
+                    saveOrUpdate(formValue);
+                }
+            }
         });
 
         $("#newJob").click(function () {
-            $('#addUpdateJobForm').find("input[type=text], textarea, select, number").val("");
+            $('#addUpdateJobForm').find("input, textarea, select, number").val("");
         });
-       
+
+        $("#jobFile").on("change", function () {
+
+            if (validateFile()) {
+                $("#invalid_JobFileLength").hide();
+            }
+            else {
+                $("#invalid_JobFileLength").show();
+            }
+        });
+
     });
 
     //function getContent(current) {
@@ -111,10 +132,10 @@
             data: formValue,
             //success: function (result) {
             //    if (result.success) {
-            //        jobList();                  
+            //        jobList();
             //        $('#closePop').click();
             //        window.location.reload();
-                 
+
             //    }
             //}
             success: function (result) {
@@ -194,7 +215,7 @@
         $.ajax({
             type: 'POST',
             url: '/Archived/UpdateArchive?id=' + jobId + '',
-            success: function () {              
+            success: function () {
                 $("#archived").click();
                 //jobList();
                 window.location.reload();
@@ -211,41 +232,134 @@
     }
     function saveUploadFile(jobId) {
         //$.noConflict();
-        $.ajax({
-            type: 'POST',
-            url: '/Jobs/saveUploadFile?id=' + jobId + '',
-            //success: function () {
-            //    $("#uploadfile").click();
-            //    jobList();
-            //    window.location.reload();
-            //}
-            success: function (result) {
-                if (result.success) {
-                    $("#uploadfile").click();
-                    $('.close').click();
-                    $.notify({
-                        title: "<strong>Success:</strong> ",
-                        message: "Upload File Succesfully",
-                    },
-                        {
-                            type: 'success',
-                            allow_dismiss: false,
-                            showProgressbar: true,
-                            delay: '100',
-                            newest_on_top: true,
-                        });
+        if (window.FormData !== undefined) {
+            if (validateFile()) {
+                var fileUpload = $("#jobFile").get(0);
+                var files = fileUpload.files;
+                var fileData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
                 }
-                setTimeout(() => {
-                    window.location.reload();
-                    //window.location.href = "/Department";
-                    //taskList();
-                }, 2000);
+                fileData.append('jobid', jobId);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Jobs/saveUploadFile?',
+                    contentType: false,
+                    processData: false,
+                    data: fileData,
+                    success: function (result) {
+                        if (result.success) {
+
+                            $('.close').click();
+                            $.notify({
+                                title: "<strong>Success:</strong> ",
+                                message: "File  succesfully uploaded.",
+                            },
+                                {
+                                    type: 'success',
+                                    allow_dismiss: false,
+                                    showProgressbar: true,
+                                    delay: '100',
+                                    newest_on_top: true,
+                                });
+                        }
+                        else if (result.error) {
+                            $.notify({
+                                title: "<strong>Error:</strong> ",
+                                message: "File could not be uploaded.",
+                            },
+                                {
+                                    type: 'error',
+                                    allow_dismiss: false,
+                                    showProgressbar: true,
+                                    delay: '100',
+                                    newest_on_top: true,
+                                });
+
+                        }
+                        setTimeout(() => {
+                            window.location.reload();
+
+                        }, 2000);
+                    }
+                });
             }
-        });
+            else {
+                $("#invalid_JobFileLength").show();
+            }
+
+        } else {
+
+        }
+
+    }
+
+    function validateFile(files) {
+
+        var fileUpload = $("#jobFile").get(0);
+        var files = fileUpload.files;
+        if (files.length > 0)
+            return true;
+        else
+            return false;
     }
 
     $("#refreshJobs").click(function () {
         history.go(0);
     });
+    function setJobDates() {
 
+        var targetCompleteDate = $("#target_completion_date").val();
+        var scheduledDate = $("#scheduled_date").val();
+        var isValid = false;
+        if (targetCompleteDate != "" && targetCompleteDate != undefined) {
+            var targetDateParameters = targetCompleteDate.split('/');
+            var targetDatemonth = targetDateParameters[0];
+            var targetDateday = targetDateParameters[1];
+            var targetDateyear = targetDateParameters[2];
+            $("#target_completion_date").val(targetDateyear + "-" + targetDatemonth + "-" + targetDateday);
+            $("#target_completion_date").attr('value', targetDateyear + "-" + targetDatemonth + "-" + targetDateday);
+            isValid = true;
+        }
+        //01/01/0001
+        if (scheduledDate != "" && scheduledDate != undefined) {
+
+            var scheduledDateParameters = scheduledDate.split('/');
+            var scheduledDatemonth = scheduledDateParameters[0];
+            var scheduledDateday = scheduledDateParameters[1];
+            var scheduledDateyear = scheduledDateParameters[2];
+            $("#scheduled_date").val(scheduledDateyear + "-" + scheduledDatemonth + "-" + scheduledDateday);
+            $("#scheduled_date").attr('value', scheduledDateyear + "-" + scheduledDatemonth + "-" + scheduledDateday);
+           // isValid = true;
+        }
+        //else {
+        //    isValid = false;
+        //}
+        //if (isValid) {
+        //    if (scheduledDate != "" && scheduledDate != undefined) {
+
+        //        var scheduledDateParameters = scheduledDate.split('/');
+        //        var scheduledDatemonth = scheduledDateParameters[0];
+        //        var scheduledDateday = scheduledDateParameters[1];
+        //        var scheduledDateyear = scheduledDateParameters[2];
+        //        $("#scheduled_date").val(scheduledDateyear + "-" + scheduledDatemonth + "-" + scheduledDateday);
+        //        $("#scheduled_date").attr('value', scheduledDateyear + "-" + scheduledDatemonth + "-" + scheduledDateday);
+        //        isValid = true;
+        //    }
+        //    else {
+        //        isValid = false;
+        //    }
+        //}
+        return isValid;
+    }
+    function applyDatePicker() {
+        $('.dateCalender').datepicker({
+            autoclose: true,
+            //dateFormat: 'yyyy-mm-dd'
+            dateFormat: 'mm/dd/yy'
+            
+         }).on("change", function () {
+            $(this).attr('value', this.value);
+        });
+    }
 </script>

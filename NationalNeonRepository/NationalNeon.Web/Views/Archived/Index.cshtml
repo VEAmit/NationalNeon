@@ -1,5 +1,4 @@
 ﻿@model List<NationalNeon.Domain.Job.JobModel>
-
 <!-- widget grid -->
 <section id="widget-grid" class="">
 
@@ -8,7 +7,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
             <button onclick="window.history.back();" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Back</button>
             <button id="refreshArchived" class="btn btn-danger export-data"><i class="fa fa-repeat"></i> Refresh</button>
-           <button id="print" onclick="window.print()" class="btn btn-danger export-data pull-right"><i class="fa fa-print"></i> Print</button>
+            <button id="print" onclick="window.print()" class="btn btn-danger export-data pull-right"><i class="fa fa-print"></i> Print</button>
             <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog" id="divAddPopup">
 
@@ -62,7 +61,18 @@
                                             <td>@item.revenue</td>
                                             <td>@item.scheduled_date.ToString("D")</td>
                                             <td>@item.sales_person</td>
-                                            <td></td>
+                                            @if (item.JobFileUpload != null)
+                                            {
+                                                <td>
+
+                                                    <a href="@item.JobFileUpload.FilePath" target="_blank">View</a>
+
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
                                         </tr>
                                     }
 

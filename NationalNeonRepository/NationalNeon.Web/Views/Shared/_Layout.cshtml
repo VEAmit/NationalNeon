@@ -334,7 +334,7 @@
                     @*Dashboard*@
                     @if (ViewContext.RouteData.Values["controller"].ToString() == "Home")
                     {
-                        @Html.ActionLink("Dashboard", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["Controller"].ToString())
+                        @Html.ActionLink("Dashboard", "dashboard", ViewContext.RouteData.Values["Controller"].ToString())
                     }
                     @if (ViewContext.RouteData.Values["controller"].ToString() == "Jobs")
                     {

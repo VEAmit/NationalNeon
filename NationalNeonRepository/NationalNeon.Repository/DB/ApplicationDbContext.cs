@@ -27,5 +27,7 @@ namespace NationalNeon.Repository.DB
         public virtual DbSet<Job> Jobs { get; set; }
 
         public virtual DbSet<Task> Tasks { get; set; }
+
+        public virtual DbSet<JobFileUpload> JobFileUploads { get; set; }
     }
 }

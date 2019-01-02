@@ -1,5 +1,4 @@
-﻿@model NationalNeon.Web.ViewModels.JobViewModel
-
+@model NationalNeon.Web.ViewModels.JobViewModel
 @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
 <script src="~/scripts/Jobs.js"></script>
 
@@ -49,7 +48,6 @@
                                 <td>
                                     @{
                                         var scheduledate = "";
-                                        //item.scheduled_date.ToString("MM/dd/yyyy") == "1/01/0001" ? "abc" : "123" </ td >
                                         if (item.scheduled_date.ToString("MM/dd/yyyy") == "01/01/0001")
                                         { scheduledate = "Date Not Set"; }
                                         else
@@ -58,10 +56,23 @@
                                         }
                                         @scheduledate
                                     }
-
-
+                                </td>                             
                                 <td>@item.sales_person</td>
-                                <td></td>
+
+                                @if (item.JobFileUpload != null)
+                                {
+                                    <td>
+
+                                        <a href="@item.JobFileUpload.FilePath" target="_blank">View</a>
+
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+
+
                                 <td class="job-action">
                                     <a href="#" title="Edit" data-toggle="modal" data-target="#myModal" onClick="showJobDetails(@item.jobId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                     @*@Html.ActionLink("Delete", "Delete", new { id = item.jobId })*@
@@ -71,7 +82,7 @@
                                     <a href="#" title="Archive" data-toggle="modal" data-target="#archived" onclick="ArchivedJobs(@item.jobId)"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
                                     @*<i class="far fa-archive"></i>*@
                                 </td>
-                                
+
                             </tr>
 
                             }
@@ -146,11 +157,13 @@
             </div>
             <div class="modal-body">
                 <label>Attach file to job</label>
-                <input class="form-control" type="file" />             
+                <input class="form-control" id="jobFile" name="jobFile" type="file" />
+                <span class="has-error" id="invalid_JobFileLength">Please select a file</span>
             </div>
             <div class="modal-footer">
                 <button onclick="UploadFileSave()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Upload File</button>
                 <button data-dismiss="modal" class="btn btn-danger form-submit-btn">Close</button>
+
             </div>
 
         </div>

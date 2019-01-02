@@ -28,6 +28,9 @@ namespace NationalNeon.Business.Interfaces
 
         void UpdateJobModel(JobModel model);
         void UpdateArchiveModel(int id);
-        
+
+        bool UpdateJobFileUploadPath(JobFileUploadModel jobFileUploadModel);
+
+
     }
 }

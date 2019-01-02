@@ -7,16 +7,21 @@ using NationalNeon.Business.Interfaces;
 using NationalNeon.Domain.Job;
 using NationalNeon.Web.ViewModels;
 using ExpressMapper;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
 
 namespace NationalNeon.Web.Controllers
 {
     public class JobsController : Controller
     {
         private readonly IJobBusiness ijobBusiness;
-
-        public JobsController(IJobBusiness ijobBusiness)
+        private readonly IHostingEnvironment ihostingEnv;
+        public JobsController(IJobBusiness ijobBusiness, IHostingEnvironment ihostingEnv)
         {
             this.ijobBusiness = ijobBusiness;
+            this.ihostingEnv = ihostingEnv;
         }
         [Route("Job")]
         public IActionResult Index()
@@ -91,7 +96,7 @@ namespace NationalNeon.Web.Controllers
                 return Json(new
                 {
                     success = true,
-                    title = "<strong>Update:</strong>",
+                    title = "<strong>Success:</strong>",
                     type = "info",
                     message = "Jobs updated Succesfully",
                     action = "edit"
@@ -143,23 +148,72 @@ namespace NationalNeon.Web.Controllers
 
 
         [HttpPost]
-        public ActionResult saveUploadFile(int id)
+        public async Task<ActionResult> saveUploadFile(int jobId)
         {
             try
             {
-               
+                string filePath = string.Empty, fileDatabasePath = string.Empty, fileUniquePath = string.Empty;
+                var files = Request.Form.Files;
+                foreach (var file in files)
+                {
+                    string filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    filename = this.EnsureCorrectFilename(filename);
+                    fileUniquePath = "\\uploads\\" + jobId + "_" + Path.GetFileNameWithoutExtension(filename) + "_" + DateTime.UtcNow.ToFileTime().ToString() + Path.GetExtension(filename);
+                    filePath = Path.Combine(this.ihostingEnv.WebRootPath + fileUniquePath);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                }
+                if (UpdateJobFilePath(jobId, fileUniquePath))
+                {
+                    return Json(new
+                    {
+                        success = true
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        error = true
+                    });
+                }
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Something went wrong.";
+                return Json(new
+                {
+                    error = true
+                });
             }
-            return Json(new
-            {
-                success = true
-            });
-            //return RedirectToAction("JobsList");
-        }
 
+        }
+        private string EnsureCorrectFilename(string filename)
+        {
+            if (filename.Contains("\\"))
+                filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+            return filename;
+        }
+        private bool UpdateJobFilePath(int jobId, string filePath)
+        {
+            try
+            {
+                JobFileUploadModel jobFileUploadModel = new JobFileUploadModel();
+                jobFileUploadModel.JobId = jobId;
+                jobFileUploadModel.FilePath = filePath;
+                ijobBusiness.UpdateJobFileUploadPath(jobFileUploadModel);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+
+        }
 
     }
 }
