@@ -25,6 +25,6 @@ namespace NationalNeon.Repository.DB
         public DateTime updated_on { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
         public string fileName { get; set; }
-        public virtual JobFileUpload JobFileUpload { get; set; }
+        public virtual ICollection<JobFileUpload> JobFileUpload { get; set; }
     }
 }

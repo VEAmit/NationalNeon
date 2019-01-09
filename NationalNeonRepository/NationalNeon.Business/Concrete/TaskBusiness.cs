@@ -23,10 +23,9 @@ namespace NationalNeon.Business.Concrete
 
         public List<TaskModel> GetAll()
         {
-            var model = new List<TaskModel>();
-            var data = taskRepository.GetAll();
-            Mapper.Map(data, model);
-            return model;
+            var taskModel = new List<TaskModel>();
+            var model = taskRepository.GetAll(null, null, "Department").ToList();
+            return Mapper.Map(model, taskModel);
         }
 
         public TaskModel AddTask(TaskModel model)

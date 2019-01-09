@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NationalNeon.Domain.Task;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace NationalNeon.Domain.Job
         public DateTime created_on { get; set; }
         public string updated_by { get; set; }
         public DateTime updated_on { get; set; }
-        public JobFileUploadModel JobFileUpload { get; set; }
+        public ICollection<JobFileUploadModel> JobFileUpload { get; set; }
+        public virtual ICollection<TaskModel> Tasks { get; set; }
     }
 }

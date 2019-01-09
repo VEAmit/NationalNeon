@@ -18,10 +18,12 @@ namespace NationalNeon.Web.Controllers
     {
         private readonly IJobBusiness ijobBusiness;
         private readonly IHostingEnvironment ihostingEnv;
-        public JobsController(IJobBusiness ijobBusiness, IHostingEnvironment ihostingEnv)
+        private readonly ITaskBusiness itaskBusiness;
+        public JobsController(IJobBusiness ijobBusiness, IHostingEnvironment ihostingEnv, ITaskBusiness itaskBusiness)
         {
             this.ijobBusiness = ijobBusiness;
             this.ihostingEnv = ihostingEnv;
+            this.itaskBusiness = itaskBusiness;
         }
         [Route("Job")]
         public IActionResult Index()
@@ -58,6 +60,23 @@ namespace NationalNeon.Web.Controllers
                 data = model
             });
         }
+
+        public ActionResult Detail(int jobId)
+        {
+
+            var model = ijobBusiness.GetJob(jobId);
+            if (model.Tasks.Count > 0)
+            {
+                var completedTaskTotalHours = model.Tasks.Where(row => row.Completed == 1).Sum(row => Convert.ToDecimal(row.BudgetedHours));
+
+                var totalHours = model.Tasks.Sum(row => Convert.ToDecimal(row.BudgetedHours));
+                ViewBag.progress = Convert.ToString(Convert.ToInt32(Math.Round(completedTaskTotalHours / totalHours, 2) * 100)) + "%";
+
+                model.Tasks = itaskBusiness.GetAll().Where(row => row.jobId == jobId).ToList();
+            }
+            return View(model);
+        }
+
 
         [HttpPost]
         public ActionResult AddJobs(JobViewModel jobModel)
@@ -158,7 +177,7 @@ namespace NationalNeon.Web.Controllers
                 {
                     string filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     filename = this.EnsureCorrectFilename(filename);
-                    fileUniquePath = "\\uploads\\" + jobId + "_" + Path.GetFileNameWithoutExtension(filename) + "_" + DateTime.UtcNow.ToFileTime().ToString() + Path.GetExtension(filename);
+                    fileUniquePath = "\\uploads\\" + jobId + "_" + Path.GetFileNameWithoutExtension(filename.Replace("_", "")) + "_" + DateTime.UtcNow.ToFileTime().ToString() + Path.GetExtension(filename);
                     filePath = Path.Combine(this.ihostingEnv.WebRootPath + fileUniquePath);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -197,6 +216,9 @@ namespace NationalNeon.Web.Controllers
                 filename = filename.Substring(filename.LastIndexOf("\\") + 1);
             return filename;
         }
+
+
+      
         private bool UpdateJobFilePath(int jobId, string filePath)
         {
             try
@@ -213,6 +235,27 @@ namespace NationalNeon.Web.Controllers
 
             }
 
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteUploadedFile(int jobFileUploadId)
+        {
+            try
+            {
+                ijobBusiness.DeleteUploadedFile(jobFileUploadId);
+                return Json(new
+                {
+                    success = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false
+                });
+            }
         }
 
     }

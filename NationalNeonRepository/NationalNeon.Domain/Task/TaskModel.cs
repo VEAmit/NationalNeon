@@ -33,6 +33,8 @@ namespace NationalNeon.Domain.Task
         public int userId { get; set; }
         public UserModel User { get; set; }
 
+        public DepartmentModel Department { get; set; }
+
 
     }
 }

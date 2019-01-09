@@ -1,4 +1,4 @@
-﻿@model List<NationalNeon.Domain.Job.JobModel>
+@model List<NationalNeon.Domain.Job.JobModel>
 <!-- widget grid -->
 <section id="widget-grid" class="">
 
@@ -59,14 +59,31 @@
                                             <td>@item.target_completion_date.ToString("D")</td>
                                             <td>@item.status</td>
                                             <td>@item.revenue</td>
-                                            <td>@item.scheduled_date.ToString("D")</td>
+                                            <td>
+                                               
+                                                @{
+                                                    var scheduledate = "";
+                                                    if (item.scheduled_date.ToString("MM/dd/yyyy") == "01/01/0001")
+                                                    { scheduledate = "Date Not Set"; }
+                                                    else
+                                                    {
+                                                        scheduledate = item.scheduled_date.ToString("D");
+                                                    }
+                                                    @scheduledate
+                                                }
+                                            </td>
                                             <td>@item.sales_person</td>
                                             @if (item.JobFileUpload != null)
                                             {
+                                              
                                                 <td>
+                                                    @foreach (var fileUpload in item.JobFileUpload)
+                                                    {
+                                                        var filename = (fileUpload.FilePath.Split('\\')[2]).Split('_')[1];
+                                                        <a href="@fileUpload.FilePath" target="_blank">@filename</a>
+                                                        <br />
 
-                                                    <a href="@item.JobFileUpload.FilePath" target="_blank">View</a>
-
+                                                    }
                                                 </td>
                                             }
                                             else

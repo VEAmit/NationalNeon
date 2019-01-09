@@ -93,7 +93,7 @@ namespace NationalNeon.Business.Concrete
         public JobModel GetJob(int id)
         {
             JobModel jobModel = new JobModel();
-            var job = jobRepositorty.SingleOrDefault(u => u.jobId == id);
+            var job = jobRepositorty.GetAll(null, null, "JobFileUpload,Tasks").SingleOrDefault(u => u.jobId == id);
             return Mapper.Map(job, jobModel);
 
         }
@@ -131,18 +131,18 @@ namespace NationalNeon.Business.Concrete
         {
             try
             {
-                var jobFileUpload = jobFileUploadRepository.GetAll(x => x.JobId == jobFileUploadModel.JobId, null, "Job").FirstOrDefault();
-                if (jobFileUpload != null)
-                {
-                    jobFileUpload.FilePath = jobFileUploadModel.FilePath;
-                    jobFileUploadRepository.Update(jobFileUpload);
-                }
-                else
-                {
-                    jobFileUpload = new JobFileUpload();
-                    Mapper.Map(jobFileUploadModel, jobFileUpload);
-                    jobFileUploadRepository.Insert(jobFileUpload);
-                }
+                //var jobFileUpload = jobFileUploadRepository.GetAll(x => x.JobId == jobFileUploadModel.JobId, null, "Job").FirstOrDefault();
+                //if (jobFileUpload != null)
+                //{
+                //    jobFileUpload.FilePath= jobFileUploadModel.FilePath;
+                //    jobFileUploadRepository.Update(jobFileUpload);
+                //}
+                //else
+                //{
+                var jobFileUpload = new JobFileUpload();
+                Mapper.Map(jobFileUploadModel, jobFileUpload);
+                jobFileUploadRepository.Insert(jobFileUpload);
+                //}
                 return true;
             }
             catch (Exception ex)
@@ -176,6 +176,18 @@ namespace NationalNeon.Business.Concrete
                 }
             }
 
+        }
+
+        public void DeleteUploadedFile(int jobFileUploadId)
+        {
+            try
+            {
+                jobFileUploadRepository.Delete(row => row.JobFileUploadId == jobFileUploadId);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
     }

@@ -31,6 +31,8 @@ namespace NationalNeon.Business.Interfaces
 
         bool UpdateJobFileUploadPath(JobFileUploadModel jobFileUploadModel);
 
+        void DeleteUploadedFile(int jobFileUploadId);
+
 
     }
 }

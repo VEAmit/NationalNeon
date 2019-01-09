@@ -1,13 +1,9 @@
-@model NationalNeon.Web.ViewModels.JobViewModel
-@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+@model NationalNeon.Domain.Job.JobModel
 <script src="~/scripts/Jobs.js"></script>
-
 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <!-- Widget ID (each widget will need unique ID)-->
     <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false" data-widget-deletebutton="false">
-
         <header><span class="widget-icon"> <i class="fa fa-briefcase"></i> </span><h2>Jobs</h2></header>
-
         <!-- widget div-->
         <div>
             <!-- widget edit box -->
@@ -37,53 +33,59 @@
                         <tbody>
                             @foreach (var item in ViewBag.Model)
                             {
-                            <tr id="@item.jobId">
+                                <tr id="@item.jobId">
 
-                                <td>@item.job_number</td>
-                                <td>@item.job_name</td>
-                                <td>@item.description</td>
-                                <td>@item.target_completion_date.ToString("D")</td>
-                                <td>@item.status</td>
-                                <td>@item.revenue</td>
-                                <td>
-                                    @{
-                                        var scheduledate = "";
-                                        if (item.scheduled_date.ToString("MM/dd/yyyy") == "01/01/0001")
-                                        { scheduledate = "Date Not Set"; }
-                                        else
-                                        {
-                                            scheduledate = item.scheduled_date.ToString("D");
-                                        }
-                                        @scheduledate
-                                    }
-                                </td>                             
-                                <td>@item.sales_person</td>
-
-                                @if (item.JobFileUpload != null)
-                                {
+                                    <td>@item.job_number</td>
                                     <td>
-
-                                        <a href="@item.JobFileUpload.FilePath" target="_blank">View</a>
-
+                                        @item.job_name
+                                        <input type="hidden" value="@item.jobId" />
                                     </td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
+                                    <td>@item.description</td>
+                                    <td>@item.target_completion_date.ToString("D")</td>
+                                    <td>@item.status</td>
+                                    <td>@item.revenue</td>
+                                    <td>
+                                        @{
+                                            var scheduledate = "";
+                                            if (item.scheduled_date.ToString("MM/dd/yyyy") == "01/01/0001")
+                                            { scheduledate = "Date Not Set"; }
+                                            else
+                                            {
+                                                scheduledate = item.scheduled_date.ToString("D");
+                                            }
+                                            @scheduledate
+                                        }
+                                    </td>
 
+                                    <td>@item.sales_person</td>
 
-                                <td class="job-action">
-                                    <a href="#" title="Edit" data-toggle="modal" data-target="#myModal" onClick="showJobDetails(@item.jobId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.jobId })*@
-                                    <a href="#" title="Delete" data-toggle="modal" data-target="#opener" onclick="setJobID(@item.jobId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                    @*<button id="opener">dialog</button>*@
-                                    <a href="#" title="Upload file" data-toggle="modal" data-target="#uploadfile" onclick="UploadFileJobs(@item.jobId)"><i class="fa fa-upload" aria-hidden="true"></i></a>
-                                    <a href="#" title="Archive" data-toggle="modal" data-target="#archived" onclick="ArchivedJobs(@item.jobId)"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
-                                    @*<i class="far fa-archive"></i>*@
-                                </td>
+                                    @if (item.JobFileUpload != null)
+                                    {
+                                      
+                                        <td>
+                                            @foreach (var fileUpload in item.JobFileUpload)
+                                            {
+                                                var filename = (fileUpload.FilePath.Split('\\')[2]).Split('_')[1];
+                                                <a href="@fileUpload.FilePath" target="_blank">@filename</a>
+                                                <br />
 
-                            </tr>
+                                            }
+                                        </td>
+
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td class="job-action">
+                                        <a href="#" title="Edit" data-toggle="modal" data-target="#myModal" onClick="showJobDetails(@item.jobId)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a href="#" title="Delete" data-toggle="modal" data-target="#opener" onclick="setJobID(@item.jobId)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        <a href="#" title="Upload file" data-toggle="modal" data-target="#uploadfile" onclick="UploadFileJobs(@item.jobId)"><i class="fa fa-upload" aria-hidden="true"></i></a>
+                                        <a href="#" title="Archive" data-toggle="modal" data-target="#archived" onclick="ArchivedJobs(@item.jobId)"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>
+                                        <input type="hidden" value="@item.jobId" />
+                                    </td>
+
+                                </tr>
 
                             }
                         </tbody>
@@ -170,3 +172,19 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".jobsList tbody tr").on("mouseover", function () {
+            $(this).css("cursor", "pointer");
+        }).on("click", function (event) {
+            var node = event.target.nodeName;
+            if (node != "I" && node!="A") {
+                jobId = $(this).find("td:last input[type='hidden']").val();
+                if (jobId != "") {
+                    location.href = "/Jobs/Detail?jobId=" + jobId;
+                }
+            }
+        });
+    });
+    
+</script>
