@@ -1,4 +1,4 @@
-﻿@model NationalNeon.Web.ViewModels.UserViewModel
+@model NationalNeon.Web.ViewModels.UserViewModel
 
 
 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -29,16 +29,17 @@
                         <tbody>
                             @foreach (var item in ViewBag.Model)
                             {
-
                                 <tr>
-                                    <td><a href='/UserDetails?userId=@item.userId'>@item.username</a></td>
-                                    <td><a href='/UserDetails?userId=@item.userId'>@item.role</a></td>
+                                    <td>
+                                         @item.username
+                                    </td>
+                                    <td>
+                                         @item.role
+                                        <input type="hidden" value="@item.userId" />
+                                    </td>
                                 </tr>
                             }
-
-
                         </tbody>
-
                     </table>
                 </div>
             </div>
@@ -50,3 +51,15 @@
     </div>
     <!-- end widget -->
 </article>
+<script>
+    $(document).ready(function () {
+        $("div.userList tbody tr").on("mouseover", function () {
+            $(this).css("cursor", "pointer");
+        }).on("click", function (event) {
+            userId = $(this).find("td:last input[type='hidden']").val();
+            if (userId != "") {
+                location.href = "/UserDetails?userId=" + userId;
+            }
+        });
+    });
+</script>

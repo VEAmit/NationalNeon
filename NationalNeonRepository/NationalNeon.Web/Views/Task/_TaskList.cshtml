@@ -48,7 +48,7 @@
                                         <td>
                                             @{
                                                 var targetdate = "";
-                                                if (item.TargetCompletionDate.ToString("MM/dd/yyyy") == "01-01-0001")
+                                                if (item.TargetCompletionDate.ToString("MM/dd/yyyy") == "01-01-0001" || item.TargetCompletionDate.ToString("MM/dd/yyyy") == "01/01/0001")
                                                 { targetdate = "Date Not Set"; }
                                                 else
                                                 {
@@ -129,7 +129,7 @@
                                         <td>@completetask.departmentname</td>
                                         <td>@completetask.TaskName</td>
                                         <td>@completetask.BudgetedHours</td>
-                                        <td>@completetask.TargetCompletionDate</td>
+                                        <td>@completetask.TargetCompletionDate.ToString("D")</td>
                                         <td>@completetask.Status</td>
                                         <td>@completetask.Employee</td>
                                         <td><i class="fa fa-fw fa-check" title="Completed Task"></i></td>

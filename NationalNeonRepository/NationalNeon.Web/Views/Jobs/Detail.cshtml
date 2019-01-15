@@ -3,33 +3,34 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noprint form-group">
         <button onclick="window.history.back();" class="btn btn-danger"><i class="fa fa-chevron-left"></i> Back</button>
         <button id="refreshTask" class="btn btn-danger export-data"><i class="fa fa-repeat"></i> Refresh</button>
-        <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#myJobDetailTaskModal" id="btnAddTask">New Task</button>
+        @*<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#myJobDetailTaskModal" id="btnAddTask">New Task</button>*@
 
     </div>
 </div>
+
 <div class="row">
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Job #</label>
-        <label class="col-xs-6">@Model.job_number</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Job # :</label>
+        <label class="col-xs-7">@Model.job_number</label>
         <input type="hidden" value="@Model.jobId" id="hdnJobId" />
     </div>
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Job Description</label>
-        <label class="col-xs-6">@Model.description</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Job Description:</label>
+        <label class="col-xs-7">@Model.description</label>
 
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Job Name</label>
-        <label class="col-xs-6">@Model.job_name</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Job Name:</label>
+        <label class="col-xs-7">@Model.job_name</label>
 
     </div>
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Target Completion Date</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Target Completion Date:</label>
         @{
             var targetDate = "";
-            if (Model.target_completion_date.ToString("MM/dd/yyyy") != "01/01/0001")
+            if (Model.target_completion_date.ToString("MM/dd/yyyy") != "01-01-0001")
             {
                 targetDate = Model.target_completion_date.ToString("D");
             }
@@ -37,21 +38,21 @@
             {
                 targetDate = "Date not set";
             }
-            <label class="col-xs-6">@targetDate</label>
+            <label class="col-xs-7">@targetDate</label>
         }
 
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Revenue</label>
-        <label class="col-xs-6">@Model.revenue</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Revenue:</label>
+        <label class="col-xs-7">@Model.revenue</label>
     </div>
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Scheduled Date</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Scheduled Date:</label>
         @{
             var scheduledDate = "";
-            if (Model.scheduled_date.ToString("MM/dd/yyyy") != "01/01/0001")
+            if (Model.scheduled_date.ToString("MM/dd/yyyy") != "01-01-0001")
             {
                 scheduledDate = Model.scheduled_date.ToString("D");
             }
@@ -60,40 +61,40 @@
                 scheduledDate = "Date not set";
             }
 
-            <label class="col-xs-6">@scheduledDate</label>
+            <label class="col-xs-7">@scheduledDate</label>
         }
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Progress</label>
-        <div class="progress">
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Progress:</label>
+        <div class="progress col-xs-7" >
             <div class="progress-bar" role="progressbar"
                  aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.progress">
                 @ViewBag.progress
             </div>
         </div>
     </div>
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Sales Person</label>
-        <label class="col-xs-6">@Model.sales_person</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Sales Person:</label>
+        <label class="col-xs-7">@Model.sales_person</label>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Project Documents</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Project Documents:</label>
         @{
             if (Model.JobFileUpload != null)
             {
-                <div class="col-xs-6">
+                <div class="col-xs-7">
                     <ul id="fileUploadDetailList">
                         @{
                             foreach (var fileUpload in Model.JobFileUpload)
                             {
-                                var filename = (fileUpload.FilePath.Split('\\')[2]).Split('_')[1];
+                                var filename = (fileUpload.FilePath.Split('\\')[2]).Split('_')[0];
                                 <li>
                                     <a href="@fileUpload.FilePath" target="_blank">@filename</a>
-                                    <button type="button" class="closebtn" onclick="deleteJobFile(@fileUpload.JobFileUploadId)">x</button>
+                                    <button type="button" class="closebtn" data-toggle="modal" data-target="#fileDeleteDialog" onclick="setJobFileDeleteId(@fileUpload.JobFileUploadId)">x</button>
                                 </li>
                             }
                         }
@@ -105,16 +106,26 @@
             }
             else
             {
-                <label class="col-xs-6"></label>
+                <label class="col-xs-5"></label>
             }
         }
 
     </div>
-    <div class="col-xs-6">
-        <label class="col-xs-6" style="font-weight:600">Status</label>
-        <label class="col-xs-6">@Model.status</label>
+    <div class="col-xs-4">
+        <label class="col-xs-5" style="font-weight:600">Status</label>
+        <label class="col-xs-7">@Model.status</label>
     </div>
 </div>
+<div>
+    @*Project Documents:*@
+    <form asp-controller="Jobs" asp-action="UploadFiles" asp-antiforgery="false"
+          class="dropzone" method="POST" id="uploadWidget" asp-route-jobId="@Model.jobId">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+            <input type="submit" value="Upload"  />
+        </div>
+    </form>
+ </div>
 <br />
 <br />
 <div class="row">
@@ -144,7 +155,7 @@
                                             </thead>
                                             <tbody>
                                                 @{
-                                                    if (Model.Tasks.Count>0)
+                                                    if (Model.Tasks.Count > 0)
                                                     {
                                                         var sno = 1;
                                                         foreach (var task in Model.Tasks)
@@ -158,11 +169,17 @@
                                                                 @{
                                                                     if (task.Completed == 1)
                                                                     {
-                                                                        <td><i class="fa fa-fw fa-check" title="Completed Task"></i></td>
+                                                                        <td>
+                                                                            <i class="fa fa-fw fa-check" title="Completed Task"></i>
+
+                                                                        </td>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <td></td>
+                                                                        <td>
+                                                                            <input type="checkbox" id='@("chk"+task.TaskId)' value="@task.TaskId" onchange="confirmTaskCompletion(@task.TaskId,event)" />
+                                                                            <button id="btnTaskComplete" style="display:none" data-target="#taskCompleteDialog" data-toggle="modal"></button>
+                                                                        </td>
                                                                     }
                                                                 }
 
@@ -211,11 +228,45 @@
         </div>
     </div>
 </div>
+<div class="modal fade noprint" id="fileDeleteDialog" role="dialog">
+    <div class="modal-dialog" style="width: 320px;">
+        <div class="modal-content">
+            <div class="modal-header modal-popup-header">
+                <button type="button" class="close" data-dismiss="modal" id="btn_closeConfirm">&times;</button>
+                <h1 class="modal-title">Delete File</h1>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Are you sure you want to delete this file ?</h5>
+                <button onclick="deleteJobFile()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Yes</button>
+                <button data-dismiss="modal" class="btn btn-danger form-submit-btn">No</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="modal fade noprint" id="taskCompleteDialog" role="dialog">
+    <div class="modal-dialog" style="width: 320px;">
+        <div class="modal-content">
+            <div class="modal-header modal-popup-header">
+                <button type="button" class="close" data-dismiss="modal" id="btn_closeConfirm">&times;</button>
+                <h1 class="modal-title">Complete Task</h1>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Are you sure you want to mark this task as complete ?</h5>
+                <button onclick="completeTask()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Yes</button>
+                <button onclick="removeTaskCheckboxMark()" data-dismiss="modal" class="btn btn-danger form-submit-btn">No</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 <script type="text/javascript">
+    var jobId = 0, fileIds = [], loadData = false;
     $(document).ready(function () {
-        var jobId = 0;
-        $("#refreshTask").click(function () {
+       $("#refreshTask").click(function () {
             history.go(0);
         });
         $("#invalid_JobDetailFileLength").hide();
@@ -288,8 +339,123 @@
                 }
             }
         });
+        Dropzone.autoDiscover = false;
+  
+        jobid = getParameterByName("jobId");
+        var uploader = new Dropzone('#uploadWidget', { 'addRemoveLinks': true, 'clickable': true, 'createImageThumbnails': true });
+        uploader.on("removedfile", function (file, id) {
+            debugger;
+            for (var i = 0; i < fileIds.length; ++i) {
+                if (fileIds[i] == file.id) {
+                    $.ajax({
+                        url: '/Jobs/DeleteUploadedFile',
+                        data: { 'jobFileUploadId': file.id },
+                        type: 'POST',
+                        success: function () {
+                            // console.log("file deleted");
+                            window.location.reload();
+                        },
+                        error: function () {
+                            // console.log("file deleted");
+                        }
 
+                    })
+                }
+            }
+
+
+        });
+        uploader.on("addedfile", function (file) {
+            showFile(file);
+
+        });
+        uploader.on("success", function (file, responseText) {
+            location.reload();
+
+        });
+        refreshData(uploader);
     });
+    function refreshData(uploader) {
+        $.getJSON("/Jobs/GetJobFiles?jobId=" + jobid).done(function (data) {
+         
+            if (data.data != null && data.data != "") {
+                if (parseInt(data.data.length) > 0) {
+                   $.each(data.data, function (index, item) {
+                        loadData = true;
+
+                        filePath = item.FilePath.replace(/\\/g, '/');
+                        fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+                        fileExt = fileName.substring(fileName.indexOf("."));
+                        var mockFile = {
+                            url: fileName,
+                            id: item.JobFileUploadId,
+                            name: fileName.split('_')[0] + fileExt
+                        };
+                       fileIds.push(mockFile.id);
+                       uploader.emit("addedfile", mockFile);
+                       uploader.on("thumbnail", mockFile, fileName);
+                       uploader.emit("complete", mockFile);
+                     });
+
+                    loadData = false;
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                return;
+            }
+        });
+    }
+    function showFile(file) {
+       var a = document.createElement('a');
+        a.setAttribute("style", "cursor:hand");
+        a.setAttribute('href', "/uploads/" + file.url);
+        a.setAttribute('target', "_blank");
+        a.innerHTML = "Show";
+        file.previewTemplate.appendChild(a);
+        $("div.dz-size").remove();
+
+    }
+    $(window).load(function () {
+        $('#addUpdateForm').find("input, textarea, select#departmentId,select#userId, number").val("");
+        $("div.taskList").find("input[type='search']").closest('label').append('<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#myJobDetailTaskModal" id="btnAddTask" style="margin-left: 50px">New Task</button>');
+    })
+    function confirmTaskCompletion(taskId, event) {
+        var isChecked = $(event.target).is(':checked');
+        if (isChecked) {
+            this.taskId = taskId;
+            $("#btnTaskComplete").click();
+        }
+    }
+    function completeTask() {
+        $.ajax({
+            url: '/Jobs/CompleteTask?taskId=' + taskId,
+            type: 'GET',
+            success: function (result) {
+                if (result.success == true) {
+                    $(event.target).closest('td').html('<i class="fa fa-fw fa-check" title="Completed Task"></i>');
+                    taskId = 0;
+                    window.location.reload();
+                }
+            }
+        });
+    }
+    function removeTaskCheckboxMark() {
+        $("div.taskList").find("input[id='chk" + this.taskId + "']:checkbox").prop('checked', false);
+    }
+
+    function getParameterByName(name) {
+
+        url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
     function UploadFileJobs(jobid) {
         $("#invalid_JobDetailFileLength").hide();
         $("#jobDetailFile").val('');
@@ -307,7 +473,9 @@
         else
             return false;
     }
-
+    function setJobFileDeleteId(fileId) {
+        jobFileDeleteId = fileId;
+    }
     function saveUploadFile(jobId) {
 
         if (window.FormData !== undefined) {
@@ -413,12 +581,12 @@
             return false;
         }
     }
-    function deleteJobFile(jobFileUploadId) {
-        debugger;
+    function deleteJobFile() {
+
         $.ajax({
             url: "/Jobs/DeleteUploadedFile",
             type: "POST",
-            data: { 'jobFileUploadId': jobFileUploadId },
+            data: { 'jobFileUploadId': jobFileDeleteId },
             async: false,
             success: function (result) {
                 window.location.reload();
