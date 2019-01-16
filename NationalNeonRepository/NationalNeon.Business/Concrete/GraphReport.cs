@@ -12,7 +12,10 @@ namespace NationalNeon.Business.Concrete
 {
     public class GraphReport : IGraphReport
     {
+
+
         #region Property
+        public bool? VisibleOnDashboard { get; set; }
         public string DepartmentName { get; set; }
         public Int32 TotalHours { get; set; }
         #endregion
@@ -57,8 +60,9 @@ namespace NationalNeon.Business.Concrete
             var obj = new GraphReport();
             obj.DepartmentName = dr["DepartmentName"].ToString();
             obj.TotalHours = dr["TotalHours"] == DBNull.Value ? 0 : Convert.ToInt32(dr["TotalHours"]);
+            obj.VisibleOnDashboard = dr["VisibleOnDashboard"] == DBNull.Value ? false : Convert.ToBoolean(dr["VisibleOnDashboard"]);
             return obj;
-            
+
         }
 
 

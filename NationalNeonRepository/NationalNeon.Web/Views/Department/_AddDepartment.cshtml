@@ -1,4 +1,4 @@
-﻿@model NationalNeon.Web.ViewModels.DepartmentViewModel
+@model NationalNeon.Web.ViewModels.DepartmentViewModel
 <style>
     .has-error {
         color: red;
@@ -18,7 +18,7 @@
                     <textarea asp-for="DepartmentName" required="required" rows="6" class="custom-scroll" onchange="$(this).parent().find('.has-error').remove();"></textarea>
                     <span class="has-error" id="invalid_departmentname">Please enter department name</span>
                 </label>
-               
+
 
                 @*<span asp-validation-for="DepartmentName" class="text-danger"></span>*@
             </section>
@@ -29,10 +29,13 @@
                     <textarea asp-for="Description" rows="6" required="required" class="custom-scroll" onchange="$(this).parent().find('.has-error').remove();"></textarea>
                     <span class="has-error" id="invalid_departmentdescription">Please enter department description</span>
                 </label>
-               
+
                 @*<span asp-validation-for="Description" class="text-danger"></span>*@
             </section>
-
+            <section>
+                   <input type="checkbox" id="VisibleOnDashboard" name="VisibleOnDashboard" value="false" />
+                   Show on Dashboard
+            </section>
             <footer class="text-center form-submit">
                 <button type="button" class="btn btn-danger form-submit-btn add_newDepartment_btn">Submit</button>
                 @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@

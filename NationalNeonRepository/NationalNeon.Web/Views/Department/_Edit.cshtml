@@ -1,4 +1,4 @@
-﻿@model NationalNeon.Web.ViewModels.DepartmentViewModel
+@model NationalNeon.Web.ViewModels.DepartmentViewModel
 <style>
     .has-error {
         color: red;
@@ -10,14 +10,14 @@
     <h1 class="modal-title">New Department</h1>
 </div>
 <div class="modal-body">
-    <form class="smart-form" asp-action="Edit" asp-controller="Department" data-ajax="true" data-ajax-method="POST"  id="editDepartmentForm">
+    <form class="smart-form" asp-action="Edit" asp-controller="Department" data-ajax="true" data-ajax-method="POST" id="editDepartmentForm">
         <section>
             <label asp-for="DepartmentName" class="label"></label>
             <label class="textarea textarea-resizable">
                 <textarea asp-for="DepartmentName" required="required" rows="6" class="custom-scroll" onchange="$(this).parent().find('.has-error').hide();"></textarea>
                 <span class="has-error" id="invalid_departmentname">Please enter department name</span>
             </label>
-            @*<span asp-validation-for="DepartmentName" class="text-danger"></span>*@
+            
         </section>
 
         <section>
@@ -26,9 +26,13 @@
                 <textarea asp-for="Description" rows="6" required="required" class="custom-scroll" onchange="$(this).parent().find('.has-error').hide();"></textarea>
                 <span class="has-error" id="invalid_departmentdescription">Please enter department description</span>
             </label>
-            @*<span asp-validation-for="Description" class="text-danger"></span>*@
+           
         </section>
-
+        <section>
+            <input type="hidden" id="hdnVisibleOnDashboard" value="@Model.VisibleOnDashboard" />
+            <input type="checkbox" id="VisibleOnDashboard" name="VisibleOnDashboard" />
+            Show on Dashboard
+        </section>
 
         <input type="hidden" asp-for="DepartmentId" />
         <footer class="text-center form-submit">
@@ -37,3 +41,15 @@
 
     </form>
 </div>
+<script>
+    $(document).ready(function () {
+        var isChecked = $("input[type='hidden'][id='hdnVisibleOnDashboard']").val();
+        if (isChecked != "")
+            $("[id='VisibleOnDashboard']").prop("checked", true);
+        
+        $("[id='VisibleOnDashboard']").on("click", function () {
+             $(this).val() == false ? $(this).val("false") : $(this).val("true");
+        })
+    });
+    
+</script>

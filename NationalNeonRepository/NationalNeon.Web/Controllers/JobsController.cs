@@ -53,7 +53,8 @@ namespace NationalNeon.Web.Controllers
                 title = x.job_name,
                 start = x.target_completion_date,
                 className = x.status == "Archived" ? new[] { "event", "bg-color-greenLight" } : new[] { "event", "bg-color-red" },
-                icon = "fa fa-briefcase"
+                icon = "fa fa-briefcase",
+                jobid = x.jobId
             }).ToList();
 
             return Json(new
@@ -331,6 +332,28 @@ namespace NationalNeon.Web.Controllers
             }
             
         }
-        
+
+        public IActionResult UpdateJobTargetDate(int jobId, DateTime targetCompletionDate)
+        {
+            try
+            {
+                ijobBusiness.UpdateJobTargetDate(jobId, targetCompletionDate);
+                return Json(new
+                {
+                    success = true,
+                    data = "Success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    data = "Error"
+                });
+            }
+
+        }
+
     }
 }

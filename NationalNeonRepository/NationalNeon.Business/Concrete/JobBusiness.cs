@@ -190,5 +190,18 @@ namespace NationalNeon.Business.Concrete
             }
         }
 
+        public void UpdateJobTargetDate(int jobId, DateTime targetCompletionDate)
+        {
+
+            var job = jobRepositorty.GetAll().SingleOrDefault(u => u.jobId == jobId);
+            if (job != null)
+            {
+                job.target_completion_date = targetCompletionDate;
+                jobRepositorty.Update(job);
+            }
+
+
+        }
+
     }
 }

@@ -48,11 +48,12 @@ namespace NationalNeon.Business.Concrete
         public void Update(DepartmentModel model)
         {
             var data = departmentRepository.FindBy(x => x.departmentId == model.departmentId);
-            if (data!=null)
+            if (data != null)
             {
                 data.departmentname = model.departmentname;
                 data.description = model.description;
                 data.updated_on = DateTime.Now;
+                data.VisibleOnDashboard = model.VisibleOnDashboard;
                 departmentRepository.Update(data);
             }
         }

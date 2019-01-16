@@ -25,5 +25,7 @@ namespace NationalNeon.Web.ViewModels
         public DateTime updated_on { get; set; }
 
         public string description { get; set; }
+
+        public bool? VisibleOnDashboard { get; set; }
     }
 }

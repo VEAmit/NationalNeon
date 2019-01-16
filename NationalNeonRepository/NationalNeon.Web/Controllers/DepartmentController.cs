@@ -50,6 +50,7 @@ namespace NationalNeon.Web.Controllers
                 Mapper.Map(model, data);
                 data.created_on = DateTime.Now;
                 data.updated_on = DateTime.Now;
+                data.VisibleOnDashboard = model.VisibleOnDashboard ?? false;
                 idepartmentBusiness.AddDepartment(data);
                 //return RedirectToAction("Index");
                 return Json(new
@@ -100,6 +101,7 @@ namespace NationalNeon.Web.Controllers
             model.DepartmentName = data.departmentname;
             model.Description = data.description;
             model.DepartmentId = data.departmentId;
+            model.VisibleOnDashboard = data.VisibleOnDashboard;
             return PartialView("_Edit", model);
         }
 
@@ -110,6 +112,7 @@ namespace NationalNeon.Web.Controllers
             data.departmentId = model.DepartmentId;
             data.departmentname = model.DepartmentName;
             data.description = model.Description;
+            data.VisibleOnDashboard = model.VisibleOnDashboard ?? false;
             idepartmentBusiness.Update(data);
             // return RedirectToAction("Index");
             return Json(new
@@ -117,6 +120,7 @@ namespace NationalNeon.Web.Controllers
                 success = true
             });
         }
+
 
         public ActionResult Delete(int id)
         {

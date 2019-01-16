@@ -1,4 +1,4 @@
-﻿
+
 
 <!-- widget grid -->
 <section id="widget-grid" class="">
@@ -68,10 +68,12 @@
                 $("#divAddPopup").html(result);
             }
         });
+        $("[id='VisibleOnDashboard']").on("click", function () {
+       
+            $(this).val() == "false" ? $(this).val("true") : $(this).val("false");
+        })
     });
-
-
-
+       
     function departmentList() {
         $.ajax({
             url: "/Department/DepartmentList",
@@ -103,6 +105,10 @@
 
         if (isValid) {
             $('#divAddPopup [id^="invalid_"]').hide();
+            //debugger;
+           // console.log(form);
+            //form.VisibleOnDashboard = form.VisibleOnDashboard === "on" ? true : false;
+          
             saveDepartment(form);
         }               
     });
@@ -135,9 +141,10 @@
             }
         });
     }
-
-
+    
     $("#refreshDepartment").click(function () {
         history.go(0);
     });
+
+   
 </script>

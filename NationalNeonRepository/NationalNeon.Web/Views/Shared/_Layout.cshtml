@@ -1,4 +1,4 @@
-﻿@using System;
+@using System;
 @using System.Collections.Generic;
 @using System.ComponentModel.DataAnnotations;
 @using System.Linq;
@@ -34,26 +34,21 @@
         <link rel="stylesheet" type="text/css" media="screen" href="~/css/smartadmin-skins.min.css">
         <!-- SmartAdmin RTL Support  -->
         <link rel="stylesheet" type="text/css" media="screen" href="~/css/smartadmin-rtl.min.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="~/css/JobFileUpload.css">
+
         <!-- Custome style sheet -->
         <link rel="stylesheet" type="text/css" media="screen" href="~/css/custome-style.css">
-       
-
-        <link href="~/css/dropzone.css" rel="stylesheet" />
-
-
-
         <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
         @*<link rel="stylesheet" type="text/css" media="screen" href="~/css/demo.min.css">*@
 
-
+        <link rel="stylesheet" type="text/css" media="screen" href="~/css/JobFileUpload.css">
         <!-- GOOGLE FONT -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
         <link href="~/css/Loading.css" rel="stylesheet" />
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+        <link href="~/css/dropzone.css" rel="stylesheet" />
+        @*<link href="~/css/fine-uploader.css" rel="stylesheet" />*@
 
     </environment>
     <style>
@@ -517,6 +512,9 @@
         <script src="~/js/plugin/morris/raphael.min.js"></script>
         <script src="~/js/plugin/morris/raphael.2.1.0.min.js"></script>
         <script src="~/scripts/dropzone.js"></script>
+        @*<script src="~/js/dropzone.js"></script>*@
+        @*<script src="~/js/plugin/dropzone/dropzone.min.js"></script>
+        <script src="~/js/plugin/dropzone/dropzone-amd-module.min.js"></script>*@
 
         <script type="text/javascript">
 
@@ -970,6 +968,7 @@
                     type: "GET",
                     url: "/Jobs/GetCalenderJobsList",
                     success: function (response) {
+                        
                         if ($("#calendar").length) {
                             var date = new Date();
                             var d = date.getDate();
@@ -978,13 +977,13 @@
 
                             var calendar = $('#calendar').fullCalendar({
 
-                                editable: false,
+                                editable: true,
                                 draggable: true,
                                 selectable: false,
                                 selectHelper: true,
                                 unselectAuto: false,
                                 disableResizing: false,
-
+                                droppable: true,
                                 header: {
                                     left: 'title', //,today
                                     center: 'prev, next, today',
@@ -1010,11 +1009,19 @@
                                 eventRender: function (event, element, icon) {
                                     if (!event.description == "") {
                                         element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description + "</span>");
+                                        element.append("<br/><input type='hidden' id='hdnJobId' value='" + event.jobid + "'>");
+                                       
                                     }
                                     if (!event.icon == "") {
                                         element.find('.fc-event-title').append("<i class='air air-top-right fa " + event.icon + " '></i>");
+                                        element.append("<br/><input type='hidden' id='hdnJobId' value='" + event.jobid + "'>")
                                     }
+                                },
+                                eventDrop: function (event, delta, revertFunc) {
+                                    //console.log(event.title + " was dropped on " + event.start.format()+",jobid:"+event.jobid);
+                                    updateJobTargetDate(event.jobid, event.start.format());
                                 }
+                                
                             });
                             /* hide default buttons */
                             $('.fc-header-right, .fc-header-center').hide();
@@ -1055,163 +1062,36 @@
                     },
                 });
 
-                //$('nav li').click(function () {
-                //    $('nav li').removeClass('active');
-                //    $(this).addClass('active');
-                //});
-
-
-
-                //if ($("#calendar").length) {
-                //    var date = new Date();
-                //    var d = date.getDate();
-                //    var m = date.getMonth();
-                //    var y = date.getFullYear();
-
-                //    var calendar = $('#calendar').fullCalendar({
-
-                //        editable: true,
-                //        draggable: true,
-                //        selectable: false,
-                //        selectHelper: true,
-                //        unselectAuto: false,
-                //        disableResizing: false,
-
-                //        header: {
-                //            left: 'title', //,today
-                //            center: 'prev, next, today',
-                //            right: 'month, agendaWeek, agenDay' //month, agendaDay,
-                //        },
-
-                //        select: function (start, end, allDay) {
-                //            var title = prompt('Event Title:');
-                //            if (title) {
-                //                calendar.fullCalendar('renderEvent', {
-                //                    title: title,
-                //                    start: start,
-                //                    end: end,
-                //                    allDay: allDay
-                //                }, true // make the event "stick"
-                //                );
-                //            }
-                //            calendar.fullCalendar('unselect');
-                //        },
-
-                //        events: [{
-                //            title: 'All Day Event',
-                //            start: new Date(y, m, 1),
-                //            description: 'long description',
-                //            className: ["event", "bg-color-greenLight"],
-                //            icon: 'fa-check'
-                //        }, {
-                //            title: 'Long Event',
-                //            start: new Date(y, m, d - 5),
-                //            end: new Date(y, m, d - 2),
-                //            className: ["event", "bg-color-red"],
-                //            icon: 'fa-lock'
-                //        }, {
-                //            id: 999,
-                //            title: 'Repeating Event',
-                //            start: new Date(y, m, d - 3, 16, 0),
-                //            allDay: false,
-                //            className: ["event", "bg-color-blue"],
-                //            icon: 'fa-clock-o'
-                //        }, {
-                //            id: 999,
-                //            title: 'Repeating Event',
-                //            start: new Date(y, m, d + 4, 16, 0),
-                //            allDay: false,
-                //            className: ["event", "bg-color-blue"],
-                //            icon: 'fa-clock-o'
-                //        }, {
-                //            title: 'Meeting',
-                //            start: new Date(y, m, d, 10, 30),
-                //            allDay: false,
-                //            className: ["event", "bg-color-darken"]
-                //        }, {
-                //            title: 'Lunch',
-                //            start: new Date(y, m, d, 12, 0),
-                //            end: new Date(y, m, d, 14, 0),
-                //            allDay: false,
-                //            className: ["event", "bg-color-darken"]
-                //        }, {
-                //            title: 'Birthday Party',
-                //            start: new Date(y, m, d + 1, 19, 0),
-                //            end: new Date(y, m, d + 1, 22, 30),
-                //            allDay: false,
-                //            className: ["event", "bg-color-darken"]
-                //        }, {
-                //            title: 'Smartadmin Open Day',
-                //            start: new Date(y, m, 28),
-                //            end: new Date(y, m, 29),
-                //            className: ["event", "bg-color-darken"]
-                //        }],
-
-                //        eventRender: function (event, element, icon) {
-                //            if (!event.description == "") {
-                //                element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description + "</span>");
-                //            }
-                //            if (!event.icon == "") {
-                //                element.find('.fc-event-title').append("<i class='air air-top-right fa " + event.icon + " '></i>");
-                //            }
-                //        }
-                //    });
-                //};
-
-                ///* hide default buttons */
-                //$('.fc-header-right, .fc-header-center').hide();
-
-                //// calendar prev
-                //$('#calendar-buttons #btn-prev').click(function () {
-                //    $('.fc-button-prev').click();
-                //    return false;
-                //});
-
-                //// calendar next
-                //$('#calendar-buttons #btn-next').click(function () {
-                //    $('.fc-button-next').click();
-                //    return false;
-                //});
-
-                //// calendar today
-                //$('#calendar-buttons #btn-today').click(function () {
-                //    $('.fc-button-today').click();
-                //    return false;
-                //});
-
-                //// calendar month
-                //$('#mt').click(function () {
-                //    $('#calendar').fullCalendar('changeView', 'month');
-                //});
-
-                //// calendar agenda week
-                //$('#ag').click(function () {
-                //    $('#calendar').fullCalendar('changeView', 'agendaWeek');
-                //});
-
-                //// calendar agenda day
-                //$('#td').click(function () {
-                //    $('#calendar').fullCalendar('changeView', 'agendaDay');
-                //});
-
                 $.ajax({
                     type: "GET",
                     url: "/Home/BindGraph",
                     success: function (response) {
                         var arrr = [];
                         $.each(response.data, function (index, value) {
-                            var obj = { x: 0, y: 0 }
-                            obj.x = value.departmentName;
-                            obj.y = value.totalHours;
-                            arrr.push(obj);
+                      
+                            if (value.visibleOnDashboard==true) {
+                                var obj = { x: 0, y: 0 }
+                                obj.x = value.departmentName;
+                                obj.y = value.totalHours;
+                                arrr.push(obj);
+                            }
                         })
                         $("#normal-bar-graph").length && Morris.Bar({
                             "element": "normal-bar-graph",
                             "data": arrr,
                             "xkey": "x",
                             "ykeys": ["y"],
-                            "labels": ["Hours"]
+                            "labels": ["Hours"],
+                            "xLabelMargin": 0,
+                            //"behaveLikeLine": true,
+                            //"resize": true,
+                             //"barGap": 1,
+                            "barSizeRatio": 0.30
+                            //fillOpacity: 0.6
+                            
+                           
                         })
+                        
                     }
                 });
                 /*
@@ -1261,6 +1141,19 @@
                 });
 
             });
+            function updateJobTargetDate(jobId, targetCompletionDate) {
+               
+                $.ajax({
+                    url: 'Jobs/UpdateJobTargetDate',
+                    data: { 'jobId': jobId, 'targetCompletionDate': targetCompletionDate },
+                    success: function (result) {
+                          location.reload();
+                   },
+                    error: function (error) {
+                   }
+                })
+
+            }
             function searchData() {
 
                 var topSearchfilter = $("input[type='text'][id='search']");
@@ -1446,7 +1339,7 @@
             </script>
             <script src="~/js/site.min.js" asp-append-version="true"></script>
         </environment>*@
-
+    
     @RenderSection("Scripts", required: false)
 </body>
 </html>

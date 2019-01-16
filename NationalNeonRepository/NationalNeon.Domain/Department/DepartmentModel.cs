@@ -25,6 +25,8 @@ namespace NationalNeon.Domain.Department
         public string updated_by { get; set; }
 
         public DateTime updated_on { get; set; }
-        
+
+        public bool? VisibleOnDashboard { get; set; }
+
     }
 }

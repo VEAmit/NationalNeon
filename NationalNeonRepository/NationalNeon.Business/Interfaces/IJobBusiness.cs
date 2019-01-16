@@ -33,6 +33,8 @@ namespace NationalNeon.Business.Interfaces
 
         void DeleteUploadedFile(int jobFileUploadId);
 
+        void UpdateJobTargetDate(int jobId, DateTime targetCompletionDate);
+
 
     }
 }

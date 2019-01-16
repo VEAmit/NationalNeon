@@ -148,7 +148,8 @@ namespace NationalNeon.Web.Controllers
                     var taskdept = new TaskDepartmentViewModel
                     {
                         departmentname = department.departmentname,
-                        InCompleteHours = inCompleteHours
+                        InCompleteHours = inCompleteHours,
+                        VisibleOnDashboard = department.VisibleOnDashboard ?? false
                     };
                     taskdata.Add(taskdept);
                 }
@@ -157,6 +158,7 @@ namespace NationalNeon.Web.Controllers
                     var taskdept = new TaskDepartmentViewModel
                     {
                         departmentname = department.departmentname,
+                        VisibleOnDashboard = department.VisibleOnDashboard ?? false
                     };
 
                     taskdata.Add(taskdept);
