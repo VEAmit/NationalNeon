@@ -1,4 +1,4 @@
-@using System;
+﻿@using System;
 @using System.Collections.Generic;
 @using System.ComponentModel.DataAnnotations;
 @using System.Linq;
@@ -362,13 +362,13 @@
             </span>
             <!-- breadcrumb -->
             @*@if (ViewContext.RouteData.Values["Controller"].ToString() == "Home")
-                {
-                    @:> @Html.ActionLink("Home", "dashboard", ViewContext.RouteData.Values["controller"].ToString())
-                }
-                @if (ViewContext.RouteData.Values["Controller"].ToString() == "Jobs")
-                {
-                    @:> @Html.ActionLink("Home", "jobs", ViewContext.RouteData.Values["controller"].ToString())
-                }*@
+            {
+                @:> @Html.ActionLink("Home", "dashboard", ViewContext.RouteData.Values["controller"].ToString())
+            }
+            @if (ViewContext.RouteData.Values["Controller"].ToString() == "Jobs")
+            {
+                @:> @Html.ActionLink("Home", "jobs", ViewContext.RouteData.Values["controller"].ToString())
+            }*@
             <ol class="breadcrumb">
                 <li>Home</li>
                 <li>
@@ -408,6 +408,7 @@
         <div class="loading" align="center">
             <img src="~/img/ajax-loader.gif" alt="" />
         </div>
+        <div class="clearfix"></div>
     </div>
 
 

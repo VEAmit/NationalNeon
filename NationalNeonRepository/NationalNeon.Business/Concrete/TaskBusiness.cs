@@ -1,4 +1,4 @@
-﻿using NationalNeon.Business.Interfaces;
+using NationalNeon.Business.Interfaces;
 using NationalNeon.Domain.Task;
 using NationalNeon.Repository.Interface;
 using NationalNeon.Repository;
@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using NationalNeon.Utility.Enums;
+
 
 namespace NationalNeon.Business.Concrete
 {
@@ -24,7 +25,9 @@ namespace NationalNeon.Business.Concrete
         public List<TaskModel> GetAll()
         {
             var taskModel = new List<TaskModel>();
+           // var data = taskRepository.GetAll();
             var model = taskRepository.GetAll(null, null, "Department").ToList();
+            //Mapper.Map(data, model);
             return Mapper.Map(model, taskModel);
         }
 
@@ -47,6 +50,7 @@ namespace NationalNeon.Business.Concrete
         {
             TaskModel taskModel = new TaskModel();
             var task = taskRepository.SingleOrDefault(u => u.TaskId == id);
+            //var task = taskRepository.GetAll(u => u.TaskId == id, null, "User").SingleOrDefault();
             return Mapper.Map(task, taskModel);
 
         }
@@ -89,8 +93,18 @@ namespace NationalNeon.Business.Concrete
         public List<TaskModel> getIncompleteTask()
         {
             var model = new List<TaskModel>();
-            var data = taskRepository.GetAll().Where(x=>x.Completed==0).ToList();
-            Mapper.Map(data, model);
+            try
+            {
+              
+                var data = taskRepository.GetAll(null, null, "Job").Where(x => x.Completed == 0).ToList();
+                if (data.Count > 0)
+                    Mapper.Map(data, model);
+
+            }
+            catch(Exception ex)
+            {
+
+            }
             return model;
         }
 
@@ -111,17 +125,49 @@ namespace NationalNeon.Business.Concrete
             Mapper.Map(abc, model);
             return model;
         }
-
         public List<TaskModel> GetAssignedTasks(int userId, string role)
         {
             var model = new List<TaskModel>();
             List<Task> taskList = new List<Task>();
             if (role == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Admin) || role == EnumHelper<RoleEnum>.GetDisplayValue(RoleEnum.Manager))
-                taskList = taskRepository.GetAll(null, null, "User").ToList();
+                taskList = taskRepository.GetAll(null,null, "User").ToList();
             else
                 taskList = taskRepository.GetAll(null, null, "User").Where(x => x.userId == userId).ToList();
             Mapper.Map(taskList, model);
             return model;
+        }
+        //public List<TaskModel> GetDepartmentTasksList(int departmentId)
+        public dynamic GetDepartmentTasksList(int departmentId)
+        {
+            //List<TaskModel> taskModel = new List<TaskModel>();
+            //var task = taskRepository.GetAll(u => u.departmentId == departmentId).ToList();
+            //return Mapper.Map(task, taskModel);
+            var task = taskRepository.GetAll(u => u.departmentId == departmentId).Select(u => new
+            {
+                title=u.TaskName,
+                start = u.TargetCompletionDate,
+                taskId = u.TaskId ,
+                u.jobId,
+                icon = "fa fa-briefcase",
+                className = u.Completed == 1 ? new[] { "event", "bg-color-greenLight" } : new[] { "event", "bg-color-red" },
+                jobName =u.Job.job_name,
+                jobCompletionDate=u.Job.target_completion_date
+
+            });
+            return task;
+
+        }
+        public void UpdateTaskTargetDate(int taskId, DateTime targetCompletionDate)
+        {
+
+            var task = taskRepository.GetAll().SingleOrDefault(u => u.TaskId == taskId);
+            if (task != null)
+            {
+                task.TargetCompletionDate = targetCompletionDate;
+                taskRepository.Update(task);
+            }
+
+
         }
     }
 }

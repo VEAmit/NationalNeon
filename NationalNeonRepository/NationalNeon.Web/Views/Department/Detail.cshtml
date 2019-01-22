@@ -1,4 +1,4 @@
-﻿@model NationalNeon.Web.ViewModels.TaskDepartmentViewModel
+@model NationalNeon.Web.ViewModels.TaskDepartmentViewModel
 @{
     ViewData["Title"] = "Detail";
 }
@@ -39,8 +39,8 @@
                         </button><br><br>
 
                         @*<button type="button" id="delete_department" class="btn btn-danger">
-            Delete Department
-        </button>*@
+                                Delete Department
+                            </button>*@
                         @*@Html.ActionLink("Delete Department", "Delete", "Department", new { id = Model.departmentId }, new { @class = "btn btn-danger", @id = "delete_department" })*@
 
                         <button type="button" data-toggle="modal" class="btn btn-danger" data-target="#opener" onclick="setDepartmentID(@Model.departmentId)">Delete Department</button>
@@ -190,37 +190,356 @@
         </div>
     </div>
 
+    <div class="row col-sm-10 col-md-10 col-lg-10 col-lg-offset-2 col-md-offset-2 col-sm-offset-2">
+        <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-5" data-widget-editbutton="false" data-widget-deletebutton="false">
+            <header>
+                <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+                <h2>Task Schedule</h2>
+                <div class="widget-toolbar">
+                    <div class="btn-group">
+                        <button class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
+                            Showing <i class="fa fa-caret-down"></i>
+                        </button>
+                        <ul class="dropdown-menu js-status-update pull-right">
+                            <li>
+                                <a href="javascript:void(0);" id="mt">Month</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" id="ag">Agenda</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" id="td">Today</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <!-- widget div-->
+            <div>
+                <!-- widget edit box -->
+                <div class="jarviswidget-editbox">
+                    <input class="form-control" type="text">
+                </div>
+                <!-- end widget edit box -->
+                <div class="widget-body no-padding">
+                    <!-- content goes here -->
+                    <div class="widget-body-toolbar">
 
-    <!-- row -->
+                        <div id="calendar-buttons">
+                            <div class="btn-group">
+                                <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="calendar"></div>
+                    <!-- end content -->
+                </div>
+            </div>
+            <!-- end widget div -->
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="divEditJobModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-body" id="divEditJob">
+                <!-- Modal content-->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="divEditTaskModel" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-body" id="divEditTask">
+                <!-- Modal content-->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="divCompletionDate" role="dialog">
+        <div class="modal-dialog" style="width: 320px;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header modal-popup-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h1 class="modal-title">Confirmation</h1>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 style="color:brown">Task completion date is greater than job completion date.Do you want to change job completion date ?</h5>
+                    <input type="hidden" id="hdnJobId" />
+                    <input type="hidden" id="hdnSelectedTaskId" />
+                    <input type="hidden" id="hdnSelectedTaskCompletionDate" />
+                    <button data-toggle="modal" data-dismiss="modal" data-target="#divEditJobModel" onclick="showJobDetails()" class="btn btn-danger form-submit-btn" style="background:#3276b1; border-color:#3276b1">Yes</button>
+                    <button onclick="refresh()" data-dismiss="modal" class="btn btn-danger form-submit-btn">No</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 </section>
 
-@*<input type="hidden" value="@Model.departmentId" id="hdnId" />*@
-
-@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
-
 <script>
+    var calendar, targetDateChangeResponse = false, showTargetDateChangeConfirmation = false;;
     $(document).ready(function () {
         var departmentId = 0;
+        $.ajax({
+            url: "/Jobs/AddJobs",
+            type: "GET",
+            async: false,
+            success: function (result) {
+                $("#divEditJob").html(result);
+            }
+        });
+        $.ajax({
+            url: "/Task/AddTask",
+            type: "GET",
+            async: false,
+            success: function (result) {
+                $("#divEditTask").html(result);
+            }
+        });
+
         $('#opener').click(function () {
             departmentId = $(this).attr('departmentId');
             // $('#wrapper').dialog('open');
         });
 
         $('#edit_Department').on('click', function () {
-        $.ajax({
-            url: "/Department/Edit",
-            data: { Id: $("#hdnId").val()},
-            success: function (result) {
-                $("#divEditModel").html(result);
-            }
+            $.ajax({
+                url: "/Department/Edit",
+                data: { Id: $("#hdnId").val() },
+                success: function (result) {
+                    $("#divEditModel").html(result);
+                }
             });
-        });     
+        });
+
+        getDepartmentTasksList();
+
+        $('#divEditJob').delegate('.btn_addUpdateJobs', 'click', function () {
+
+            let isValid = true;
+            var formValue = $("#addUpdateJobForm").serialize();
+            if (formValue !== undefined) {
+                if ($('input[name="job_number"]').val() == '' || $('input[name="job_number"]').val() == undefined) {
+                    $("#invalid_Job").show();
+                    isValid = false;
+                }
+                if ($('input[name="job_name"]').val() == '' || $('input[name="job_name"]').val() == undefined) {
+                    $("#invalid_JobName").show();
+                    isValid = false;
+                }
+
+                if ($('input[name="target_completion_date"]').val() == '' || $('input[name="target_completion_date"]').val() == undefined) {
+                    $("#invalid_target_completion_date").show();
+                    isValid = false;
+                }
+
+            }
+
+            if (isValid) {
+                $('#divEditJob [id^="invalid_"]').hide();
+                if (setJobDates()) {
+                    formValue = $("#addUpdateJobForm").serialize();
+                    saveOrUpdateJob(formValue);
+                }
+            }
+        });
+        $(".btn_addUpdateTask").on('click', function () {
+
+            let isValid = true;
+            var curEvent = $(this);
+            var formValue = $("#addUpdateForm").serialize();
+            if (formValue !== undefined) {
+                if ($('select[name="jobId"]').val() == '' || $('select[name="jobId"]').val() == undefined) {
+                    $("#invalid_JobName").show();
+                    isValid = false;
+                }
+
+                if ($('select[name="departmentId"]').val() == '' || $('select[name="departmentId"]').val() == undefined) {
+                    $("#invalid_DepartmentName").show();
+                    isValid = false;
+                }
+                if ($('input[name="TaskName"]').val() == '' || $('input[name="TaskName"]').val() == undefined) {
+                    $("#invalid_TaskName").show();
+                    isValid = false;
+                }
+               
+                if ($('input[name="TargetCompletionDate"]').val() == '' || $('input[name="TargetCompletionDate"]').val() == undefined) {
+                    $("#invalid_TargetCompletionDate").show();
+                    isValid = false;
+                }
+
+                if ($('select[name="userId"]').val() == '' || $('select[name="userId"]').val() == undefined) {
+                    $("#invalid_UserName").show();
+                    isValid = false;
+                }
+             
+                if ($('input[name="Status"]').val() == '' || $('input[name="Status"]').val() == undefined) {
+                    $("#invalid_Status").show();
+                    isValid = false;
+                }
+            }
+            if (isValid) {
+                $('#divEditTask [id^="invalid_"]').hide();
+                if (setTaskDates()) {
+
+                    formValue = $("#addUpdateForm").serialize();
+                    saveOrUpdateTask(formValue);
+                }
+            }
+        });
+        $("#divEditJobModel").find(".modal-title").html("Edit Job");
+
     });
+    function showJobDetails() {
+
+        jobId=$("#hdnJobId").val();
+        $.ajax({
+            type: 'POST',
+            url: '/Jobs/GetJobs?id=' + jobId + '',
+            success: function (data) {
+                var targetcompletiondate = new Date(data.data.target_completion_date);
+                var ttargerdate = ('0' + (targetcompletiondate.getMonth() + 1)).slice(-2) + '/' + targetcompletiondate.getDate() + '/' + targetcompletiondate.getFullYear();
+                var scheduleddate = new Date(data.data.scheduled_date);
+                var tscheduledate = ('0' + (scheduleddate.getMonth() + 1)).slice(-2) + '/' + scheduleddate.getDate() + '/' + scheduleddate.getFullYear();
+                $('#jobId').val(data.data.jobId);
+                $('#job_number').val(data.data.job_number);
+                $('#job_name').val(data.data.job_name);
+                $('#description').val(data.data.description);
+                $('#target_completion_date').val(ttargerdate);
+                $('#status').val(data.data.status);
+                $('#revenue').val(data.data.revenue);
+                $('#sales_person').val(data.data.sales_person);
+
+                var scheduledDate = data.data.scheduled_date;
+
+                if (scheduledDate == "0001-01-01T00:00:00") {
+                    $("#scheduled_date").val();
+
+                }
+                else {
+                    if (scheduledDate != "" && scheduledDate != undefined) {
+                        var scheduledDateParameters = scheduledDate.split('T')[0];
+                        scheduledDateParameters = scheduledDateParameters.split('-');
+                        scheduledDate = scheduledDateParameters[1] + "/" + scheduledDateParameters[2] + "/" + scheduledDateParameters[0];
+                        $("#scheduled_date").val(scheduledDate);
+                    }
+                }
+            }
+        });
+
+    }
+    function setJobDates() {
+
+        var targetCompleteDate = $("#target_completion_date").val();
+        var scheduledDate = $("#scheduled_date").val();
+        var isValid = false;
+        if (targetCompleteDate != "" && targetCompleteDate != undefined) {
+            var targetDateParameters = targetCompleteDate.split('/');
+            var targetDatemonth = targetDateParameters[0];
+            var targetDateday = targetDateParameters[1];
+            var targetDateyear = targetDateParameters[2];
+            $("#target_completion_date").val(targetDateyear + "-" + targetDatemonth + "-" + targetDateday);
+            $("#target_completion_date").attr('value', targetDateyear + "-" + targetDatemonth + "-" + targetDateday);
+            isValid = true;
+        }
+        if (scheduledDate != "" && scheduledDate != undefined) {
+
+            var scheduledDateParameters = scheduledDate.split('/');
+            var scheduledDatemonth = scheduledDateParameters[0];
+            var scheduledDateday = scheduledDateParameters[1];
+            var scheduledDateyear = scheduledDateParameters[2];
+            $("#scheduled_date").val(scheduledDateyear + "-" + scheduledDatemonth + "-" + scheduledDateday);
+            $("#scheduled_date").attr('value', scheduledDateyear + "-" + scheduledDatemonth + "-" + scheduledDateday);
+        }
+        return isValid;
+    }
+    function saveOrUpdateJob(formValue) {
+        $.ajax({
+            type: 'POST',
+            url: "/Jobs/AddJobs",
+            async: false,
+            data: formValue,
+            success: function (result) {
+               
+                    updateTaskTargetDate($("#hdnSelectedTaskId").val(), $("#hdnSelectedTaskCompletionDate").val());
+                    $('.close').click();
+                  
+            }
+        });
+    }
+
+    function showTaskDetails() {
+        taskId = $("#hdnSelectedTaskId").val();
+        $.ajax({
+            type: 'POST',
+            url: '/Task/GetTask?id=' + taskId + '',
+            success: function (data) {
+                var targetCompletionDate = new Date(data.data.targetCompletionDate);
+                var ttargerdate = ('0' + (targetCompletionDate.getMonth() + 1)).slice(-2) + '/' + targetCompletionDate.getDate() + '/' + targetCompletionDate.getFullYear();
+                $('#TaskId').val(data.data.taskId);
+               
+                $("select#jobId").val($("#hdnJobId").val());
+                $('#departmentId').val(data.data.departmentId);
+                $('#TaskName').val(data.data.taskName);
+                $('#BudgetedHours').val(data.data.budgetedHours);
+                $('#TargetCompletionDate').val(ttargerdate);
+                $('#Employee').val(data.data.employee);
+                $('#Status').val(data.data.status);
+                $('#userId').val(data.data.userId);
+                
+            }
+        });
+    }
+    function setTaskDates() {
+        var targetCompleteDate = $("#TargetCompletionDate").val();
+        if (targetCompleteDate != null && targetCompleteDate != undefined && targetCompleteDate != "") {
+            var dateParameters = targetCompleteDate.split('/');
+            var month = dateParameters[0];
+            var day = dateParameters[1];
+            var year = dateParameters[2];
+            $("#TargetCompletionDate").val(year + "-" + month + "-" + day);
+            $("#TargetCompletionDate").attr('value', year + "-" + month + "-" + day);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    function saveOrUpdateTask(formValue) {
+        $.ajax({
+            type: 'POST',
+            url: "/Task/AddTask",
+            async: false,
+            data: formValue,
+            success: function (result) {
+                if (result.success) {
+                    $('.close').click();
+                    $.notify({
+                        title: result.title,
+                        message: result.message,
+                    },
+                        {
+                            type: result.type,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            delay: '100',
+                            newest_on_top: true,
+                        });
+                }
+                refresh();
+               
+            }
+        });
+
+    }
+    //--------------------
+
     function setDepartmentID(_departmentId) {
         departmentId = _departmentId;
     }
-
 
     $("#divEditModel").delegate('.edit_department_btn', 'click', function () {
         let isValid = true;
@@ -238,7 +557,7 @@
         if (isValid) {
             $('#divAddPopup [id^="invalid_"]').hide();
             editDepartment(form);
-        }               
+        }
     });
 
     function editDepartment(form) {
@@ -270,7 +589,6 @@
             }
         });
     }
-
 
     function deleteDepartment() {
         callDelete(departmentId);
@@ -307,4 +625,142 @@
             }
         })
     }
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function updateTaskTargetDate(taskId, targetCompletionDate) {
+        $.ajax({
+            url: 'Task/UpdateTaskTargetDate',
+            data: { 'taskId': taskId, 'targetCompletionDate': targetCompletionDate },
+            success: function (result) {
+               refresh();
+            },
+            error: function (error) {
+            }
+        })
+    }
+    function refresh() {
+        window.location.reload();
+    }
+    //------------------------------------------------------
+    function getDepartmentTasksList() {
+        var departmentId = getParameterByName("Id");
+        if (departmentId != "" && departmentId != null) {
+            $.ajax({
+                type: "GET",
+                url: "/Department/GetDepartmentTasksList?departmentId=" + departmentId,
+                success: function (response) {
+                  
+                   if ($("#calendar").length) {
+                       var calendar = $('#calendar').fullCalendar({
+                            editable: true,
+                            draggable: true,
+                            selectable: false,
+                            selectHelper: true,
+                            unselectAuto: false,
+                            disableResizing: false,
+                            droppable: true,
+                            contentHeight : 300,
+                            header: {
+                                left: 'title', //,today
+                                center: 'prev, next, today',
+                                right: 'month, agendaWeek, agenDay' //month, agendaDay,
+                            },
+                            eventClick: function (event, jsEvent, view) {
+                             
+                                $("#hdnJobId").val(event.jobId);
+                                $("#hdnSelectedTaskId").val(event.taskId);
+                                $("#divEditTaskModel").modal();
+                                $("#divEditTask").find(".modal-title").html("Edit Task");
+                                showTaskDetails();
+                            },
+                            select: function (start, end, allDay) {
+                                var title = prompt('Event Title:');
+                                if (title) {
+                                    calendar.fullCalendar('renderEvent', {
+                                        title: title,
+                                        start: start,
+                                        end: end,
+                                        allDay: allDay
+                                    }, true // make the event "stick"
+                                    );
+                                }
+                                calendar.fullCalendar('unselect');
+                            },
+                            events: response.data,
+                            eventRender: function (event, element, icon) {
+                               // if (!event.description == "") {
+                                    element.append("<br/><input type='hidden' id='hdnTaskId' value='" + event.taskId + "'>");
+                                    element.append("<br/><input type='hidden' id='hdnJobCompletionDate' value='" + event.jobCompletionDate + "'>");
+
+                                //}
+                                //if (!event.icon == "") {
+                                //    element.append("<br/><input type='hidden' id='hdnTaskId' value='" + event.taskId + "'>");
+                                //    element.append("<br/><input type='hidden' id='hdnJobCompletionDate' value='" + event.jobCompletionDate + "'>");
+                                //}
+                            },
+                            eventDrop: function (event, delta, revertFunc) {
+                                $("#hdnJobId").val(event.jobId);
+                                $("#hdnSelectedTaskCompletionDate").val(event.start.format());
+                                $("#hdnSelectedTaskId").val(event.taskId);
+
+                                if (event.start.format() > event.jobCompletionDate) {
+                                     $("#divCompletionDate").modal({ show: 'true' });
+                                }
+                                else {
+                                    updateTaskTargetDate(event.taskId, event.start.format());
+                                 }
+                            }
+                        });
+                        /* hide default buttons */
+                        $('.fc-header-right, .fc-header-center').hide();
+
+                        // calendar prev
+                        $('#calendar-buttons #btn-prev').click(function () {
+                            $('.fc-button-prev').click();
+                            return false;
+                        });
+
+                        // calendar next
+                        $('#calendar-buttons #btn-next').click(function () {
+                            $('.fc-button-next').click();
+                            return false;
+                        });
+
+                        // calendar today
+                        $('#calendar-buttons #btn-today').click(function () {
+                            $('.fc-button-today').click();
+                            return false;
+                        });
+
+                        // calendar month
+                        $('#mt').click(function () {
+                            $('#calendar').fullCalendar('changeView', 'month');
+                        });
+
+                        // calendar agenda week
+                        $('#ag').click(function () {
+                            $('#calendar').fullCalendar('changeView', 'agendaWeek');
+                        });
+
+                        // calendar agenda day
+                        $('#td').click(function () {
+                            $('#calendar').fullCalendar('changeView', 'agendaDay');
+                       });
+
+                       
+                    };
+                }
+            });
+        }
+    }
+
 </script>

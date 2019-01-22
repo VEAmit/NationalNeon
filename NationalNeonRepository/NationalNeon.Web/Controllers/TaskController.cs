@@ -200,6 +200,29 @@ namespace NationalNeon.Web.Controllers
             //Code to get content
             return new ViewAsPdf("TaskPdf", taskDeptList) { FileName = "export_work_order_National Neon _ Work Order " + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf" };
         }
+        public IActionResult UpdateTaskTargetDate(int taskId, DateTime targetCompletionDate)
+        {
+            try
+            {
+                itaskBusiness.UpdateTaskTargetDate(taskId, targetCompletionDate);
+                return Json(new
+                {
+                    success = true,
+                    data = "Success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    data = "Error"
+                });
+            }
+
+        }
+
+
 
 
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,7 +50,7 @@ namespace NationalNeon.Web.Controllers
                 Mapper.Map(model, data);
                 data.created_on = DateTime.Now;
                 data.updated_on = DateTime.Now;
-                data.VisibleOnDashboard = model.VisibleOnDashboard ?? false;
+                data.VisibleOnDashboard = model.VisibleOnDashboard??false;
                 idepartmentBusiness.AddDepartment(data);
                 //return RedirectToAction("Index");
                 return Json(new
@@ -101,7 +101,7 @@ namespace NationalNeon.Web.Controllers
             model.DepartmentName = data.departmentname;
             model.Description = data.description;
             model.DepartmentId = data.departmentId;
-            model.VisibleOnDashboard = data.VisibleOnDashboard;
+            model.VisibleOnDashboard = data.VisibleOnDashboard ; 
             return PartialView("_Edit", model);
         }
 
@@ -121,7 +121,6 @@ namespace NationalNeon.Web.Controllers
             });
         }
 
-
         public ActionResult Delete(int id)
         {
             idepartmentBusiness.DeleteDepartment(id);
@@ -130,6 +129,27 @@ namespace NationalNeon.Web.Controllers
                 success = true
             });
            // return RedirectToAction("Index");
-        }     
+        }
+
+        
+        public JsonResult GetDepartmentTasksList(int departmentId)
+        {
+            var model = itaskBusiness.GetDepartmentTasksList(departmentId);
+            //var model= itaskBusiness.GetDepartmentTasksList(departmentId).Select(x=> new
+            //{
+            //    title = x.TaskName,
+            //    start=x.TargetCompletionDate,
+            //    className = x.Completed == 1 ? new[] { "event", "bg-color-greenLight" } : new[] { "event", "bg-color-red" },
+            //    icon = "fa fa-briefcase",
+            //    taskId = x.TaskId
+            //}).ToList();
+
+            return Json(new
+            {
+                success = true,
+                data = model
+            });
+
+        }
     }
 }

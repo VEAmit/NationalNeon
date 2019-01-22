@@ -344,7 +344,6 @@
         jobid = getParameterByName("jobId");
         var uploader = new Dropzone('#uploadWidget', { 'addRemoveLinks': true, 'clickable': true, 'createImageThumbnails': true });
         uploader.on("removedfile", function (file, id) {
-            debugger;
             for (var i = 0; i < fileIds.length; ++i) {
                 if (fileIds[i] == file.id) {
                     $.ajax({

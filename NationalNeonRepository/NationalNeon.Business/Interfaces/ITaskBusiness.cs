@@ -1,4 +1,4 @@
-﻿using NationalNeon.Domain.Task;
+using NationalNeon.Domain.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +29,10 @@ namespace NationalNeon.Business.Interfaces
        void updateincompleteTask(int TaskId);
 
         List<TaskModel> getcompleteTask();
+        List<TaskModel> GetAssignedTasks(int userId,string role);
+        //List<TaskModel> GetDepartmentTasksList(int departmentId);
+        dynamic GetDepartmentTasksList(int departmentId);
+        void UpdateTaskTargetDate(int taskId, DateTime targetCompletionDate);
 
-        List<TaskModel> GetAssignedTasks(int userId, string role);
     }
 }
